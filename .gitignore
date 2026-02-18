@@ -23,6 +23,7 @@ pnpm-lock.yaml
 
 .astro
 .agents
+.claude
 
 # documents
 *.docx
