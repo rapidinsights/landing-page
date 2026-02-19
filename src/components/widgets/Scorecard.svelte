@@ -155,6 +155,7 @@
   }
 </script>
 
+<div>
 <!-- Progress dots (bottom of viewport) -->
 {#if phase === 'questions'}
   <div class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
@@ -389,6 +390,7 @@
     </div>
   </div>
 {/if}
+</div>
 
 <style>
   .animate-fade-in {

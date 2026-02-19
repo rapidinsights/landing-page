@@ -19,6 +19,7 @@ export default {
         serif: ['var(--aw-font-serif, ui-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--aw-font-mono, ui-monospace)', ...defaultTheme.fontFamily.mono],
+        display: ['var(--aw-font-display, ui-serif)', ...defaultTheme.fontFamily.serif],
       },
       lineHeight: {
         tighter: '1.2',
