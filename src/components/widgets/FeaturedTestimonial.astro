@@ -1,7 +1,8 @@
 ---
 /**
- * Featured Testimonial — single full-width blockquote with real client quote.
- * Editorial layout: oversized quote mark, Lora italic text, headshot + attribution.
+ * Featured Testimonial — card-based layout with headshot left, quote right.
+ * Inspired by lemlist-style testimonial card: large photo with company logo overlay,
+ * quote text beside it, decorative open/close quote marks on the card.
  * Hardcoded content (like ProblemAgitation) — no props needed for a single testimonial.
  */
 import Image from '~/components/common/Image.astro';
@@ -10,52 +11,67 @@ import arLogo from '~/assets/images/AR-2.jpg';
 ---
 
 <section id="testimonial" class="relative not-prose scroll-mt-[72px]">
-  <div class="absolute inset-0 bg-section"></div>
+  <div class="relative mx-auto max-w-5xl px-4 md:px-6 py-16 md:py-24 lg:py-32 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
 
-  <div class="relative mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24 lg:py-32 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+    <!-- Card -->
+    <div class="relative rounded-2xl bg-white shadow-lg border border-slate-100 p-8 md:p-12 overflow-hidden">
 
-    <!-- Decorative quote mark -->
-    <span class="block font-display text-[8rem] leading-none text-accent opacity-20 -mb-12 md:-mb-16" aria-hidden="true">
-      &ldquo;
-    </span>
+      <!-- Decorative open quote — top left -->
+      <span class="absolute top-6 left-6 md:top-8 md:left-8 font-display text-6xl md:text-7xl leading-none text-slate-200 select-none" aria-hidden="true">
+        &ldquo;
+      </span>
 
-    <!-- Quote + Attribution -->
-    <figure>
-      <blockquote>
-        <p class="font-display italic text-2xl md:text-3xl leading-snug text-default">
-          Our managers are back to leading with clear and reliable data.
-          Working with Rapid Insights has been a win for our team. They delivered
-          exactly what we needed through smart data analysis, performance tracking,
-          dashboard development, and production capacity planning. Nothing feels
-          impossible when Rapid Insights is involved&nbsp;&mdash;&nbsp;we highly recommend their work.
-        </p>
-      </blockquote>
+      <!-- Decorative close quote — bottom right -->
+      <span class="absolute bottom-6 right-6 md:bottom-8 md:right-8 font-display text-6xl md:text-7xl leading-none text-slate-200 select-none" aria-hidden="true">
+        &rdquo;
+      </span>
 
-      <figcaption class="mt-8 md:mt-10 flex items-center gap-4">
-        <div class="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-accent/30">
-          <Image
-            src={johnHeadshot}
-            alt="John L., CEO of Apparel Redefined"
-            width={56}
-            height={56}
-            class="h-full w-full object-cover"
-          />
+      <!-- Content: photo left, quote right -->
+      <figure class="relative flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10">
+
+        <!-- Headshot with company logo overlay -->
+        <div class="flex-shrink-0 relative">
+          <div class="w-36 h-44 md:w-44 md:h-52 rounded-xl overflow-hidden bg-secondary/20 shadow-md">
+            <Image
+              src={johnHeadshot}
+              alt="John L., CEO of Apparel Redefined"
+              width={176}
+              height={208}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <!-- Company logo badge overlaid at bottom center -->
+          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white rounded-md shadow-sm px-2 py-1">
+            <Image
+              src={arLogo}
+              alt="Apparel Redefined logo"
+              width={64}
+              height={24}
+              class="h-5 w-auto object-contain"
+            />
+          </div>
         </div>
-        <div>
-          <p class="font-heading font-semibold text-base text-default">John L.</p>
-          <p class="text-sm text-muted">CEO, Apparel Redefined</p>
+
+        <!-- Quote + attribution -->
+        <div class="flex-1 text-center md:text-left pt-2">
+          <blockquote>
+            <p class="text-lg md:text-xl leading-relaxed text-slate-600">
+              Our managers are back to leading with clear and reliable data.
+              Working with Rapid Insights has been a win for our team. They delivered
+              exactly what we needed through smart data analysis, performance tracking,
+              dashboard development, and production capacity planning. Nothing feels
+              impossible when Rapid Insights is involved&nbsp;&mdash;&nbsp;we highly recommend their work.
+            </p>
+          </blockquote>
+
+          <figcaption class="mt-6 flex flex-col md:flex-row items-center md:items-baseline gap-1 md:gap-3">
+            <span class="font-heading font-semibold text-base text-default">John L.</span>
+            <span class="text-sm text-muted">CEO at <strong class="font-semibold text-default">Apparel Redefined</strong></span>
+          </figcaption>
         </div>
-        <div class="ml-2 h-8 flex-shrink-0 opacity-60">
-          <Image
-            src={arLogo}
-            alt="Apparel Redefined logo"
-            width={32}
-            height={32}
-            class="h-8 w-auto object-contain"
-          />
-        </div>
-      </figcaption>
-    </figure>
+
+      </figure>
+    </div>
 
   </div>
 </section>
