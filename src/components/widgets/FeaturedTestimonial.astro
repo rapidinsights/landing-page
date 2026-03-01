@@ -19,44 +19,43 @@ import arLogo from '~/assets/images/AR-2.jpg';
       &ldquo;
     </span>
 
-    <!-- Quote -->
-    <blockquote>
-      <p class="font-display italic text-2xl md:text-3xl leading-snug text-default">
-        Our managers are back to leading with clear and reliable data.
-        Working with Rapid Insights has been a win for our team. They delivered
-        exactly what we needed through smart data analysis, performance tracking,
-        dashboard development, and production capacity planning. Nothing feels
-        impossible when Rapid Insights is involved&nbsp;&mdash;&nbsp;we highly recommend their work.
-      </p>
-    </blockquote>
+    <!-- Quote + Attribution -->
+    <figure>
+      <blockquote>
+        <p class="font-display italic text-2xl md:text-3xl leading-snug text-default">
+          Our managers are back to leading with clear and reliable data.
+          Working with Rapid Insights has been a win for our team. They delivered
+          exactly what we needed through smart data analysis, performance tracking,
+          dashboard development, and production capacity planning. Nothing feels
+          impossible when Rapid Insights is involved&nbsp;&mdash;&nbsp;we highly recommend their work.
+        </p>
+      </blockquote>
 
-    <!-- Attribution -->
-    <div class="mt-8 md:mt-10 flex items-center gap-4">
-      <div class="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-accent/30">
-        <Image
-          src={johnHeadshot}
-          alt="John L., CEO of Apparel Redefined"
-          width={56}
-          height={56}
-          class="h-full w-full object-cover"
-          loading="lazy"
-        />
-      </div>
-      <div>
-        <p class="font-heading font-semibold text-base text-default">John L.</p>
-        <p class="text-sm text-muted">CEO, Apparel Redefined</p>
-      </div>
-      <div class="ml-2 h-8 flex-shrink-0 opacity-60">
-        <Image
-          src={arLogo}
-          alt="Apparel Redefined logo"
-          width={32}
-          height={32}
-          class="h-8 w-auto object-contain"
-          loading="lazy"
-        />
-      </div>
-    </div>
+      <figcaption class="mt-8 md:mt-10 flex items-center gap-4">
+        <div class="h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-accent/30">
+          <Image
+            src={johnHeadshot}
+            alt="John L., CEO of Apparel Redefined"
+            width={56}
+            height={56}
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div>
+          <p class="font-heading font-semibold text-base text-default">John L.</p>
+          <p class="text-sm text-muted">CEO, Apparel Redefined</p>
+        </div>
+        <div class="ml-2 h-8 flex-shrink-0 opacity-60">
+          <Image
+            src={arLogo}
+            alt="Apparel Redefined logo"
+            width={32}
+            height={32}
+            class="h-8 w-auto object-contain"
+          />
+        </div>
+      </figcaption>
+    </figure>
 
   </div>
 </section>
