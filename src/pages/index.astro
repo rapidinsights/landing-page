@@ -9,7 +9,6 @@ import HowItWorks from '~/components/widgets/HowItWorks.astro';
 import FeaturedTestimonial from '~/components/widgets/FeaturedTestimonial.astro';
 import ProblemAgitation from '~/components/widgets/ProblemAgitation.astro';
 import Stats from '~/components/widgets/Stats.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 const metadata = {
   title: 'Rapid Insights Consulting | Data & Analytics for Growing Businesses',
 };
@@ -21,7 +20,6 @@ const metadata = {
     <Header
       links={[
         { text: 'Home', href: '#' },
-        { text: 'Blog', href: '#blog' },
       ]}
       actions={[
         {
@@ -97,16 +95,4 @@ const metadata = {
   <!-- Featured Testimonial ********** -->
 
   <FeaturedTestimonial />
-
-  <!-- BlogLatestPost Widget **************** -->
-
-  <BlogLatestPosts
-    id="blog"
-    title="Explore my insightful articles on my blog"
-    information={`Dive into a realm of design wisdom and creative inspiration, where you'll find invaluable insights, practical tips, and captivating narratives that elevate and enrich your creative journey.`}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-section"></div>
-    </Fragment>
-  </BlogLatestPosts>
 </Layout>
