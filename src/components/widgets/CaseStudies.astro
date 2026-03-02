@@ -1,0 +1,74 @@
+---
+/**
+ * Case Studies — side-by-side cards with result metrics.
+ * Shows before→after transformation with quantifiable results.
+ * Positioned after HowItWorks, before mid-page CTA.
+ * Hardcoded content — no props needed.
+ */
+---
+
+<section id="case-studies" class="relative not-prose scroll-mt-[72px]">
+  <div class="relative mx-auto max-w-5xl px-4 md:px-6 py-16 md:py-24 lg:py-32">
+
+    <!-- Section header -->
+    <div class="mb-10 md:mb-14 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight text-default">
+        Results in the real world
+      </h2>
+      <p class="mt-3 text-lg text-muted">
+        Here's what changed for businesses like yours.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Card 1 — Construction -->
+      <div class="rounded-xl border-l-4 border-l-accent border border-slate-100 bg-white shadow-sm p-6 md:p-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        <span class="text-xs uppercase tracking-label font-mono text-muted block mb-4">
+          Construction &middot; 45 employees
+        </span>
+        <p class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">
+          15 hrs/week saved
+        </p>
+        <p class="text-base leading-relaxed text-muted mb-6">
+          Twelve spreadsheets tracked jobs, costs, and crew hours &mdash; none of them agreed.
+          We replaced them with one live dashboard updated automatically from their existing tools.
+        </p>
+        <blockquote class="border-none pl-0">
+          <p class="font-display italic text-base text-default mb-3">
+            &ldquo;I used to spend every Friday night reconciling numbers. Now I check my phone
+            on Monday morning and know exactly where every job stands.&rdquo;
+          </p>
+          <footer class="text-sm text-muted">
+            &mdash; Operations Manager, Regional GC
+          </footer>
+        </blockquote>
+      </div>
+
+      <!-- Card 2 — Apparel Manufacturing -->
+      <div class="rounded-xl border border-slate-100 bg-white shadow-sm p-6 md:p-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        <span class="text-xs uppercase tracking-label font-mono text-muted block mb-4">
+          Apparel Manufacturing &middot; 60 employees
+        </span>
+        <p class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">
+          $340K in recovered margin
+        </p>
+        <p class="text-base leading-relaxed text-muted mb-6">
+          Pricing decisions were based on gut feel and outdated cost sheets. We built margin
+          visibility by product line so they could see which styles were actually profitable.
+        </p>
+        <blockquote class="border-none pl-0">
+          <p class="font-display italic text-base text-default mb-3">
+            &ldquo;We found three product lines we'd been losing money on for over a year.
+            That one insight paid for the entire engagement.&rdquo;
+          </p>
+          <footer class="text-sm text-muted">
+            &mdash; CEO, Apparel Manufacturer
+          </footer>
+        </blockquote>
+      </div>
+
+    </div>
+  </div>
+</section>
