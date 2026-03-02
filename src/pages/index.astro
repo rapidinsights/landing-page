@@ -4,7 +4,8 @@ import Layout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import Features2 from '~/components/widgets/Features2.astro';
+import SolutionStack from '~/components/widgets/SolutionStack.astro';
+import HowItWorks from '~/components/widgets/HowItWorks.astro';
 import FeaturedTestimonial from '~/components/widgets/FeaturedTestimonial.astro';
 import ProblemAgitation from '~/components/widgets/ProblemAgitation.astro';
 import Stats from '~/components/widgets/Stats.astro';
@@ -77,31 +78,15 @@ const metadata = {
     isDark
   />
 
-  <!-- Solution — what changes when you can see -->
+  <!-- Solution — here's what changes -->
 
-  <Features2
-    title="What changes when you can see"
-    columns={3}
-    items={[
-      {
-        title: 'See your numbers. Actually see them.',
-        description: 'Walk in Monday morning and know where every job stands. Not a guess. Not a phone call. Your numbers, accurate and live.',
-        icon: 'tabler:eye',
-      },
-      {
-        title: 'Decide with confidence, not instinct.',
-        description: 'Know which jobs to take, which quotes to raise, which clients actually make you money.',
-        icon: 'tabler:target-arrow',
-      },
-      {
-        title: 'Get back to the work you started this for.',
-        description: "Stop being the most expensive detective in the building. Your team gets the answers they need without calling you.",
-        icon: 'tabler:clock-bolt',
-      },
-    ]}
-  />
+  <SolutionStack />
 
-  <!-- CTA — after solution section -->
+  <!-- How It Works — the path is simple -->
+
+  <HowItWorks />
+
+  <!-- CTA — after showing problem, solution, AND process -->
 
   <CallToAction
     title="Stop guessing. Start seeing."
