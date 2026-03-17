@@ -7,7 +7,11 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import SolutionStack from '~/components/widgets/SolutionStack.astro';
 import HowItWorks from '~/components/widgets/HowItWorks.astro';
 import CaseStudies from '~/components/widgets/CaseStudies.astro';
+import FAQ from '~/components/widgets/FAQ.astro';
 import FeaturedTestimonial from '~/components/widgets/FeaturedTestimonial.astro';
+import AboutGuide from '~/components/widgets/AboutGuide.astro';
+import RiskReversal from '~/components/widgets/RiskReversal.astro';
+import FinalCTA from '~/components/widgets/FinalCTA.astro';
 import ProblemAgitation from '~/components/widgets/ProblemAgitation.astro';
 import Stats from '~/components/widgets/Stats.astro';
 const metadata = {
@@ -48,7 +52,7 @@ const metadata = {
       <p
         class="text-sm text-muted mt-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
       >
-        Free 2-minute assessment.
+        Free 2-minute assessment. No jargon. No obligation.
       </p>
     </Fragment>
   </Hero>
@@ -89,15 +93,31 @@ const metadata = {
 
   <CaseStudies />
 
+  <!-- FAQ / Objection Handling -->
+
+  <FAQ />
+
   <!-- CTA — after showing problem, solution, AND process -->
 
   <CallToAction
     title="Stop guessing. Start seeing."
     subtitle="Take a free 2-minute assessment and find out where your blind spots are — before they cost you another quarter."
-    actions={[{ variant: 'primary', text: 'Score your blind spots', href: '/scorecard' }]}
+    actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard' }]}
   />
 
   <!-- Featured Testimonial ********** -->
 
   <FeaturedTestimonial />
+
+  <!-- About the Guide — personal trust -->
+
+  <AboutGuide />
+
+  <!-- Risk Reversal — guarantee before the final ask -->
+
+  <RiskReversal />
+
+  <!-- Final CTA — last impression before footer -->
+
+  <FinalCTA />
 </Layout>
