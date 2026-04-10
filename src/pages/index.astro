@@ -26,6 +26,7 @@ const metadata = {
       ]}
       actions={[
         {
+          variant: 'primary',
           text: 'Find out what you can\'t see',
           href: '/scorecard',
           'data-astro-prefetch': true,
@@ -45,18 +46,36 @@ const metadata = {
     actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard', 'data-astro-prefetch': true }]}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[70%] rounded-full bg-accent/[0.06] blur-[100px]"></div>
-        <div class="absolute bottom-[-10%] right-[-5%] w-[45%] h-[50%] rounded-full bg-primary/[0.08] blur-[80px]"></div>
-      </div>
+      <!-- Dot grid: graph-paper texture, 24px tile, 18% cream over Prussian base -->
+      <div
+        class="absolute inset-0"
+        style="background-image: radial-gradient(circle at center, rgba(250, 245, 239, 0.18) 1px, transparent 1.25px); background-size: 24px 24px;"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Vignette (desktop): focal left-biased behind H1, dots fade on all edges.
+           H1 zone stays fully bright; left/top/bottom edges fade gently; right side fully Prussian. -->
+      <div
+        class="absolute inset-0 hidden md:block"
+        style="background: radial-gradient(ellipse 70% 80% at 35% 50%, rgb(1 28 66 / 0) 0%, rgb(1 28 66 / 0) 20%, rgb(1 28 66) 100%);"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Vignette (mobile): centered focal, dots fade on all four edges uniformly -->
+      <div
+        class="absolute inset-0 md:hidden"
+        style="background: radial-gradient(ellipse 85% 85% at 50% 45%, rgb(1 28 66 / 0) 0%, rgb(1 28 66 / 0) 25%, rgb(1 28 66) 100%);"
+        aria-hidden="true"
+      ></div>
     </Fragment>
     <Fragment slot="subtitle">
       It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now you'd turn down if you could see their actual margin.
     </Fragment>
     <Fragment slot="content">
       <p
-        class="text-sm text-muted mt-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        class="flex items-center gap-2 text-sm text-[rgb(250_245_239_/_50%)] mt-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
       >
+        <span class="text-accent" aria-hidden="true">&bull;</span>
         Free 2-minute assessment. No jargon. No obligation.
       </p>
     </Fragment>

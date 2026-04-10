@@ -5,8 +5,26 @@
  */
 ---
 
-<section id="problem" class="relative not-prose scroll-mt-[72px]">
-  <div class="absolute inset-0 bg-[rgb(3_6_32)]"></div>
+<section id="problem" class="relative not-prose scroll-mt-[72px] overflow-hidden">
+  <!-- Base navy — matches hero -->
+  <div class="absolute inset-0 bg-[rgb(1_28_66)]"></div>
+
+  <!-- Layered radial gradients — visible color wash -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background:
+      radial-gradient(ellipse 80% 70% at 0% 100%, rgba(9, 111, 255, 0.38), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 15% 45%, rgba(52, 232, 187, 0.18), transparent 70%),
+      radial-gradient(ellipse 55% 50% at 90% 85%, rgba(139, 92, 246, 0.22), transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Inset vignette — softens outer corners -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="box-shadow: inset 0 0 220px 30px rgba(1, 28, 66, 0.55);"
+    aria-hidden="true"
+  ></div>
 
   <div class="relative mx-auto max-w-5xl px-4 md:px-6 py-16 md:py-24 lg:py-32">
 

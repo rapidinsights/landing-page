@@ -187,7 +187,7 @@
     </p>
     <button
       onclick={startAssessment}
-      class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-lg cursor-pointer"
+      class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-sm hover:bg-primary/90 active:scale-[0.98] active:translate-y-px transition-all shadow-lg cursor-pointer"
     >
       Start the assessment
     </button>
@@ -248,7 +248,7 @@
     </p>
     <button
       onclick={showEmailGate}
-      class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-lg cursor-pointer"
+      class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-sm hover:bg-primary/90 active:scale-[0.98] active:translate-y-px transition-all shadow-lg cursor-pointer"
     >
       See what it means →
     </button>
@@ -278,7 +278,7 @@
       <button
         onclick={submitEmail}
         disabled={!email || isSubmitting}
-        class="w-full px-6 py-3 text-base font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        class="w-full px-6 py-3 text-base font-semibold text-white bg-primary rounded-sm hover:bg-primary/90 active:scale-[0.98] active:translate-y-px transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         {isSubmitting ? 'Sending...' : 'Send my report'}
       </button>
