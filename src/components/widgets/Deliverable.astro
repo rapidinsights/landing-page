@@ -1,0 +1,89 @@
+---
+/**
+ * Deliverable — the signature moment of the page.
+ *
+ * Sits between HowItWorks (the process) and CaseStudies (the proof) to
+ * answer the one question every other section leaves abstract: "but what
+ * do I actually get?" Treats a real client dashboard as an editorial
+ * artifact — a single day-in-the-life composition, not a feature list.
+ *
+ * Layout deliberately breaks the page's max-w-5xl rhythm. Asymmetric
+ * 7/5 grid, image-dominant left, caption block anchored to the image's
+ * bottom on the right. No section header, no CTA — this is a pause moment.
+ *
+ * Hardcoded content by project convention.
+ */
+import Image from '~/components/common/Image.astro';
+import dashboardImage from '~/assets/images/stitch-manufacturing-dashboard.png';
+---
+
+<section id="deliverable" class="relative not-prose scroll-mt-[72px] overflow-hidden">
+  <div class="absolute inset-0 bg-white" aria-hidden="true"></div>
+
+  <!-- Thin editorial rule running through the section, off-center -->
+  <div
+    class="hidden md:block absolute left-0 right-0 top-1/2 h-px bg-primary/5 -translate-y-1/2"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 md:px-6 py-20 md:py-28 lg:py-36">
+
+    <div class="grid grid-cols-12 gap-8 md:gap-10 lg:gap-16 items-end">
+
+      <!-- Image block — dominant, 7/12 cols -->
+      <figure
+        class="col-span-12 md:col-span-7 lg:col-span-7 order-2 md:order-1 relative intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      >
+        <!-- Subtle accent glow behind the image -->
+        <div
+          class="absolute -inset-4 md:-inset-6 rounded-3xl bg-gradient-to-br from-primary/5 via-accent/5 to-transparent blur-2xl"
+          aria-hidden="true"
+        ></div>
+
+        <div class="relative rounded-xl overflow-hidden ring-1 ring-black/5 shadow-2xl shadow-primary/20">
+          <Image
+            src={dashboardImage}
+            alt="A client's live production intelligence dashboard showing overnight uptime, operational flow, and the live production queue"
+            width={956}
+            height={1024}
+            class="block w-full h-auto"
+          />
+        </div>
+
+        <!-- Mono caption below the image — editorial photo-credit energy -->
+        <figcaption class="mt-4 font-mono text-[11px] uppercase tracking-label text-muted/80">
+          Client production dashboard &middot; live &middot; names redacted
+        </figcaption>
+      </figure>
+
+      <!-- Copy block — 5/12 cols, anchored to image bottom on md+ -->
+      <div
+        class="col-span-12 md:col-span-5 lg:col-span-5 order-1 md:order-2 md:pb-2 lg:pb-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      >
+        <p class="font-mono text-xs uppercase tracking-label text-accent mb-6">
+          Wednesday &middot; 7:43 AM
+        </p>
+
+        <h2
+          class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-default leading-[1.05] mb-6"
+        >
+          You already know<br />
+          how the week<br />
+          is going.
+        </h2>
+
+        <p class="text-lg leading-relaxed text-muted mb-4">
+          Production ran 98.4% uptime overnight. 1,240 orders in queue.
+          The three jobs slipping schedule are already flagged in red.
+        </p>
+
+        <p class="text-lg leading-relaxed text-muted">
+          You haven't opened a spreadsheet. You haven't chased a status update.
+          You haven't asked anyone for a number. You just&nbsp;know.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>

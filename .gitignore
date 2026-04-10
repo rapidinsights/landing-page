@@ -24,6 +24,8 @@ pnpm-lock.yaml
 .astro
 .agents
 .claude
+.mcp.json
+.playwright-mcp/
 
 # documents
 *.docx

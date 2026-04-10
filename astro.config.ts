@@ -26,6 +26,12 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  // Prefetch `/scorecard` on CTA hover/focus so the primary conversion
+  // navigation feels instant. Opt-in per-link via `data-astro-prefetch`.
+  prefetch: {
+    defaultStrategy: 'hover',
+  },
+
   integrations: [tailwind({
     applyBaseStyles: false,
   }), sitemap(), mdx(), icon({

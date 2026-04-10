@@ -143,7 +143,6 @@ import { UI } from 'astrowind:config';
     });
   };
   const onPageShow = function () {
-    document.documentElement.classList.add('motion-safe:scroll-smooth');
     const elem = document.querySelector('[data-aw-toggle-menu]');
     if (elem) {
       elem.classList.remove('expanded');
@@ -156,12 +155,6 @@ import { UI } from 'astrowind:config';
 
   window.onload = onLoad;
   window.onpageshow = onPageShow;
-
-  document.addEventListener('astro:after-swap', () => {
-    initTheme();
-    onLoad();
-    onPageShow();
-  });
 </script>
 
 <script is:inline>
@@ -267,8 +260,4 @@ import { UI } from 'astrowind:config';
   };
 
   Observer.start();
-
-  document.addEventListener('astro:after-swap', () => {
-    Observer.start();
-  });
 </script>

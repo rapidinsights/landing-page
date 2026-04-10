@@ -3,13 +3,11 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import SolutionStack from '~/components/widgets/SolutionStack.astro';
 import HowItWorks from '~/components/widgets/HowItWorks.astro';
+import Deliverable from '~/components/widgets/Deliverable.astro';
 import CaseStudies from '~/components/widgets/CaseStudies.astro';
 import FAQ from '~/components/widgets/FAQ.astro';
 import FeaturedTestimonial from '~/components/widgets/FeaturedTestimonial.astro';
-import AboutGuide from '~/components/widgets/AboutGuide.astro';
 import RiskReversal from '~/components/widgets/RiskReversal.astro';
 import FinalCTA from '~/components/widgets/FinalCTA.astro';
 import ProblemAgitation from '~/components/widgets/ProblemAgitation.astro';
@@ -30,6 +28,7 @@ const metadata = {
         {
           text: 'Find out what you can\'t see',
           href: '/scorecard',
+          'data-astro-prefetch': true,
         },
       ]}
       isSticky
@@ -43,7 +42,7 @@ const metadata = {
     id="hero"
     title="You spend more time reacting than leading."
     tagline=""
-    actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard' }]}
+    actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard', 'data-astro-prefetch': true }]}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -87,13 +86,13 @@ const metadata = {
     isDark
   />
 
-  <!-- Solution — here's what changes -->
-
-  <SolutionStack />
-
   <!-- How It Works — the path is simple -->
 
   <HowItWorks />
+
+  <!-- Deliverable — signature moment: show what you actually get -->
+
+  <Deliverable />
 
   <!-- Case Studies — proof the process works -->
 
@@ -103,25 +102,9 @@ const metadata = {
 
   <FAQ />
 
-  <!-- CTA — after showing problem, solution, AND process -->
-
-  <CallToAction
-    title="Stop guessing. Start seeing."
-    subtitle="Take a free 2-minute assessment and find out where your blind spots are — before they cost you another quarter."
-    actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard' }]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-section"></div>
-    </Fragment>
-  </CallToAction>
-
   <!-- Featured Testimonial ********** -->
 
   <FeaturedTestimonial />
-
-  <!-- About the Guide — personal trust -->
-
-  <AboutGuide />
 
   <!-- Risk Reversal — guarantee before the final ask -->
 

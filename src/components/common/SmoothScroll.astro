@@ -1,0 +1,11 @@
+---
+// SmoothScroll.astro — RAF-driven smooth scroll via Lenis.
+// Honors prefers-reduced-motion automatically.
+---
+
+<script>
+  import Lenis from 'lenis';
+  import 'lenis/dist/lenis.css';
+
+  new Lenis({ autoRaf: true });
+</script>
