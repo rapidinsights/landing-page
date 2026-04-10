@@ -1,6 +1,6 @@
 ---
 /**
- * How It Works — horizontal 3-step process with connectors.
+ * How It Works — vertical timeline with connecting line.
  * Reduces complexity anxiety by showing the path is simple.
  * Steps aligned to actual conversion funnel: scorecard → game plan → launch.
  * Hardcoded content — no props needed.
@@ -22,49 +22,58 @@
       </p>
     </div>
 
-    <!-- Steps -->
-    <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+    <!-- Timeline -->
+    <div class="relative max-w-2xl">
 
-<!-- Step 01 -->
-      <div class="relative intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-mono font-semibold">01</span>
+      <!-- Vertical connecting line -->
+      <div class="absolute left-5 md:left-[1.6rem] top-2 bottom-2 w-px bg-primary/15" aria-hidden="true"></div>
+
+      <!-- Step 01 -->
+      <div class="relative flex gap-6 md:gap-8 pb-12 md:pb-16 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        <div class="flex-shrink-0 relative z-10">
+          <span class="flex w-10 h-10 md:w-[3.2rem] md:h-[3.2rem] rounded-full bg-primary text-white items-center justify-center text-sm font-mono font-semibold shadow-sm shadow-primary/20">01</span>
         </div>
-        <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
-          Take the 2-minute assessment
-        </h3>
-        <p class="text-base leading-relaxed text-muted">
-          Answer a few questions about how your business runs today. You'll see exactly where your
-          blind spots are &mdash; free, instant results.
-        </p>
+        <div class="pt-1.5 md:pt-2.5">
+          <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
+            Take the 2-minute assessment
+          </h3>
+          <p class="text-base leading-relaxed text-muted">
+            Answer a few questions about how your business runs today. You'll see exactly where your
+            blind spots are &mdash; free, instant results.
+          </p>
+        </div>
       </div>
 
       <!-- Step 02 -->
-      <div class="relative intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-mono font-semibold">02</span>
+      <div class="relative flex gap-6 md:gap-8 pb-12 md:pb-16 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        <div class="flex-shrink-0 relative z-10">
+          <span class="flex w-10 h-10 md:w-[3.2rem] md:h-[3.2rem] rounded-full bg-primary text-white items-center justify-center text-sm font-mono font-semibold shadow-sm shadow-primary/20">02</span>
         </div>
-        <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
-          Get your custom game plan
-        </h3>
-        <p class="text-base leading-relaxed text-muted">
-          We'll walk you through what's costing you time and money &mdash; and show you exactly
-          what the fix looks like for your business. No jargon. No obligation.
-        </p>
+        <div class="pt-1.5 md:pt-2.5">
+          <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
+            Get your custom game plan
+          </h3>
+          <p class="text-base leading-relaxed text-muted">
+            We'll walk you through what's costing you time and money &mdash; and show you exactly
+            what the fix looks like for your business. No jargon. No obligation.
+          </p>
+        </div>
       </div>
 
       <!-- Step 03 -->
-      <div class="relative intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-mono font-semibold">03</span>
+      <div class="relative flex gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        <div class="flex-shrink-0 relative z-10">
+          <span class="flex w-10 h-10 md:w-[3.2rem] md:h-[3.2rem] rounded-full bg-accent text-primary items-center justify-center text-sm font-mono font-semibold shadow-sm shadow-accent/20">03</span>
         </div>
-        <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
-          See your numbers in weeks
-        </h3>
-        <p class="text-base leading-relaxed text-muted">
-          We connect your existing tools, build your dashboards, and train your team.
-          Most clients go live in 4&ndash;6 weeks.
-        </p>
+        <div class="pt-1.5 md:pt-2.5">
+          <h3 class="font-heading text-lg md:text-xl font-bold text-default mb-3">
+            See your numbers in weeks
+          </h3>
+          <p class="text-base leading-relaxed text-muted">
+            We connect your existing tools, build your dashboards, and train your team.
+            Most clients go live in 4&ndash;6 weeks.
+          </p>
+        </div>
       </div>
 
     </div>

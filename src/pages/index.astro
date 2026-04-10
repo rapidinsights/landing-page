@@ -45,6 +45,12 @@ const metadata = {
     tagline=""
     actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard' }]}
   >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[70%] rounded-full bg-accent/[0.06] blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[45%] h-[50%] rounded-full bg-primary/[0.08] blur-[80px]"></div>
+      </div>
+    </Fragment>
     <Fragment slot="subtitle">
       It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now you'd turn down if you could see their actual margin.
     </Fragment>
@@ -103,7 +109,11 @@ const metadata = {
     title="Stop guessing. Start seeing."
     subtitle="Take a free 2-minute assessment and find out where your blind spots are — before they cost you another quarter."
     actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard' }]}
-  />
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-section"></div>
+    </Fragment>
+  </CallToAction>
 
   <!-- Featured Testimonial ********** -->
 
