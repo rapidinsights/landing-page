@@ -21,13 +21,11 @@ const metadata = {
   <Fragment slot="announcement"></Fragment>
   <Fragment slot="header">
     <Header
-      links={[
-        { text: 'Home', href: '#' },
-      ]}
+      links={[{ text: 'Home', href: '#' }]}
       actions={[
         {
           variant: 'primary',
-          text: 'Find out what you can\'t see',
+          text: "Find out what you can't see",
           href: '/scorecard',
           'data-astro-prefetch': true,
         },
@@ -43,7 +41,9 @@ const metadata = {
     id="hero"
     title="You spend more time reacting than leading."
     tagline=""
-    actions={[{ variant: 'primary', text: 'Find out what you can\'t see', href: '/scorecard', 'data-astro-prefetch': true }]}
+    actions={[
+      { variant: 'primary', text: "Find out what you can't see", href: '/scorecard', 'data-astro-prefetch': true },
+    ]}
   >
     <Fragment slot="bg">
       <!-- Dot grid: graph-paper texture, 24px tile, 18% cream over Prussian base -->
@@ -51,7 +51,8 @@ const metadata = {
         class="absolute inset-0"
         style="background-image: radial-gradient(circle at center, rgba(250, 245, 239, 0.18) 1px, transparent 1.25px); background-size: 24px 24px;"
         aria-hidden="true"
-      ></div>
+      >
+      </div>
 
       <!-- Vignette (desktop): focal left-biased behind H1, dots fade on all edges.
            H1 zone stays fully bright; left/top/bottom edges fade gently; right side fully Prussian. -->
@@ -59,17 +60,20 @@ const metadata = {
         class="absolute inset-0 hidden md:block"
         style="background: radial-gradient(ellipse 70% 80% at 35% 50%, rgb(1 28 66 / 0) 0%, rgb(1 28 66 / 0) 20%, rgb(1 28 66) 100%);"
         aria-hidden="true"
-      ></div>
+      >
+      </div>
 
       <!-- Vignette (mobile): centered focal, dots fade on all four edges uniformly -->
       <div
         class="absolute inset-0 md:hidden"
         style="background: radial-gradient(ellipse 85% 85% at 50% 45%, rgb(1 28 66 / 0) 0%, rgb(1 28 66 / 0) 25%, rgb(1 28 66) 100%);"
         aria-hidden="true"
-      ></div>
+      >
+      </div>
     </Fragment>
     <Fragment slot="subtitle">
-      It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now you'd turn down if you could see their actual margin.
+      It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now
+      you'd turn down if you could see their actual margin.
     </Fragment>
     <Fragment slot="content">
       <p

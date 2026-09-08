@@ -2,7 +2,7 @@
 
 Reference for the **values** of this project's visual language — tokens, type roles, motion primitives, shape, and layout conventions. The **principles** ("why" and "how to work") live in [CLAUDE.md](CLAUDE.md).
 
-When the two drift: DESIGN.md is the source of truth for *what exists*; CLAUDE.md is the source of truth for *how to work*.
+When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.md is the source of truth for _how to work_.
 
 ---
 
@@ -16,17 +16,17 @@ When the two drift: DESIGN.md is the source of truth for *what exists*; CLAUDE.m
 
 Defined as CSS variables in [CustomStyles.astro:18-28](src/components/CustomStyles.astro#L18-L28), exposed to Tailwind in [tailwind.config.js:9-16](tailwind.config.js#L9-L16). Always use the Tailwind alias — never hardcode hex.
 
-| CSS variable | Value | Tailwind alias | Role |
-|---|---|---|---|
-| `--aw-color-primary` | `rgb(1 97 239)` | `primary` | Deep blue — focus rings, primary-button hover fill, link accents |
-| `--aw-color-secondary` | `rgb(1 84 207)` | `secondary` | Darker blue — tagline text, secondary accents |
-| `--aw-color-accent` | `rgb(109 40 217)` | `accent` | Violet — primary-button default fill, highlight borders |
-| `--aw-color-text-default` | `rgb(16 16 16)` | `default` | Body text (near-black) |
-| `--aw-color-text-muted` | `rgb(16 16 16 / 66%)` | `muted` | De-emphasized copy, captions |
-| `--aw-color-bg-section` | `rgb(239 246 255)` | `section` | Light blue-white section backgrounds |
-| `--aw-color-text-heading` | `rgb(0 0 0)` | *(not aliased)* | Pure black for headings; used via CSS var |
-| `--aw-color-bg-page` | `rgb(255 255 255)` | *(via `.bg-page`)* | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
-| `--aw-color-bg-page-dark` | `rgb(3 6 32)` | *(via `.bg-dark`)* | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA) |
+| CSS variable              | Value                 | Tailwind alias     | Role                                                                                                 |
+| ------------------------- | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------------- |
+| `--aw-color-primary`      | `rgb(1 97 239)`       | `primary`          | Deep blue — focus rings, primary-button hover fill, link accents                                     |
+| `--aw-color-secondary`    | `rgb(1 84 207)`       | `secondary`        | Darker blue — tagline text, secondary accents                                                        |
+| `--aw-color-accent`       | `rgb(109 40 217)`     | `accent`           | Violet — primary-button default fill, highlight borders                                              |
+| `--aw-color-text-default` | `rgb(16 16 16)`       | `default`          | Body text (near-black)                                                                               |
+| `--aw-color-text-muted`   | `rgb(16 16 16 / 66%)` | `muted`            | De-emphasized copy, captions                                                                         |
+| `--aw-color-bg-section`   | `rgb(239 246 255)`    | `section`          | Light blue-white section backgrounds                                                                 |
+| `--aw-color-text-heading` | `rgb(0 0 0)`          | _(not aliased)_    | Pure black for headings; used via CSS var                                                            |
+| `--aw-color-bg-page`      | `rgb(255 255 255)`    | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
+| `--aw-color-bg-page-dark` | `rgb(3 6 32)`         | _(via `.bg-dark`)_ | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA)                         |
 
 Selection highlight on the default theme is `lavender` — see [CustomStyles.astro:30-32](src/components/CustomStyles.astro#L30-L32).
 
@@ -45,13 +45,13 @@ The **default** (no class) is the production theme.
 
 Four variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. Imports in [CustomStyles.astro:2-5](src/components/CustomStyles.astro#L2-L5), mapping in [CustomStyles.astro:12-16](src/components/CustomStyles.astro#L12-L16), Tailwind aliases in [tailwind.config.js:17-23](tailwind.config.js#L17-L23).
 
-| Tailwind alias | Family | Role |
-|---|---|---|
-| `font-sans` | Inter Variable | Body, UI, default text |
-| `font-serif` | Inter Variable (same) | Fallback; rarely used distinctly |
-| `font-heading` | Plus Jakarta Sans Variable | Section titles, H2s |
-| `font-mono` | JetBrains Mono Variable | Labels, metrics, eyebrow text — editorial credibility |
-| `font-display` | Lora Variable | Sparingly, for pull moments (italic callouts, signature headlines) |
+| Tailwind alias | Family                     | Role                                                               |
+| -------------- | -------------------------- | ------------------------------------------------------------------ |
+| `font-sans`    | Inter Variable             | Body, UI, default text                                             |
+| `font-serif`   | Inter Variable (same)      | Fallback; rarely used distinctly                                   |
+| `font-heading` | Plus Jakarta Sans Variable | Section titles, H2s                                                |
+| `font-mono`    | JetBrains Mono Variable    | Labels, metrics, eyebrow text — editorial credibility              |
+| `font-display` | Lora Variable              | Sparingly, for pull moments (italic callouts, signature headlines) |
 
 ## Type tokens
 
@@ -86,13 +86,13 @@ Defaults in [WidgetWrapper.astro:25-27](src/components/ui/WidgetWrapper.astro#L2
 
 Container widths in use across widgets:
 
-| Width | When |
-|---|---|
+| Width       | When                                    |
+| ----------- | --------------------------------------- |
 | `max-w-3xl` | Headlines, FAQ, narrow editorial blocks |
-| `max-w-4xl` | About / guide sections |
-| `max-w-5xl` | Case studies, solution stack |
-| `max-w-6xl` | Feature grids |
-| `max-w-7xl` | Full-bleed sections, hero |
+| `max-w-4xl` | About / guide sections                  |
+| `max-w-5xl` | Case studies, solution stack            |
+| `max-w-6xl` | Feature grids                           |
+| `max-w-7xl` | Full-bleed sections, hero               |
 
 Vary container width across sections — the rhythm of width changes is itself a design element. See CLAUDE.md principle 5.
 
@@ -102,14 +102,14 @@ Vary container width across sections — the rhythm of width changes is itself a
 
 Defined in [tailwind.css:52-68](src/assets/styles/tailwind.css#L52-L68); consumed via [Button.astro](src/components/ui/Button.astro) with a `variant` prop.
 
-| Class | Variant | Visual |
-|---|---|---|
-| `.btn` | base | Pill, gray border, transparent bg, hover gray-100, active scale-[0.98] |
-| `.btn-primary` | `variant="primary"` | Violet `accent` fill with blue `primary` text → hovers to `primary` blue fill with white text |
-| `.btn-secondary` | `variant="secondary"` | `.btn` base, no additional styling |
-| `.btn-tertiary` | `variant="tertiary"` | Borderless, muted text, hovers to `gray-900` — **link-like, not a color variant** |
+| Class            | Variant               | Visual                                                                                        |
+| ---------------- | --------------------- | --------------------------------------------------------------------------------------------- |
+| `.btn`           | base                  | Pill, gray border, transparent bg, hover gray-100, active scale-[0.98]                        |
+| `.btn-primary`   | `variant="primary"`   | Violet `accent` fill with blue `primary` text → hovers to `primary` blue fill with white text |
+| `.btn-secondary` | `variant="secondary"` | `.btn` base, no additional styling                                                            |
+| `.btn-tertiary`  | `variant="tertiary"`  | Borderless, muted text, hovers to `gray-900` — **link-like, not a color variant**             |
 
-Note: the `tertiary` name refers to a *button role*, not a color token. There is no `tertiary` color in the palette.
+Note: the `tertiary` name refers to a _button role_, not a color token. There is no `tertiary` color in the palette.
 
 Focus ring is `focus:ring-primary focus:ring-2 focus:ring-offset-2` across all variants.
 
@@ -140,6 +140,7 @@ intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:interse
 ```
 
 Modifiers:
+
 - `intersect-full` / `intersect-half` / `intersect-quarter` — visibility threshold (0.99 / 0.5 / 0.25; default is 0)
 - `intersect-once` — unobserve after first trigger (almost always wanted)
 - `intersect-no-queue` — skip the 100ms stagger between sibling reveals
@@ -182,12 +183,12 @@ Defined at `body::after` in [tailwind.css:17-27](src/assets/styles/tailwind.css#
 
 ## Source file map
 
-| Concern | File |
-|---|---|
-| CSS variables, font imports, alt themes | [src/components/CustomStyles.astro](src/components/CustomStyles.astro) |
-| Tailwind token exposure, intersect variant, keyframes | [tailwind.config.js](tailwind.config.js) |
-| Base layer, grain overlay, `.btn` primitives, header scroll state | [src/assets/styles/tailwind.css](src/assets/styles/tailwind.css) |
-| Intersect reveal engine, header scroll detection | [src/components/common/BasicScripts.astro](src/components/common/BasicScripts.astro) |
-| Lenis smooth scroll | [src/components/common/SmoothScroll.astro](src/components/common/SmoothScroll.astro) |
-| Layout primitives | [src/components/ui/](src/components/ui/) |
-| Theme toggle (light-only) | [src/config.yaml](src/config.yaml) |
+| Concern                                                           | File                                                                                 |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| CSS variables, font imports, alt themes                           | [src/components/CustomStyles.astro](src/components/CustomStyles.astro)               |
+| Tailwind token exposure, intersect variant, keyframes             | [tailwind.config.js](tailwind.config.js)                                             |
+| Base layer, grain overlay, `.btn` primitives, header scroll state | [src/assets/styles/tailwind.css](src/assets/styles/tailwind.css)                     |
+| Intersect reveal engine, header scroll detection                  | [src/components/common/BasicScripts.astro](src/components/common/BasicScripts.astro) |
+| Lenis smooth scroll                                               | [src/components/common/SmoothScroll.astro](src/components/common/SmoothScroll.astro) |
+| Layout primitives                                                 | [src/components/ui/](src/components/ui/)                                             |
+| Theme toggle (light-only)                                         | [src/config.yaml](src/config.yaml)                                                   |

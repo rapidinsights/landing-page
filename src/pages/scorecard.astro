@@ -1,16 +1,17 @@
 ---
 import ScorecardLayout from '~/layouts/ScorecardLayout.astro';
-import Scorecard from '~/components/widgets/Scorecard.svelte';
+import ScorecardQuiz from '~/components/widgets/Scorecard.svelte';
 
 const metadata = {
   title: 'Business Visibility Scorecard — Rapid Insights',
-  description: 'Find out what you can\'t see in your own business. Take a free 2-minute assessment and get your Visibility Report.',
+  description:
+    "Find out what you can't see in your own business. Take a free 2-minute assessment and get your Visibility Report.",
 };
 ---
 
 <ScorecardLayout metadata={metadata}>
   <!-- Hidden Netlify Form for data capture (detected at deploy time) -->
-  <form name="scorecard" netlify hidden>
+  <form name="scorecard" data-netlify="true" hidden>
     <input type="hidden" name="email" />
     <input type="hidden" name="score" />
     <input type="hidden" name="industry" />
@@ -20,5 +21,5 @@ const metadata = {
   </form>
 
   <!-- Svelte interactive scorecard -->
-  <Scorecard client:only="svelte" />
+  <ScorecardQuiz client:only="svelte" />
 </ScorecardLayout>

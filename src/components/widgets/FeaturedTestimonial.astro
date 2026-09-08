@@ -11,24 +11,29 @@ import arLogo from '~/assets/images/AR-2.jpg';
 ---
 
 <section id="testimonial" class="relative not-prose scroll-mt-[72px]">
-  <div class="relative mx-auto max-w-5xl px-4 md:px-6 py-16 md:py-24 lg:py-32 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-
+  <div
+    class="relative mx-auto max-w-5xl px-4 md:px-6 py-16 md:py-24 lg:py-32 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+  >
     <!-- Card -->
     <div class="relative rounded-2xl bg-section p-8 md:p-12 overflow-hidden">
-
       <!-- Decorative open quote — top left -->
-      <span class="absolute top-6 left-6 md:top-8 md:left-8 font-display text-6xl md:text-7xl leading-none text-primary/10 select-none" aria-hidden="true">
+      <span
+        class="absolute top-6 left-6 md:top-8 md:left-8 font-display text-6xl md:text-7xl leading-none text-primary/10 select-none"
+        aria-hidden="true"
+      >
         &ldquo;
       </span>
 
       <!-- Decorative close quote — bottom right -->
-      <span class="absolute bottom-6 right-6 md:bottom-8 md:right-8 font-display text-6xl md:text-7xl leading-none text-primary/10 select-none" aria-hidden="true">
+      <span
+        class="absolute bottom-6 right-6 md:bottom-8 md:right-8 font-display text-6xl md:text-7xl leading-none text-primary/10 select-none"
+        aria-hidden="true"
+      >
         &rdquo;
       </span>
 
       <!-- Content: photo left, quote right -->
       <figure class="relative flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10">
-
         <!-- Headshot with company logo overlay -->
         <div class="flex-shrink-0 relative">
           <div class="w-36 h-44 md:w-44 md:h-52 rounded-xl overflow-hidden bg-secondary/20 shadow-md">
@@ -42,13 +47,7 @@ import arLogo from '~/assets/images/AR-2.jpg';
           </div>
           <!-- Company logo badge overlaid at bottom center -->
           <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-sm p-2">
-            <Image
-              src={arLogo}
-              alt="Apparel Redefined logo"
-              width={40}
-              height={40}
-              class="h-10 w-10 object-contain"
-            />
+            <Image src={arLogo} alt="Apparel Redefined logo" width={40} height={40} class="h-10 w-10 object-contain" />
           </div>
         </div>
 
@@ -56,22 +55,21 @@ import arLogo from '~/assets/images/AR-2.jpg';
         <div class="flex-1 text-center md:text-left pt-2">
           <blockquote>
             <p class="text-lg md:text-xl leading-relaxed text-slate-600">
-              Our managers are back to leading with clear and reliable data.
-              Working with Rapid Insights has been a win for our team. They delivered
-              exactly what we needed through smart data analysis, performance tracking,
-              dashboard development, and production capacity planning. Nothing feels
-              impossible when Rapid Insights is involved. We highly recommend their work.
+              Our managers are back to leading with clear and reliable data. Working with Rapid Insights has been a win
+              for our team. They delivered exactly what we needed through smart data analysis, performance tracking,
+              dashboard development, and production capacity planning. Nothing feels impossible when Rapid Insights is
+              involved. We highly recommend their work.
             </p>
           </blockquote>
 
           <figcaption class="mt-6 flex flex-col md:flex-row items-center md:items-baseline gap-1 md:gap-3">
             <span class="font-heading font-semibold text-base text-default">John L.</span>
-            <span class="text-sm text-muted">CEO at <strong class="font-semibold text-default">Apparel Redefined</strong></span>
+            <span class="text-sm text-muted"
+              >CEO at <strong class="font-semibold text-default">Apparel Redefined</strong></span
+            >
           </figcaption>
         </div>
-
       </figure>
     </div>
-
   </div>
 </section>
