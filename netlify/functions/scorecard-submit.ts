@@ -40,10 +40,9 @@ const handler: Handler = async (event) => {
 
   if (!RESEND_API_KEY) {
     console.error('RESEND_API_KEY not configured');
-    // In development without Resend key, return success but log warning
     return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Scorecard received (email sending not configured)' }),
+      statusCode: 503,
+      body: JSON.stringify({ error: 'email_not_configured' }),
     };
   }
 
