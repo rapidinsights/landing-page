@@ -16,17 +16,18 @@ When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.m
 
 Defined as CSS variables in [CustomStyles.astro:18-28](src/components/CustomStyles.astro#L18-L28), exposed to Tailwind in [tailwind.config.js:9-16](tailwind.config.js#L9-L16). Always use the Tailwind alias — never hardcode hex.
 
-| CSS variable              | Value                 | Tailwind alias     | Role                                                                                                 |
-| ------------------------- | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `--aw-color-primary`      | `rgb(1 97 239)`       | `primary`          | Deep blue — focus rings, primary-button hover fill, link accents                                     |
-| `--aw-color-secondary`    | `rgb(1 84 207)`       | `secondary`        | Darker blue — tagline text, secondary accents                                                        |
-| `--aw-color-accent`       | `rgb(109 40 217)`     | `accent`           | Violet — primary-button default fill, highlight borders                                              |
-| `--aw-color-text-default` | `rgb(16 16 16)`       | `default`          | Body text (near-black)                                                                               |
-| `--aw-color-text-muted`   | `rgb(16 16 16 / 66%)` | `muted`            | De-emphasized copy, captions                                                                         |
-| `--aw-color-bg-section`   | `rgb(239 246 255)`    | `section`          | Light blue-white section backgrounds                                                                 |
-| `--aw-color-text-heading` | `rgb(0 0 0)`          | _(not aliased)_    | Pure black for headings; used via CSS var                                                            |
-| `--aw-color-bg-page`      | `rgb(255 255 255)`    | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
-| `--aw-color-bg-page-dark` | `rgb(3 6 32)`         | _(via `.bg-dark`)_ | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA)                         |
+| CSS variable                    | Value                                                                          | Tailwind alias     | Role                                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------- |
+| `--aw-color-primary`            | `rgb(1 97 239)`                                                                | `primary`          | Deep blue — focus rings, primary-button hover fill, link accents                                     |
+| `--aw-color-secondary`          | `rgb(1 84 207)`                                                                | `secondary`        | Darker blue — tagline text, secondary accents                                                        |
+| `--aw-color-accent`             | `rgb(109 40 217)`                                                              | `accent`           | Violet — primary-button default fill, highlight borders                                              |
+| `--aw-color-text-default`       | `rgb(16 16 16)`                                                                | `default`          | Body text (near-black)                                                                               |
+| `--aw-color-text-muted`         | `rgb(16 16 16 / 66%)` — `rgb(71 85 105)` in the active `theme-prussian-orange` | `muted`            | De-emphasized copy, captions. The active value clears WCAG AA (6.6:1) on `bg-section`                |
+| `--aw-color-text-muted-on-dark` | `rgb(250 245 239 / 80%)`                                                       | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections; clears AA (10.2:1 on `rgb(1 28 66)`)         |
+| `--aw-color-bg-section`         | `rgb(239 246 255)`                                                             | `section`          | Light blue-white section backgrounds                                                                 |
+| `--aw-color-text-heading`       | `rgb(0 0 0)`                                                                   | _(not aliased)_    | Pure black for headings; used via CSS var                                                            |
+| `--aw-color-bg-page`            | `rgb(255 255 255)`                                                             | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
+| `--aw-color-bg-page-dark`       | `rgb(3 6 32)`                                                                  | _(via `.bg-dark`)_ | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA)                         |
 
 Selection highlight on the default theme is `lavender` — see [CustomStyles.astro:30-32](src/components/CustomStyles.astro#L30-L32).
 
@@ -37,7 +38,7 @@ Class-triggered overrides defined in [CustomStyles.astro:35-69](src/components/C
 - `theme-prussian-orange` — navy primary (`rgb(20 33 61)`) + bright orange accent (`rgb(252 163 17)`)
 - `theme-refined-gold` — charcoal primary (`rgb(45 45 45)`) + warm gold accent (`rgb(212 168 67)`)
 
-The **default** (no class) is the production theme.
+**`theme-prussian-orange` is the production theme** — it is applied on `<html>` in [Layout.astro:27](src/layouts/Layout.astro#L27) and [ScorecardLayout.astro:24](src/layouts/ScorecardLayout.astro#L24). `theme-refined-gold` is dormant.
 
 ---
 

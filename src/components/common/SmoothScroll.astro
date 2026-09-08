@@ -1,11 +1,14 @@
 ---
 // SmoothScroll.astro — RAF-driven smooth scroll via Lenis.
-// Honors prefers-reduced-motion automatically.
+// Lenis has no prefers-reduced-motion check of its own, so it is only
+// constructed when the user has not asked for reduced motion.
 ---
 
 <script>
   import Lenis from 'lenis';
   import 'lenis/dist/lenis.css';
 
-  new Lenis({ autoRaf: true });
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    new Lenis({ autoRaf: true });
+  }
 </script>
