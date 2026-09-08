@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "rapid-insights-landing-page",
   "version": "1.0.0-beta.52",
-  "description": "AstroWind: A free template using Astro 5.0 and Tailwind CSS. Astro starter theme.",
+  "description": "Landing page for Rapid Insights Consulting, driving visitors to the business visibility scorecard assessment.",
   "type": "module",
   "engines": {
     "node": "^18.17.1 || ^20.3.0 || >= 21.0.0"
@@ -47,6 +47,7 @@
     "@eslint/js": "^9.33.0",
     "@iconify-json/flat-color-icons": "^1.2.1",
     "@iconify-json/tabler": "^1.2.20",
+    "@netlify/functions": "^6.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/js-yaml": "^4.0.9",
     "@types/lodash.merge": "^4.6.9",
