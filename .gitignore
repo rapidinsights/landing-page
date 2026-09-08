@@ -23,9 +23,13 @@ pnpm-lock.yaml
 
 .astro
 .agents
-.claude
+.claude/*
+!.claude/settings.json
 .mcp.json
 .playwright-mcp/
+
+# lighthouse gate reports
+.lighthouse/
 
 # documents
 *.docx

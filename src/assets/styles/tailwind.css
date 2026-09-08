@@ -71,7 +71,7 @@
 /* On pages with a dark hero, default the header's bg layer to match the hero's navy.
    When scrolled past the hero, the .scroll rule below kicks in and swaps to cream. */
 body:has(#hero) #header:not(.scroll) > div:first-child {
-  background-color: rgb(1 28 66);
+  @apply bg-prussian;
 }
 body:has(#hero) #header > div:first-child {
   transition: background-color 200ms ease;

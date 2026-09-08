@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run check)",
+      "Bash(npm run check:astro)",
+      "Bash(npm run check:eslint)",
+      "Bash(npm run check:prettier)",
+      "Bash(npm run fix)",
+      "Bash(npm run audit)",
+      "Bash(npx astro preview:*)",
+      "Bash(npx lighthouse:*)",
+      "Bash(git status)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}
