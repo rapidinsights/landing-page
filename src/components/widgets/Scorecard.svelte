@@ -218,7 +218,7 @@
     >
       Start the assessment
     </button>
-    <p class="text-sm text-muted/60">No fluff. No sales pitch. Just an honest read on where you stand.</p>
+    <p class="text-sm text-muted">No fluff. No sales pitch. Just an honest read on where you stand.</p>
   </div>
 
 <!-- QUESTIONS PHASE -->
@@ -326,7 +326,7 @@
       {#if submitError}
         <p class="text-sm text-red-600">{submitError}</p>
       {/if}
-      <p class="text-xs text-muted/60">One email with your results. No spam. We never share your information.</p>
+      <p class="text-xs text-muted">One email with your results. No spam. We never share your information.</p>
     </div>
 
     <button

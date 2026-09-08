@@ -33,20 +33,21 @@
 }
 
 @layer utilities {
+  /* Tokens are channel lists, so direct consumers must wrap them in rgb(). */
   .bg-page {
-    background-color: var(--aw-color-bg-page);
+    background-color: rgb(var(--aw-color-bg-page));
   }
   .bg-dark {
-    background-color: var(--aw-color-bg-page-dark);
+    background-color: rgb(var(--aw-color-bg-page-dark));
   }
   .bg-light {
-    background-color: var(--aw-color-bg-page);
+    background-color: rgb(var(--aw-color-bg-page));
   }
   .text-page {
-    color: var(--aw-color-text-page);
+    color: rgb(var(--aw-color-text-page));
   }
   .text-muted {
-    color: var(--aw-color-text-muted);
+    color: rgb(var(--aw-color-text-muted));
   }
 }
 
