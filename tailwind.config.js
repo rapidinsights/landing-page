@@ -12,6 +12,7 @@ export default {
         accent: 'var(--aw-color-accent)',
         default: 'var(--aw-color-text-default)',
         muted: 'var(--aw-color-text-muted)',
+        'muted-on-dark': 'var(--aw-color-text-muted-on-dark)',
         section: 'var(--aw-color-bg-section)',
       },
       fontFamily: {

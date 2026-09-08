@@ -10,40 +10,41 @@ When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.m
 
 - **Light only.** `ui.theme: 'light:only'` in [src/config.yaml](src/config.yaml). `color-scheme: light only` is set on `:root` in [CustomStyles.astro:10](src/components/CustomStyles.astro#L10).
 - **Do not add `dark:` variants to new components.** Existing `dark:` classes are AstroWind template residue — leave them alone, don't propagate them.
-- The `.dark` CSS variable block in [CustomStyles.astro:71-91](src/components/CustomStyles.astro#L71-L91) is dormant template residue and will never render.
+- The `.dark` CSS variable block in [CustomStyles.astro:73-93](src/components/CustomStyles.astro#L73-L93) is dormant template residue and will never render.
 
 ## Color tokens
 
-Defined as CSS variables in [CustomStyles.astro:18-28](src/components/CustomStyles.astro#L18-L28), exposed to Tailwind in [tailwind.config.js:9-16](tailwind.config.js#L9-L16). Always use the Tailwind alias — never hardcode hex.
+Defined as CSS variables in [CustomStyles.astro:18-29](src/components/CustomStyles.astro#L18-L29), exposed to Tailwind in [tailwind.config.js:9-17](tailwind.config.js#L9-L17). Always use the Tailwind alias — never hardcode hex.
 
-| CSS variable              | Value                 | Tailwind alias     | Role                                                                                                 |
-| ------------------------- | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `--aw-color-primary`      | `rgb(1 97 239)`       | `primary`          | Deep blue — focus rings, primary-button hover fill, link accents                                     |
-| `--aw-color-secondary`    | `rgb(1 84 207)`       | `secondary`        | Darker blue — tagline text, secondary accents                                                        |
-| `--aw-color-accent`       | `rgb(109 40 217)`     | `accent`           | Violet — primary-button default fill, highlight borders                                              |
-| `--aw-color-text-default` | `rgb(16 16 16)`       | `default`          | Body text (near-black)                                                                               |
-| `--aw-color-text-muted`   | `rgb(16 16 16 / 66%)` | `muted`            | De-emphasized copy, captions                                                                         |
-| `--aw-color-bg-section`   | `rgb(239 246 255)`    | `section`          | Light blue-white section backgrounds                                                                 |
-| `--aw-color-text-heading` | `rgb(0 0 0)`          | _(not aliased)_    | Pure black for headings; used via CSS var                                                            |
-| `--aw-color-bg-page`      | `rgb(255 255 255)`    | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
-| `--aw-color-bg-page-dark` | `rgb(3 6 32)`         | _(via `.bg-dark`)_ | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA)                         |
+| CSS variable                    | Value                                                                          | Tailwind alias     | Role                                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------- |
+| `--aw-color-primary`            | `rgb(1 97 239)`                                                                | `primary`          | Deep blue — focus rings, primary-button hover fill, link accents                                     |
+| `--aw-color-secondary`          | `rgb(1 84 207)`                                                                | `secondary`        | Darker blue — tagline text, secondary accents                                                        |
+| `--aw-color-accent`             | `rgb(109 40 217)`                                                              | `accent`           | Violet — primary-button default fill, highlight borders                                              |
+| `--aw-color-text-default`       | `rgb(16 16 16)`                                                                | `default`          | Body text (near-black)                                                                               |
+| `--aw-color-text-muted`         | `rgb(16 16 16 / 66%)` — `rgb(71 85 105)` in the active `theme-prussian-orange` | `muted`            | De-emphasized copy, captions. The active value clears WCAG AA (6.6:1) on `bg-section`                |
+| `--aw-color-text-muted-on-dark` | `rgb(250 245 239 / 80%)`                                                       | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections; clears AA (10.2:1 on `rgb(1 28 66)`)         |
+| `--aw-color-bg-section`         | `rgb(239 246 255)`                                                             | `section`          | Light blue-white section backgrounds                                                                 |
+| `--aw-color-text-heading`       | `rgb(0 0 0)`                                                                   | _(not aliased)_    | Pure black for headings; used via CSS var                                                            |
+| `--aw-color-bg-page`            | `rgb(255 255 255)`                                                             | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
+| `--aw-color-bg-page-dark`       | `rgb(3 6 32)`                                                                  | _(via `.bg-dark`)_ | Very dark navy; used for dark-background sections (Hero gradients, FinalCTA)                         |
 
-Selection highlight on the default theme is `lavender` — see [CustomStyles.astro:30-32](src/components/CustomStyles.astro#L30-L32).
+Selection highlight on the default theme is `lavender` — see [CustomStyles.astro:31-33](src/components/CustomStyles.astro#L31-L33).
 
-## Alt themes (dormant)
+## Themes
 
-Class-triggered overrides defined in [CustomStyles.astro:35-69](src/components/CustomStyles.astro#L35-L69). Not applied anywhere in production; kept for exploration.
+Class-triggered overrides defined in [CustomStyles.astro:36-71](src/components/CustomStyles.astro#L36-L71).
 
 - `theme-prussian-orange` — navy primary (`rgb(20 33 61)`) + bright orange accent (`rgb(252 163 17)`)
 - `theme-refined-gold` — charcoal primary (`rgb(45 45 45)`) + warm gold accent (`rgb(212 168 67)`)
 
-The **default** (no class) is the production theme.
+**`theme-prussian-orange` is the production theme** — it is applied on `<html>` in [Layout.astro:27](src/layouts/Layout.astro#L27) and [ScorecardLayout.astro:24](src/layouts/ScorecardLayout.astro#L24). `theme-refined-gold` is dormant.
 
 ---
 
 ## Typography — voice palette
 
-Four variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. Imports in [CustomStyles.astro:2-5](src/components/CustomStyles.astro#L2-L5), mapping in [CustomStyles.astro:12-16](src/components/CustomStyles.astro#L12-L16), Tailwind aliases in [tailwind.config.js:17-23](tailwind.config.js#L17-L23).
+Four variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. Imports in [CustomStyles.astro:2-5](src/components/CustomStyles.astro#L2-L5), mapping in [CustomStyles.astro:12-16](src/components/CustomStyles.astro#L12-L16), Tailwind aliases in [tailwind.config.js:18-24](tailwind.config.js#L18-L24).
 
 | Tailwind alias | Family                     | Role                                                               |
 | -------------- | -------------------------- | ------------------------------------------------------------------ |
@@ -55,7 +56,7 @@ Four variable font families, each with a deliberate role. The interplay **is** t
 
 ## Type tokens
 
-Custom scale extensions in [tailwind.config.js:24-30](tailwind.config.js#L24-L30):
+Custom scale extensions in [tailwind.config.js:25-31](tailwind.config.js#L25-L31):
 
 - `leading-tighter` — `1.2`
 - `tracking-heading` — `-0.02em`
@@ -131,7 +132,7 @@ Four lines of script. **Do not expand.** Destroy/re-init logic is only needed un
 
 ### 2. Intersect reveal — scroll-triggered fade/translate
 
-CSS + a tiny `IntersectionObserver` helper in [BasicScripts.astro:160-263](src/components/common/BasicScripts.astro#L160-L263). The `intersect` Tailwind variant is registered in [tailwind.config.js:46-48](tailwind.config.js#L46-L48) as `&:not([no-intersect])`.
+CSS + a tiny `IntersectionObserver` helper in [BasicScripts.astro:160-263](src/components/common/BasicScripts.astro#L160-L263). The `intersect` Tailwind variant is registered in [tailwind.config.js:47-49](tailwind.config.js#L47-L49) as `&:not([no-intersect])`.
 
 **Default class chain** (use this; don't invent new motion):
 
@@ -149,7 +150,7 @@ Modifiers:
 
 ### 3. CSS transitions / `@keyframes`
 
-For hover states, button press feedback, micro-interactions. The one project-level keyframe is `fadeInUp` in [tailwind.config.js:32-41](tailwind.config.js#L32-L41):
+For hover states, button press feedback, micro-interactions. The one project-level keyframe is `fadeInUp` in [tailwind.config.js:33-42](tailwind.config.js#L33-L42):
 
 ```js
 fadeInUp: { '0%': { opacity: 0, translateY: '2rem' }, '100%': { opacity: 1, translateY: 0 } }
