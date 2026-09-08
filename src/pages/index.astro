@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
+import { getHomePermalink } from '~/utils/permalinks';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import HowItWorks from '~/components/widgets/HowItWorks.astro';
@@ -18,10 +19,9 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <Fragment slot="announcement"></Fragment>
   <Fragment slot="header">
     <Header
-      links={[{ text: 'Home', href: '#' }]}
+      links={[{ text: 'Home', href: getHomePermalink() }]}
       actions={[
         {
           variant: 'primary',

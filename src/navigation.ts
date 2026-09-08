@@ -1,24 +1,12 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getHomePermalink } from './utils/permalinks';
 
 export const headerData = {
-  links: [
-    { text: 'Home', href: '#' },
-    { text: 'About', href: '#about' },
-    { text: 'Process', href: '#process' },
-    { text: 'Blog', href: getBlogPermalink() },
-  ],
-  actions: [{ text: 'Book a Call', href: '#contact' }],
+  links: [{ text: 'Home', href: getHomePermalink() }],
+  actions: [{ text: "Find out what you can't see", href: getPermalink('/scorecard') }],
 };
 
 export const footerData = {
   links: [
-    {
-      title: 'Company',
-      links: [
-        { text: 'About', href: '#about' },
-        { text: 'Blog', href: getBlogPermalink() },
-      ],
-    },
     {
       title: 'Legal',
       links: [
@@ -31,10 +19,7 @@ export const footerData = {
     { text: 'Terms', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
-  socialLinks: [
-    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: '#' },
-    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
-  ],
+  socialLinks: [],
   footNote: `
     &copy; ${new Date().getFullYear()} Rapid Insights Consulting Inc. All rights reserved.
   `,
