@@ -30,6 +30,9 @@ jobs:
 
   check:
     runs-on: ubuntu-latest
+    # The Lighthouse gate drives headless Chrome; a browser that stalls would
+    # otherwise hang the job until GitHub's 6-hour default.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 22
@@ -39,3 +42,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run build
+      - run: npm run audit

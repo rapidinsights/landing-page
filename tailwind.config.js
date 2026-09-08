@@ -14,6 +14,8 @@ export default {
         muted: 'var(--aw-color-text-muted)',
         'muted-on-dark': 'var(--aw-color-text-muted-on-dark)',
         section: 'var(--aw-color-bg-section)',
+        prussian: 'var(--aw-color-bg-prussian)',
+        cream: 'var(--aw-color-text-cream)',
       },
       fontFamily: {
         sans: ['var(--aw-font-sans, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
