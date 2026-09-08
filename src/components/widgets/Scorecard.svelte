@@ -47,9 +47,10 @@
   let lastFocusKey = 'intro:0';
 
   $effect(() => {
-    if (focusKey === lastFocusKey) return;
+    const el = headingEl;
+    if (!el || focusKey === lastFocusKey) return;
     lastFocusKey = focusKey;
-    headingEl?.focus();
+    el.focus();
   });
 
   // Progress: pre-fill at ~10%, fast-to-slow progression
@@ -144,14 +145,12 @@
 
       if (sendFailed) {
         submitError = "We couldn't send your report. Your results are shown below.";
-        emailSubmitted = false;
       } else {
         emailSubmitted = true;
       }
       phase = 'results';
     } catch {
       submitError = 'Something went wrong. You can still see your results.';
-      emailSubmitted = false;
       phase = 'results';
     } finally {
       isSubmitting = false;
@@ -172,7 +171,10 @@
   }
 </script>
 
-<div aria-live="polite">
+<div>
+<!-- Phase headings are announced by the focus move; this covers what focus does not -->
+<p class="sr-only" role="status">{submitError}</p>
+
 <!-- Progress dots (bottom of viewport) -->
 {#if phase === 'questions'}
   <div
@@ -182,6 +184,7 @@
     aria-valuenow={Math.round(progressPercent)}
     aria-valuemin="0"
     aria-valuemax="100"
+    aria-valuetext="Question {currentQuestionIndex + 1} of {totalQuestions}"
   >
     {#each questions as _, i}
       <div
@@ -225,16 +228,17 @@
       <p class="text-sm text-muted text-center">{getQuestionHeader(currentQuestionIndex)}</p>
     {/if}
 
+    <p class="sr-only" id="scorecard-question-count">Question {currentQuestionIndex + 1} of {totalQuestions}</p>
+
     <h1
       bind:this={headingEl}
       tabindex="-1"
       id="scorecard-question"
+      aria-describedby="scorecard-question-count"
       class="text-xl md:text-2xl font-bold text-default leading-snug text-center"
     >
       {currentQuestion.question}
     </h1>
-
-    <p class="sr-only">Question {currentQuestionIndex + 1} of {totalQuestions}</p>
 
     <div class="space-y-3 mt-8" role="radiogroup" aria-labelledby="scorecard-question">
       {#if currentQuestion.type === 'scored'}
@@ -344,6 +348,11 @@
       <h1 bind:this={headingEl} tabindex="-1" class="text-2xl font-bold text-default">{scoreTier.label}</h1>
     </div>
 
+    <!-- Delivery failure sits above the results, so "shown below" is accurate -->
+    {#if emailFailed}
+      <p class="text-sm text-red-600 text-center">{submitError}</p>
+    {/if}
+
     <!-- Results body -->
     <div class="bg-gray-50 rounded-2xl p-6 md:p-8 space-y-6">
       {#if showFullResult || emailSkipped}
@@ -387,10 +396,6 @@
           <p class="text-sm text-muted">
             We've sent your full Visibility Report to <strong>{email}</strong>. It includes everything above plus specific next steps.
           </p>
-        </div>
-      {:else if emailFailed}
-        <div class="pt-4 border-t border-gray-200">
-          <p class="text-sm text-red-600">{submitError}</p>
         </div>
       {/if}
 
