@@ -50,15 +50,26 @@ Class-triggered overrides defined in [CustomStyles.astro:41-76](src/components/C
 
 ## Typography — voice palette
 
-Four variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. Imports in [CustomStyles.astro:2-5](src/components/CustomStyles.astro#L2-L5), mapping in [CustomStyles.astro:12-16](src/components/CustomStyles.astro#L12-L16), Tailwind aliases in [tailwind.config.js:18-24](tailwind.config.js#L18-L24).
+Three variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. `@font-face` declarations in [src/assets/styles/fonts.css](src/assets/styles/fonts.css), mapping in [CustomStyles.astro:9-13](src/components/CustomStyles.astro#L9-L13), Tailwind aliases in [tailwind.config.js:21-25](tailwind.config.js#L21-L25).
 
 | Tailwind alias | Family                     | Role                                                               |
 | -------------- | -------------------------- | ------------------------------------------------------------------ |
-| `font-sans`    | Inter Variable             | Body, UI, default text                                             |
-| `font-serif`   | Inter Variable (same)      | Fallback; rarely used distinctly                                   |
+| `font-sans`    | Plus Jakarta Sans Variable | Body, UI, default text                                             |
+| `font-serif`   | Plus Jakarta Sans Variable | Fallback; rarely used distinctly                                   |
 | `font-heading` | Plus Jakarta Sans Variable | Section titles, H2s                                                |
 | `font-mono`    | JetBrains Mono Variable    | Labels, metrics, eyebrow text — editorial credibility              |
 | `font-display` | Lora Variable              | Sparingly, for pull moments (italic callouts, signature headlines) |
+
+**Three families is a performance budget, not a style preference.** Font bytes
+are the largest thing on this page's critical path: a fourth family (Inter,
+removed) pushed the four-family total to 153 KB and took `/` LCP to 2.33s,
+past the 2.0s ceiling. Three fits at ~105 KB and 1.73s. Plus Jakarta Sans
+absorbed body copy when Inter went, since the two were doing the same job.
+Adding a family means removing one — `npm run audit` will tell you.
+
+Faces are declared by hand rather than through `@fontsource-variable/<family>`,
+whose `index.css` ships six unicode subsets per family when the browser only
+ever fetches latin.
 
 ## Type tokens
 
