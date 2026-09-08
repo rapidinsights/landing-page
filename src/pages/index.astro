@@ -69,6 +69,20 @@ const metadata = {
         aria-hidden="true"
       >
       </div>
+      <!-- Spotlight: two brighter copies of the grid masked to circles that follow the cursor,
+           a wide soft halo and a tight core. Hover-capable devices only; invisible until the first pointer move. -->
+      <div
+        class="hero-spotlight hero-spotlight--halo absolute inset-0"
+        style="background-image: radial-gradient(circle at center, rgba(250, 245, 239, 0.45) 1px, transparent 1.25px); background-size: 24px 24px;"
+        aria-hidden="true"
+      >
+      </div>
+      <div
+        class="hero-spotlight hero-spotlight--core absolute inset-0"
+        style="background-image: radial-gradient(circle at center, rgba(250, 245, 239, 0.9) 1.25px, transparent 1.5px); background-size: 24px 24px;"
+        aria-hidden="true"
+      >
+      </div>
     </Fragment>
     <Fragment slot="subtitle">
       It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now
@@ -83,6 +97,82 @@ const metadata = {
       </p>
     </Fragment>
   </Hero>
+
+  <style is:global>
+    .hero-spotlight {
+      opacity: 0;
+      transition: opacity 600ms ease;
+      -webkit-mask-image: radial-gradient(
+        circle var(--r) at var(--mx, -999px) var(--my, -999px),
+        black 0%,
+        rgb(0 0 0 / 0.5) 45%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        circle var(--r) at var(--mx, -999px) var(--my, -999px),
+        black 0%,
+        rgb(0 0 0 / 0.5) 45%,
+        transparent 100%
+      );
+    }
+    .hero-spotlight--halo {
+      --r: 320px;
+    }
+    .hero-spotlight--core {
+      --r: 110px;
+    }
+    @media (hover: hover) and (min-width: 768px) {
+      #hero.is-lit .hero-spotlight {
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <script>
+    const hero = document.getElementById('hero');
+    if (hero && matchMedia('(hover: hover)').matches) {
+      const instant = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let tx = 0;
+      let ty = 0;
+      let x = 0;
+      let y = 0;
+      let running = false;
+      let lit = false;
+
+      const tick = () => {
+        // Ease toward the cursor so the light glides instead of snapping.
+        const k = instant ? 1 : 0.18;
+        x += (tx - x) * k;
+        y += (ty - y) * k;
+        hero.style.setProperty('--mx', `${x}px`);
+        hero.style.setProperty('--my', `${y}px`);
+        const settled = Math.abs(tx - x) < 0.5 && Math.abs(ty - y) < 0.5;
+        if (lit || !settled) requestAnimationFrame(tick);
+        else running = false;
+      };
+
+      hero.addEventListener('pointerenter', (e) => {
+        const r = hero.getBoundingClientRect();
+        x = tx = e.clientX - r.left;
+        y = ty = e.clientY - r.top;
+      });
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        tx = e.clientX - r.left;
+        ty = e.clientY - r.top;
+        lit = true;
+        hero.classList.add('is-lit');
+        if (!running) {
+          running = true;
+          requestAnimationFrame(tick);
+        }
+      });
+      hero.addEventListener('pointerleave', () => {
+        lit = false;
+        hero.classList.remove('is-lit');
+      });
+    }
+  </script>
 
   <!-- Problem Agitation ************* -->
 
