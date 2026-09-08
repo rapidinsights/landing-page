@@ -38,9 +38,12 @@ function getFreePort() {
   });
 }
 
-async function waitForServer(origin) {
+async function waitForServer(origin, preview) {
   const deadline = Date.now() + SERVER_READY_TIMEOUT_MS;
   while (Date.now() < deadline) {
+    if (preview.exitCode !== null) {
+      throw new Error(`Preview server exited with ${preview.exitCode} before serving:\n${preview.stderrText()}`);
+    }
     try {
       const response = await fetch(origin);
       if (response.ok) return;
@@ -56,10 +59,23 @@ async function waitForServer(origin) {
 // child of its own, and killing only the parent leaves the port held.
 function startPreview(port) {
   const astroBin = join(process.cwd(), 'node_modules', '.bin', 'astro');
-  return spawn(astroBin, ['preview', '--port', String(port), '--host', '127.0.0.1'], {
-    stdio: 'ignore',
+  const child = spawn(astroBin, ['preview', '--port', String(port), '--host', '127.0.0.1'], {
+    stdio: ['ignore', 'ignore', 'pipe'],
     detached: true,
   });
+
+  // Without a listener, a missing astro binary emits 'error' as an uncaught
+  // exception, escaping the try/finally that tears the server down.
+  let stderr = '';
+  child.on('error', (error) => {
+    stderr += `${error.message}\n`;
+  });
+  child.stderr.on('data', (chunk) => {
+    stderr += chunk;
+  });
+  child.stderrText = () => stderr.trim() || '(no output)';
+
+  return child;
 }
 
 function stopPreview(child) {
@@ -132,10 +148,12 @@ function collectFailures(results) {
 }
 
 async function main() {
-  if (!existsSync('dist')) {
-    console.log('dist/ is missing — building first.');
-    await run('npm', ['run', 'build']);
+  // Always rebuild. Auditing a stale dist/ reports a confident green table for
+  // code that is no longer there, which is the one thing a gate must not do.
+  if (existsSync('dist')) {
+    console.log('Rebuilding so the audit measures current source.');
   }
+  await run('npm', ['run', 'build']);
 
   await mkdir(REPORT_DIR, { recursive: true });
 
@@ -144,9 +162,22 @@ async function main() {
   let preview;
   let chrome;
 
+  const cleanup = () => {
+    chrome?.kill();
+    stopPreview(preview);
+  };
+  // startPreview is detached, so a terminal SIGINT never reaches it: without
+  // these the preview server and Chrome survive a Ctrl-C and hold the port.
+  const onSignal = (signal) => {
+    cleanup();
+    process.exit(signal === 'SIGINT' ? 130 : 143);
+  };
+  process.on('SIGINT', onSignal);
+  process.on('SIGTERM', onSignal);
+
   try {
     preview = startPreview(port);
-    await waitForServer(origin);
+    await waitForServer(origin, preview);
 
     chrome = await chromeLauncher.launch({ chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'] });
 
@@ -167,8 +198,9 @@ async function main() {
     }
     console.log('Lighthouse gate passed.');
   } finally {
-    chrome?.kill();
-    stopPreview(preview);
+    process.off('SIGINT', onSignal);
+    process.off('SIGTERM', onSignal);
+    cleanup();
   }
 }
 
