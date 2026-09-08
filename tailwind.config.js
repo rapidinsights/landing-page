@@ -6,16 +6,19 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      // Tokens are channel lists in CustomStyles.astro; the `<alpha-value>`
+      // placeholder is what lets Tailwind compose `text-primary/10`. A bare
+      // `var(--token)` here silently drops every opacity modifier instead.
       colors: {
-        primary: 'var(--aw-color-primary)',
-        secondary: 'var(--aw-color-secondary)',
-        accent: 'var(--aw-color-accent)',
-        default: 'var(--aw-color-text-default)',
-        muted: 'var(--aw-color-text-muted)',
-        'muted-on-dark': 'var(--aw-color-text-muted-on-dark)',
-        section: 'var(--aw-color-bg-section)',
-        prussian: 'var(--aw-color-bg-prussian)',
-        cream: 'var(--aw-color-text-cream)',
+        primary: 'rgb(var(--aw-color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--aw-color-secondary) / <alpha-value>)',
+        accent: 'rgb(var(--aw-color-accent) / <alpha-value>)',
+        default: 'rgb(var(--aw-color-text-default) / <alpha-value>)',
+        muted: 'rgb(var(--aw-color-text-muted) / <alpha-value>)',
+        'muted-on-dark': 'rgb(var(--aw-color-text-muted-on-dark) / <alpha-value>)',
+        section: 'rgb(var(--aw-color-bg-section) / <alpha-value>)',
+        prussian: 'rgb(var(--aw-color-bg-prussian) / <alpha-value>)',
+        cream: 'rgb(var(--aw-color-text-cream) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['var(--aw-font-sans, ui-sans-serif)', ...defaultTheme.fontFamily.sans],

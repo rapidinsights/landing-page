@@ -8,30 +8,51 @@ When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.m
 
 ## Theme mode
 
-- **Light only.** `ui.theme: 'light:only'` in [src/config.yaml](src/config.yaml). `color-scheme: light only` is set on `:root` in [CustomStyles.astro:10](src/components/CustomStyles.astro#L10).
+- **Light only.** `ui.theme: 'light:only'` in [src/config.yaml](src/config.yaml). `color-scheme: light only` is set on `:root` in [CustomStyles.astro:17](src/components/CustomStyles.astro#L17).
 - **Do not add `dark:` variants to new components.** Existing `dark:` classes are AstroWind template residue — leave them alone, don't propagate them.
-- The `.dark` CSS variable block in [CustomStyles.astro:73-93](src/components/CustomStyles.astro#L73-L93) is dormant template residue and will never render.
+- The `.dark` CSS variable block in [CustomStyles.astro:89-110](src/components/CustomStyles.astro#L89-L110) is dormant template residue and will never render.
 
 ## Color tokens
 
-Defined as CSS variables in [CustomStyles.astro](src/components/CustomStyles.astro), exposed to Tailwind in [tailwind.config.js:9-19](tailwind.config.js#L9-L19). Always use the Tailwind alias — never hardcode hex.
+Defined as CSS variables in [CustomStyles.astro](src/components/CustomStyles.astro), exposed to Tailwind in [tailwind.config.js:9-22](tailwind.config.js#L9-L22). Always use the Tailwind alias — never hardcode hex.
 
-**These are the `.theme-prussian-orange` values** — the production theme, applied on `<html>` in both layouts. The bare `:root` block still holds AstroWind's blue/violet defaults; it never reaches the page, so it is not documented here.
+### The channel-list convention (read before adding a token)
 
-| CSS variable                    | Value                    | Tailwind alias     | Role                                                                                                 |
-| ------------------------------- | ------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `--aw-color-primary`            | `rgb(20 33 61)`          | `primary`          | Prussian navy — focus rings, primary-button hover fill, link accents                                 |
-| `--aw-color-secondary`          | `rgb(45 106 159)`        | `secondary`        | Mid blue — eyebrow text, secondary accents. 5.7:1 on white                                           |
-| `--aw-color-accent`             | `rgb(252 163 17)`        | `accent`           | Orange — the scarce accent. 2.0:1 on white, so decorative use only, never body text                  |
-| `--aw-color-text-default`       | `rgb(26 26 46)`          | `default`          | Body text (near-black navy)                                                                          |
-| `--aw-color-text-muted`         | `rgb(71 85 105)`         | `muted`            | De-emphasized copy, captions. Clears WCAG AA at 6.6:1 on `bg-section`                                |
-| `--aw-color-text-muted-on-dark` | `rgb(250 245 239 / 80%)` | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections; clears AA (10.2:1 on `bg-prussian`)          |
-| `--aw-color-bg-section`         | `rgb(237 240 247)`       | `section`          | Cool grey-white section backgrounds                                                                  |
-| `--aw-color-bg-prussian`        | `rgb(1 28 66)`           | `prussian`         | The deep Prussian field behind the Hero, ProblemAgitation and FinalCTA bands                         |
-| `--aw-color-text-cream`         | `rgb(250 245 239)`       | `cream`            | Full-strength cream copy on the Prussian field                                                       |
-| `--aw-color-text-heading`       | `rgb(26 26 46)`          | _(not aliased)_    | Headings; used via CSS var                                                                           |
-| `--aw-color-bg-page`            | `rgb(250 250 250)`       | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
-| `--aw-color-bg-page-dark`       | `rgb(20 33 61)`          | _(via `.bg-dark`)_ | Navy; used for dark-background sections                                                              |
+Every colour token is a **bare space-separated channel list**, never wrapped in `rgb()`:
+
+```css
+--aw-color-primary: 20 33 61; /* correct */
+--aw-color-primary: rgb(20 33 61); /* WRONG — breaks opacity modifiers */
+```
+
+`tailwind.config.js` then composes each one with the `<alpha-value>` placeholder:
+
+```js
+primary: 'rgb(var(--aw-color-primary) / <alpha-value>)',
+```
+
+**This is not cosmetic.** Tailwind can only apply an opacity modifier to a colour written with `<alpha-value>`. Given a bare `var(--token)`, a utility like `text-primary/10` is **silently dropped** — no CSS rule is emitted at all, the element just inherits its parent's colour, and nothing warns. `npm run check` passes, the class looks right in the markup, and the page renders wrong. Non-alpha utilities keep working either way, which is what makes the failure so quiet.
+
+A channel list **cannot itself carry an alpha**. A token that needs one either flattens to its composite over that block's own `--aw-color-bg-page`, or drops the alpha and states it at the call site — which is why `muted-on-dark` is used as `text-muted-on-dark/80`.
+
+| CSS variable                    | Value         | Tailwind alias     | Role                                                                                                 |
+| ------------------------------- | ------------- | ------------------ | ---------------------------------------------------------------------------------------------------- |
+| `--aw-color-primary`            | `20 33 61`    | `primary`          | Prussian navy — focus rings, primary-button hover fill, link accents                                 |
+| `--aw-color-secondary`          | `45 106 159`  | `secondary`        | Mid blue — eyebrow text, secondary accents. 5.7:1 on white                                           |
+| `--aw-color-accent`             | `252 163 17`  | `accent`           | Orange — the scarce accent. 2.0:1 on white, so decorative use only, never body text                  |
+| `--aw-color-text-default`       | `26 26 46`    | `default`          | Body text (near-black navy)                                                                          |
+| `--aw-color-text-muted`         | `71 85 105`   | `muted`            | De-emphasized copy, captions. Clears WCAG AA at 6.6:1 on `bg-section`                                |
+| `--aw-color-text-muted-on-dark` | `250 245 239` | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections. **Always used as `/80`**; clears AA (10.2:1) |
+| `--aw-color-bg-section`         | `237 240 247` | `section`          | Cool grey-white section backgrounds                                                                  |
+| `--aw-color-bg-prussian`        | `1 28 66`     | `prussian`         | The deep Prussian field behind the Hero, ProblemAgitation and FinalCTA bands                         |
+| `--aw-color-text-cream`         | `250 245 239` | `cream`            | Full-strength cream copy on the Prussian field                                                       |
+| `--aw-color-text-heading`       | `26 26 46`    | _(not aliased)_    | Headings; used via CSS var                                                                           |
+| `--aw-color-bg-page`            | `250 250 250` | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
+| `--aw-color-bg-page-dark`       | `20 33 61`    | _(via `.bg-dark`)_ | Navy; used for dark-background sections                                                              |
+
+Direct consumers outside Tailwind must wrap the token themselves — `rgb(var(--aw-color-bg-page))`, as the `@layer utilities` block in [tailwind.css](src/assets/styles/tailwind.css) does.
+
+`--aw-color-text-muted-on-dark` and `--aw-color-text-cream` now hold the same channels; the former exists only because opacity modifiers used to be broken, and collapsing the two is worthwhile cleanup.
 
 `--aw-color-bg-prussian` and `--aw-color-text-cream` are brand constants declared once on `:root`, not per-theme overrides — the Prussian field and the cream on it are the same in every theme. Most existing components still hardcode these two values as `rgb(1 28 66)` and `#FAF5EF`; migrating those uses to the tokens is deliberately left as separate cleanup.
 
@@ -39,10 +60,10 @@ Selection highlight on the production theme is `rgb(252 163 17 / 30%)` — see [
 
 ## Themes
 
-Class-triggered overrides defined in [CustomStyles.astro:41-76](src/components/CustomStyles.astro#L41-L76).
+Class-triggered overrides defined in [CustomStyles.astro:50-88](src/components/CustomStyles.astro#L50-L88).
 
-- `theme-prussian-orange` — navy primary (`rgb(20 33 61)`) + bright orange accent (`rgb(252 163 17)`)
-- `theme-refined-gold` — charcoal primary (`rgb(45 45 45)`) + warm gold accent (`rgb(212 168 67)`)
+- `theme-prussian-orange` — navy primary (`20 33 61`) + bright orange accent (`252 163 17`)
+- `theme-refined-gold` — charcoal primary (`45 45 45`) + warm gold accent (`212 168 67`)
 
 **`theme-prussian-orange` is the production theme** — it is applied on `<html>` in [Layout.astro:27](src/layouts/Layout.astro#L27) and [ScorecardLayout.astro:24](src/layouts/ScorecardLayout.astro#L24). `theme-refined-gold` is dormant.
 
@@ -50,7 +71,7 @@ Class-triggered overrides defined in [CustomStyles.astro:41-76](src/components/C
 
 ## Typography — voice palette
 
-Three variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. `@font-face` declarations in [src/assets/styles/fonts.css](src/assets/styles/fonts.css), mapping in [CustomStyles.astro:9-13](src/components/CustomStyles.astro#L9-L13), Tailwind aliases in [tailwind.config.js:21-25](tailwind.config.js#L21-L25).
+Three variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. `@font-face` declarations in [src/assets/styles/fonts.css](src/assets/styles/fonts.css), mapping in [CustomStyles.astro:19-23](src/components/CustomStyles.astro#L19-L23), Tailwind aliases in [tailwind.config.js:24-28](tailwind.config.js#L24-L28).
 
 | Tailwind alias | Family                     | Role                                                               |
 | -------------- | -------------------------- | ------------------------------------------------------------------ |

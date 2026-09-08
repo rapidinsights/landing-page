@@ -3,6 +3,16 @@ import '~/assets/styles/fonts.css';
 ---
 
 <style is:inline>
+  /* Colour tokens are bare space-separated CHANNEL LISTS ("1 28 66"), never
+     wrapped in rgb(). tailwind.config.js composes them as
+     `rgb(var(--token) / <alpha-value>)`, which is the only form Tailwind can
+     apply an opacity modifier to. Wrap one in rgb() here and every opacity
+     modifier on it silently emits no rule at all - no error, no warning.
+
+     A channel list cannot itself carry an alpha, so a token that used to be
+     `rgb(R G B / A%)` either flattens to its composite over the page
+     background of the block it lives in, or drops the alpha here and states
+     it at the call site (`text-muted-on-dark/80`). See DESIGN.md. */
   :root {
     color-scheme: light only;
 
@@ -12,23 +22,25 @@ import '~/assets/styles/fonts.css';
     --aw-font-mono: 'JetBrains Mono Variable';
     --aw-font-display: 'Lora Variable';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: 1 97 239;
+    --aw-color-secondary: 1 84 207;
+    --aw-color-accent: 109 40 217;
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-text-muted-on-dark: rgb(250 245 239 / 80%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: 0 0 0;
+    --aw-color-text-default: 16 16 16;
+    /* was rgb(16 16 16 / 66%), flattened over --aw-color-bg-page (255 255 255) */
+    --aw-color-text-muted: 97 97 97;
+    /* alpha moved to the call site: text-muted-on-dark/80 */
+    --aw-color-text-muted-on-dark: 250 245 239;
+    --aw-color-bg-page: 255 255 255;
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
-    --aw-color-bg-section: rgb(239 246 255);
+    --aw-color-bg-page-dark: 3 6 32;
+    --aw-color-bg-section: 239 246 255;
 
     /* Brand constants, not theme overrides — the Prussian field and the cream
        that sits on it are the same in every theme. */
-    --aw-color-bg-prussian: rgb(1 28 66);
-    --aw-color-text-cream: rgb(250 245 239);
+    --aw-color-bg-prussian: 1 28 66;
+    --aw-color-text-cream: 250 245 239;
 
     ::selection {
       background-color: lavender;
@@ -36,18 +48,19 @@ import '~/assets/styles/fonts.css';
   }
 
   .theme-prussian-orange {
-    --aw-color-primary: rgb(20 33 61);
-    --aw-color-secondary: rgb(45 106 159);
-    --aw-color-accent: rgb(252 163 17);
+    --aw-color-primary: 20 33 61;
+    --aw-color-secondary: 45 106 159;
+    --aw-color-accent: 252 163 17;
 
-    --aw-color-text-heading: rgb(26 26 46);
-    --aw-color-text-default: rgb(26 26 46);
-    --aw-color-text-muted: rgb(71 85 105);
-    --aw-color-text-muted-on-dark: rgb(250 245 239 / 80%);
-    --aw-color-bg-page: rgb(250 250 250);
+    --aw-color-text-heading: 26 26 46;
+    --aw-color-text-default: 26 26 46;
+    --aw-color-text-muted: 71 85 105;
+    /* alpha moved to the call site: text-muted-on-dark/80 */
+    --aw-color-text-muted-on-dark: 250 245 239;
+    --aw-color-bg-page: 250 250 250;
 
-    --aw-color-bg-page-dark: rgb(20 33 61);
-    --aw-color-bg-section: rgb(237 240 247);
+    --aw-color-bg-page-dark: 20 33 61;
+    --aw-color-bg-section: 237 240 247;
 
     ::selection {
       background-color: rgb(252 163 17 / 30%);
@@ -55,17 +68,18 @@ import '~/assets/styles/fonts.css';
   }
 
   .theme-refined-gold {
-    --aw-color-primary: rgb(45 45 45);
-    --aw-color-secondary: rgb(90 90 90);
-    --aw-color-accent: rgb(212 168 67);
+    --aw-color-primary: 45 45 45;
+    --aw-color-secondary: 90 90 90;
+    --aw-color-accent: 212 168 67;
 
-    --aw-color-text-heading: rgb(26 26 26);
-    --aw-color-text-default: rgb(45 45 45);
-    --aw-color-text-muted: rgb(107 114 128);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: 26 26 26;
+    --aw-color-text-default: 45 45 45;
+    --aw-color-text-muted: 107 114 128;
+    --aw-color-bg-page: 255 255 255;
 
-    --aw-color-bg-page-dark: rgb(26 26 26);
-    --aw-color-bg-section: rgb(45 45 45 / 5%);
+    --aw-color-bg-page-dark: 26 26 26;
+    /* was rgb(45 45 45 / 5%), flattened over --aw-color-bg-page (255 255 255) */
+    --aw-color-bg-section: 245 245 245;
 
     ::selection {
       background-color: rgb(212 168 67 / 30%);
@@ -79,14 +93,15 @@ import '~/assets/styles/fonts.css';
     --aw-font-mono: 'JetBrains Mono Variable';
     --aw-font-display: 'Lora Variable';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: 1 97 239;
+    --aw-color-secondary: 1 84 207;
+    --aw-color-accent: 109 40 217;
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-heading: 247 248 248;
+    --aw-color-text-default: 229 236 246;
+    /* was rgb(229 236 246 / 66%), flattened over --aw-color-bg-page (3 6 32) */
+    --aw-color-text-muted: 152 158 173;
+    --aw-color-bg-page: 3 6 32;
 
     ::selection {
       background-color: black;
