@@ -6,15 +6,7 @@ export const headerData = {
 };
 
 export const footerData = {
-  links: [
-    {
-      title: 'Legal',
-      links: [
-        { text: 'Terms', href: getPermalink('/terms') },
-        { text: 'Privacy Policy', href: getPermalink('/privacy') },
-      ],
-    },
-  ],
+  links: [],
   secondaryLinks: [
     { text: 'Terms', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
