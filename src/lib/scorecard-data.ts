@@ -38,7 +38,7 @@ export const questions: Question[] = [
     options: [
       { text: 'Before — we catch things early with good data', points: 3 },
       { text: 'Sometimes before, sometimes after — depends on the problem', points: 2 },
-      { text: 'Usually after — we don\'t see problems until they\'ve already hit', points: 1 },
+      { text: "Usually after — we don't see problems until they've already hit", points: 1 },
       { text: 'Almost always after — our whole week is putting out fires', points: 0 },
     ],
   },
@@ -50,7 +50,7 @@ export const questions: Question[] = [
     icon: 'tabler:currency-dollar',
     options: [
       { text: 'Yes — by job, by client, without hesitation', points: 3 },
-      { text: 'Roughly, but I\'d need to pull something together', points: 2 },
+      { text: "Roughly, but I'd need to pull something together", points: 2 },
       { text: 'I could get there, but it would take hours of digging', points: 1 },
       { text: 'Honestly, no', points: 0 },
     ],
@@ -59,11 +59,11 @@ export const questions: Question[] = [
   {
     id: 'data-trust',
     type: 'scored',
-    question: 'When you present numbers in a meeting, how confident are you that they\'re right?',
+    question: "When you present numbers in a meeting, how confident are you that they're right?",
     icon: 'tabler:shield-check',
     options: [
       { text: 'Very — I know where they come from and I trust the source', points: 3 },
-      { text: 'Mostly — but I wouldn\'t want someone to dig too deep', points: 2 },
+      { text: "Mostly — but I wouldn't want someone to dig too deep", points: 2 },
       { text: 'I present them, but I have real doubts', points: 1 },
       { text: 'I avoid presenting specific numbers when I can', points: 0 },
     ],
@@ -72,13 +72,13 @@ export const questions: Question[] = [
   {
     id: 'reporting-speed',
     type: 'scored',
-    question: 'How long does it take to produce a report you\'d trust enough to make a decision from?',
+    question: "How long does it take to produce a report you'd trust enough to make a decision from?",
     icon: 'tabler:clock',
     options: [
-      { text: 'Minutes — it\'s automated and I trust it', points: 3 },
-      { text: 'A few hours of someone\'s time', points: 2 },
-      { text: 'Most of someone\'s day, sometimes longer', points: 1 },
-      { text: 'We don\'t have reports I fully trust', points: 0 },
+      { text: "Minutes — it's automated and I trust it", points: 3 },
+      { text: "A few hours of someone's time", points: 2 },
+      { text: "Most of someone's day, sometimes longer", points: 1 },
+      { text: "We don't have reports I fully trust", points: 0 },
     ],
   },
   // Q5: Key person risk
@@ -89,9 +89,9 @@ export const questions: Question[] = [
     icon: 'tabler:user-exclamation',
     options: [
       { text: 'Nothing — our systems are documented and transferable', points: 3 },
-      { text: 'Some disruption, but we\'d figure it out in a few weeks', points: 2 },
+      { text: "Some disruption, but we'd figure it out in a few weeks", points: 2 },
       { text: 'It would be a serious problem for months', points: 1 },
-      { text: 'We\'d lose the ability to see our own numbers', points: 0 },
+      { text: "We'd lose the ability to see our own numbers", points: 0 },
     ],
   },
   // Q6: Spreadsheet dependence
@@ -101,8 +101,8 @@ export const questions: Question[] = [
     question: 'How much of your critical business information lives in spreadsheets that one person built?',
     icon: 'tabler:table',
     options: [
-      { text: 'Very little — we\'ve outgrown that', points: 3 },
-      { text: 'Some, but they\'re manageable and shared', points: 2 },
+      { text: "Very little — we've outgrown that", points: 3 },
+      { text: "Some, but they're manageable and shared", points: 2 },
       { text: 'Most of it, and only one or two people understand them', points: 1 },
       { text: 'Nearly all of it — and the person who built them is the only one who knows how they work', points: 0 },
     ],
@@ -111,13 +111,13 @@ export const questions: Question[] = [
   {
     id: 'growth-vs-systems',
     type: 'scored',
-    question: 'As your business has grown, has your ability to see what\'s going on kept up?',
+    question: "As your business has grown, has your ability to see what's going on kept up?",
     icon: 'tabler:trending-up',
     options: [
       { text: 'Yes — our reporting and systems scale with us', points: 3 },
       { text: 'Mostly, but there are growing gaps', points: 2 },
-      { text: 'No — it\'s gotten harder to understand what\'s happening as we\'ve grown', points: 1 },
-      { text: 'We\'re definitely running a bigger business on the same tools we had years ago', points: 0 },
+      { text: "No — it's gotten harder to understand what's happening as we've grown", points: 1 },
+      { text: "We're definitely running a bigger business on the same tools we had years ago", points: 0 },
     ],
   },
   // Q8: Decision confidence
@@ -129,8 +129,8 @@ export const questions: Question[] = [
     options: [
       { text: 'Mostly data — we have solid numbers to work from', points: 3 },
       { text: 'A mix, leaning toward data', points: 2 },
-      { text: 'Mostly gut — the data isn\'t reliable or available enough', points: 1 },
-      { text: 'Almost entirely gut — I\'ve been meaning to fix that', points: 0 },
+      { text: "Mostly gut — the data isn't reliable or available enough", points: 1 },
+      { text: "Almost entirely gut — I've been meaning to fix that", points: 0 },
     ],
   },
   // Q9: Industry (qualifying, not scored) — moved to end per research
@@ -237,7 +237,7 @@ export const scoreTiers: ScoreTier[] = [
     min: 6,
     max: 12,
     label: "You're running a growing business with serious blind spots.",
-    summary: "Your business has outgrown your tools. The blind spots are costing you.",
+    summary: 'Your business has outgrown your tools. The blind spots are costing you.',
     fullResult: (industry, revenueBand) => {
       const dollars = dollarEstimates[revenueBand];
       return `You're not alone — this is more common than most owners realize, especially in the ${dollars.label} range where the business has outgrown its tools but enterprise solutions don't fit. Your Visibility Report breaks down your weakest areas and what they typically cost. The short version: it's fixable, and faster than you think.`;
@@ -250,7 +250,7 @@ export const scoreTiers: ScoreTier[] = [
     min: 0,
     max: 5,
     label: "You're flying blind. But now you know it.",
-    summary: "The gap between your business and what you can see is significant — and costly.",
+    summary: 'The gap between your business and what you can see is significant — and costly.',
     fullResult: (industry, revenueBand) => {
       const dollars = dollarEstimates[revenueBand];
       const lang = industryLanguage[industry];
@@ -280,35 +280,43 @@ export function getWeakestAreas(answers: Record<string, number>): string[] {
 export const weakAreaLabels: Record<string, { label: string; actionItem: string }> = {
   'problem-detection': {
     label: 'Problem Detection',
-    actionItem: 'This week, ask your team: "What problem did we catch too late this month?" Write down the first three answers.',
+    actionItem:
+      'This week, ask your team: "What problem did we catch too late this month?" Write down the first three answers.',
   },
   profitability: {
     label: 'Job Profitability Visibility',
-    actionItem: 'Pull your last 5 completed jobs. Can you identify actual margin on each? If not, that\'s your starting point.',
+    actionItem:
+      "Pull your last 5 completed jobs. Can you identify actual margin on each? If not, that's your starting point.",
   },
   'data-trust': {
     label: 'Data Trust & Confidence',
-    actionItem: 'Before your next meeting, ask: "Where did these numbers come from?" If the answer is one person\'s spreadsheet, you have your diagnosis.',
+    actionItem:
+      'Before your next meeting, ask: "Where did these numbers come from?" If the answer is one person\'s spreadsheet, you have your diagnosis.',
   },
   'reporting-speed': {
     label: 'Reporting Speed',
-    actionItem: 'Time how long it takes to answer: "How did we do last month?" If it\'s more than 5 minutes, your reporting isn\'t keeping up.',
+    actionItem:
+      'Time how long it takes to answer: "How did we do last month?" If it\'s more than 5 minutes, your reporting isn\'t keeping up.',
   },
   'key-person-risk': {
     label: 'Key Person Risk',
-    actionItem: 'Ask yourself: if your reporting person called in sick for a week, what would break? Write it down. That\'s your risk register.',
+    actionItem:
+      "Ask yourself: if your reporting person called in sick for a week, what would break? Write it down. That's your risk register.",
   },
   'spreadsheet-dependence': {
     label: 'Spreadsheet Dependence',
-    actionItem: 'Count the spreadsheets that run your business. Now count how many people understand each one. If any number is "1," that\'s a single point of failure.',
+    actionItem:
+      'Count the spreadsheets that run your business. Now count how many people understand each one. If any number is "1," that\'s a single point of failure.',
   },
   'growth-vs-systems': {
     label: 'Systems Scaling',
-    actionItem: 'Compare your revenue from 3 years ago to today. Now compare your reporting tools. If the tools haven\'t changed, the gap is growing.',
+    actionItem:
+      "Compare your revenue from 3 years ago to today. Now compare your reporting tools. If the tools haven't changed, the gap is growing.",
   },
   'decision-confidence': {
     label: 'Decision Confidence',
-    actionItem: 'Think about the last major pricing decision you made. What data did you have? What data did you wish you had? That gap is your starting point.',
+    actionItem:
+      'Think about the last major pricing decision you made. What data did you have? What data did you wish you had? That gap is your starting point.',
   },
 };
 

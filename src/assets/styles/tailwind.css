@@ -26,7 +26,8 @@
     background-size: 256px 256px;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     text-wrap: balance;
   }
 }
@@ -92,7 +93,9 @@ body:has(#hero) #header > div:first-child {
 #header nav a,
 #header nav button,
 #header [data-aw-toggle-menu] span {
-  transition: color 200ms ease, background-color 200ms ease;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
 }
 #header:not(.scroll):not(.expanded) .logo-text {
   color: #faf5ef;
