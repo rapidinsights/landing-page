@@ -38,8 +38,23 @@
   let revenueBand = $derived((qualifyingAnswers['revenue'] as RevenueBand) || '2m-10m');
   let weakestAreas = $derived(getWeakestAreas(answers));
 
+  // A failed send still earned the full report copy, minus the sent confirmation
+  let showFullResult = $derived(!emailSkipped && (emailSubmitted || !!submitError));
+  let emailFailed = $derived(!emailSkipped && !emailSubmitted && !!submitError);
+
+  let headingEl: HTMLElement | null = $state(null);
+  let focusKey = $derived(`${phase}:${currentQuestionIndex}`);
+  let lastFocusKey = 'intro:0';
+
+  $effect(() => {
+    const el = headingEl;
+    if (!el || focusKey === lastFocusKey) return;
+    lastFocusKey = focusKey;
+    el.focus();
+  });
+
   // Progress: pre-fill at ~10%, fast-to-slow progression
-  let progressPercent = $derived(() => {
+  let progressPercent = $derived.by(() => {
     if (phase === 'intro') return 8; // Endowed progress effect
     if (phase === 'questions') {
       // Fast early, slow late: use square root for fast-to-slow feel
@@ -108,9 +123,7 @@
         body: JSON.stringify(payload),
       });
 
-      if (!emailResponse.ok) {
-        console.warn('Email send failed, continuing to results');
-      }
+      const sendFailed = !emailResponse.ok;
 
       // Submit to Netlify Forms for dashboard capture
       const formData = new URLSearchParams();
@@ -130,11 +143,14 @@
         // Netlify Forms capture is best-effort
       });
 
-      emailSubmitted = true;
+      if (sendFailed) {
+        submitError = "We couldn't send your report. Your results are shown below.";
+      } else {
+        emailSubmitted = true;
+      }
       phase = 'results';
     } catch {
       submitError = 'Something went wrong. You can still see your results.';
-      emailSubmitted = false;
       phase = 'results';
     } finally {
       isSubmitting = false;
@@ -156,9 +172,20 @@
 </script>
 
 <div>
+<!-- Phase headings are announced by the focus move; this covers what focus does not -->
+<p class="sr-only" role="status">{submitError}</p>
+
 <!-- Progress dots (bottom of viewport) -->
 {#if phase === 'questions'}
-  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+  <div
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10"
+    role="progressbar"
+    aria-label="Assessment progress"
+    aria-valuenow={Math.round(progressPercent)}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuetext="Question {currentQuestionIndex + 1} of {totalQuestions}"
+  >
     {#each questions as _, i}
       <div
         class="rounded-full transition-all duration-200 {i < currentQuestionIndex
@@ -174,7 +201,7 @@
 <!-- INTRO PHASE -->
 {#if phase === 'intro'}
   <div class="text-center space-y-6 animate-fade-in">
-    <h1 class="text-3xl md:text-4xl font-bold text-default leading-tight">
+    <h1 bind:this={headingEl} tabindex="-1" class="text-3xl md:text-4xl font-bold text-default leading-tight">
       How well can you actually see your own business?
     </h1>
     <p class="text-lg text-muted max-w-lg mx-auto">
@@ -201,15 +228,25 @@
       <p class="text-sm text-muted text-center">{getQuestionHeader(currentQuestionIndex)}</p>
     {/if}
 
-    <h2 class="text-xl md:text-2xl font-bold text-default leading-snug text-center">
-      {currentQuestion.question}
-    </h2>
+    <p class="sr-only" id="scorecard-question-count">Question {currentQuestionIndex + 1} of {totalQuestions}</p>
 
-    <div class="space-y-3 mt-8">
+    <h1
+      bind:this={headingEl}
+      tabindex="-1"
+      id="scorecard-question"
+      aria-describedby="scorecard-question-count"
+      class="text-xl md:text-2xl font-bold text-default leading-snug text-center"
+    >
+      {currentQuestion.question}
+    </h1>
+
+    <div class="space-y-3 mt-8" role="radiogroup" aria-labelledby="scorecard-question">
       {#if currentQuestion.type === 'scored'}
         {#each (currentQuestion as ScoredQuestion).options as option, optIndex}
           <button
             onclick={() => selectAnswer(currentQuestion.id, option.points, 'scored')}
+            role="radio"
+            aria-checked={answers[currentQuestion.id] === option.points}
             class="w-full text-left px-5 py-4 rounded-xl border-2 border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-150 cursor-pointer min-h-[56px] flex items-center gap-3 group"
           >
             <span class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-primary flex items-center justify-center text-sm font-medium text-muted group-hover:text-primary transition-colors">
@@ -222,6 +259,8 @@
         {#each (currentQuestion as QualifyingQuestion).options as option, optIndex}
           <button
             onclick={() => selectAnswer(currentQuestion.id, option.value, 'qualifying')}
+            role="radio"
+            aria-checked={qualifyingAnswers[currentQuestion.id] === option.value}
             class="w-full text-left px-5 py-4 rounded-xl border-2 border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-150 cursor-pointer min-h-[56px] flex items-center gap-3 group"
           >
             <span class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-primary flex items-center justify-center text-sm font-medium text-muted group-hover:text-primary transition-colors">
@@ -240,9 +279,9 @@
     <div class="inline-flex items-center justify-center w-28 h-28 rounded-full bg-primary/10 mb-2">
       <span class="text-4xl font-bold text-primary">{score}<span class="text-lg text-muted">/{MAX_SCORE}</span></span>
     </div>
-    <h2 class="text-2xl md:text-3xl font-bold text-default leading-snug">
+    <h1 bind:this={headingEl} tabindex="-1" class="text-2xl md:text-3xl font-bold text-default leading-snug">
       {scoreTier.label}
-    </h2>
+    </h1>
     <p class="text-lg text-muted max-w-md mx-auto">
       {scoreTier.summary}
     </p>
@@ -260,19 +299,21 @@
     <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-2">
       <span class="text-2xl font-bold text-primary">{score}<span class="text-sm text-muted">/{MAX_SCORE}</span></span>
     </div>
-    <h2 class="text-2xl font-bold text-default">
+    <h1 bind:this={headingEl} tabindex="-1" class="text-2xl font-bold text-default">
       Your Visibility Report is ready.
-    </h2>
+    </h1>
     <p class="text-base text-muted max-w-md mx-auto">
       Your weak spots, what they're costing you, and one thing to check this week.
     </p>
 
     <div class="max-w-sm mx-auto space-y-3">
+      <label for="scorecard-email" class="block text-sm font-medium text-default">Where should we send it?</label>
       <input
+        id="scorecard-email"
         type="email"
         bind:value={email}
         placeholder="you@company.com"
-        class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none text-base text-center"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus-visible:ring-2 focus-visible:ring-primary text-base text-center"
         onkeydown={(e) => e.key === 'Enter' && submitEmail()}
       />
       <button
@@ -304,14 +345,19 @@
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10">
         <span class="text-2xl font-bold text-primary">{score}<span class="text-sm text-muted">/{MAX_SCORE}</span></span>
       </div>
-      <h2 class="text-2xl font-bold text-default">{scoreTier.label}</h2>
+      <h1 bind:this={headingEl} tabindex="-1" class="text-2xl font-bold text-default">{scoreTier.label}</h1>
     </div>
+
+    <!-- Delivery failure sits above the results, so "shown below" is accurate -->
+    {#if emailFailed}
+      <p class="text-sm text-red-600 text-center">{submitError}</p>
+    {/if}
 
     <!-- Results body -->
     <div class="bg-gray-50 rounded-2xl p-6 md:p-8 space-y-6">
-      {#if emailSubmitted || emailSkipped}
+      {#if showFullResult || emailSkipped}
         <p class="text-base text-default leading-relaxed">
-          {#if emailSubmitted && !emailSkipped}
+          {#if showFullResult}
             {scoreTier.fullResult(industry, revenueBand)}
           {:else}
             {scoreTier.basicResult}
@@ -320,7 +366,7 @@
       {/if}
 
       <!-- Weak areas (only for email path) -->
-      {#if emailSubmitted && !emailSkipped && weakestAreas.length > 0}
+      {#if showFullResult && weakestAreas.length > 0}
         <div class="space-y-4 pt-4 border-t border-gray-200">
           <h3 class="text-lg font-semibold text-default">Your biggest blind spots</h3>
           {#each weakestAreas as areaId}
@@ -335,7 +381,7 @@
       {/if}
 
       <!-- Dollar impact (only for email path) -->
-      {#if emailSubmitted && !emailSkipped && score < 20}
+      {#if showFullResult && score < 20}
         <div class="pt-4 border-t border-gray-200">
           <h3 class="text-lg font-semibold text-default mb-2">What this is likely costing you</h3>
           <p class="text-base text-default leading-relaxed">
@@ -373,10 +419,10 @@
     {#if scoreTier.showBookCall}
       <div class="text-center space-y-3">
         <a
-          href="#"
+          href="/#final-cta"
           class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-lg"
         >
-          Book a 20-minute call
+          Talk to us about your results
         </a>
         <p class="text-sm text-muted">Let's look at what you're not seeing.</p>
       </div>
