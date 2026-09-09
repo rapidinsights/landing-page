@@ -3,7 +3,7 @@ import plugin from 'tailwindcss/plugin';
 import typographyPlugin from '@tailwindcss/typography';
 
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,ts,tsx,vue}'],
   theme: {
     extend: {
       // Tokens are channel lists in CustomStyles.astro; the `<alpha-value>`

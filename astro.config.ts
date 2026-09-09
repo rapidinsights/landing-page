@@ -24,8 +24,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
-  // Prefetch is enabled for internal links that opt in via `data-astro-prefetch`,
-  // so a hovered/focused CTA navigates instantly.
+  // Prefetch is enabled for internal links that opt in via `data-astro-prefetch`.
   prefetch: {
     defaultStrategy: 'hover',
   },
