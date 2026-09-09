@@ -9,7 +9,7 @@ metadata:
   title:
     default: Rapid Insights
     template: '%s — Rapid Insights'
-  description: "Rapid Insights helps operationally complex businesses replace spreadsheet chaos with real-time clarity \u2014 so leadership can make confident decisions based on what\u2019s actually happening."
+  description: "I find what's quietly costing your business money, and I fix it. Operational drag is the hidden time, money and capacity lost between the things your business does. Rapid Insights finds it and removes it."
   robots:
     index: true
     follow: true

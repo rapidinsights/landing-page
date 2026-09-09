@@ -1,8 +1,10 @@
 import { getPermalink, getHomePermalink } from './utils/permalinks';
 
+export const dragMapUrl = '/map';
+
 export const headerData = {
   links: [{ text: 'Home', href: getHomePermalink() }],
-  actions: [{ text: "Find out what you can't see", href: getPermalink('/scorecard') }],
+  actions: [{ text: 'Build your Drag Map', href: dragMapUrl }],
 };
 
 export const footerData = {

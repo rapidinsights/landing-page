@@ -15,8 +15,6 @@ import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
-import svelte from '@astrojs/svelte';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -26,8 +24,8 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
-  // Prefetch `/scorecard` on CTA hover/focus so the primary conversion
-  // navigation feels instant. Opt-in per-link via `data-astro-prefetch`.
+  // Prefetch is enabled for internal links that opt in via `data-astro-prefetch`,
+  // so a hovered/focused CTA navigates instantly.
   prefetch: {
     defaultStrategy: 'hover',
   },
@@ -74,7 +72,6 @@ export default defineConfig({
     astrowind({
       config: './src/config.yaml',
     }),
-    svelte(),
   ],
 
   image: {

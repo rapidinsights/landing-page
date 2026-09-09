@@ -2,19 +2,16 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import { getHomePermalink } from '~/utils/permalinks';
+import { dragMapUrl } from '~/navigation';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import HowItWorks from '~/components/widgets/HowItWorks.astro';
-import Deliverable from '~/components/widgets/Deliverable.astro';
+import ProofStrip from '~/components/widgets/ProofStrip.astro';
+import DragSystem from '~/components/widgets/DragSystem.astro';
+import Offer from '~/components/widgets/Offer.astro';
 import CaseStudies from '~/components/widgets/CaseStudies.astro';
-import FAQ from '~/components/widgets/FAQ.astro';
-import FeaturedTestimonial from '~/components/widgets/FeaturedTestimonial.astro';
-import RiskReversal from '~/components/widgets/RiskReversal.astro';
-import FinalCTA from '~/components/widgets/FinalCTA.astro';
-import ProblemAgitation from '~/components/widgets/ProblemAgitation.astro';
-import Stats from '~/components/widgets/Stats.astro';
+
 const metadata = {
-  title: 'Rapid Insights Consulting | Data & Analytics for Growing Businesses',
+  title: "Rapid Insights | I find what's costing your business money, and I fix it",
 };
 ---
 
@@ -25,9 +22,8 @@ const metadata = {
       actions={[
         {
           variant: 'primary',
-          text: "Find out what you can't see",
-          href: '/scorecard',
-          'data-astro-prefetch': true,
+          text: 'Build your Drag Map',
+          href: dragMapUrl,
         },
       ]}
       isSticky
@@ -38,11 +34,9 @@ const metadata = {
 
   <Hero
     id="hero"
-    title="You spend more time reacting than leading."
-    tagline=""
-    actions={[
-      { variant: 'primary', text: "Find out what you can't see", href: '/scorecard', 'data-astro-prefetch': true },
-    ]}
+    title="I find what's costing your business money, and I fix it."
+    subtitle="Most of it is operational drag: the hidden time, money, capacity and momentum lost between the things your business does."
+    actions={[{ variant: 'primary', text: 'Build your Drag Map', href: dragMapUrl }]}
   >
     <Fragment slot="bg">
       <!-- Dot grid: graph-paper texture, 24px tile, 18% cream over Prussian base -->
@@ -84,16 +78,12 @@ const metadata = {
       >
       </div>
     </Fragment>
-    <Fragment slot="subtitle">
-      It's not a leadership problem — you just can't see your own numbers. You have jobs in your pipeline right now
-      you'd turn down if you could see their actual margin.
-    </Fragment>
     <Fragment slot="content">
       <p
         class="flex items-center gap-2 text-sm text-muted-on-dark/80 mt-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
       >
         <span class="text-accent" aria-hidden="true">&bull;</span>
-        Free 2-minute assessment. No jargon. No obligation.
+        Free. Takes about 25 minutes. Export your map without giving an email.
       </p>
     </Fragment>
   </Hero>
@@ -174,55 +164,19 @@ const metadata = {
     }
   </script>
 
-  <!-- Problem Agitation ************* -->
+  <!-- Proof Strip — quantified results, no context -->
 
-  <ProblemAgitation />
+  <ProofStrip />
 
-  <!-- Stats — quantify the cost of the agitation moments above -->
+  <!-- Drag System — the enemy shown, the signature moment -->
 
-  <Stats
-    stats={[
-      {
-        amount: '88%',
-        title: 'of spreadsheets have at least one error',
-      },
-      {
-        amount: '58%',
-        title: 'of business decisions are based on gut feel',
-      },
-      {
-        amount: '15–25%',
-        title: 'of revenue lost to data blind spots',
-      },
-    ]}
-    isDark
-  />
+  <DragSystem />
 
-  <!-- How It Works — the path is simple -->
+  <!-- Offer — the Drag Map itself -->
 
-  <HowItWorks />
-
-  <!-- Deliverable — signature moment: show what you actually get -->
-
-  <Deliverable />
+  <Offer />
 
   <!-- Case Studies — proof the process works -->
 
   <CaseStudies />
-
-  <!-- FAQ / Objection Handling -->
-
-  <FAQ />
-
-  <!-- Featured Testimonial ********** -->
-
-  <FeaturedTestimonial />
-
-  <!-- Risk Reversal — guarantee before the final ask -->
-
-  <RiskReversal />
-
-  <!-- Final CTA — last impression before footer -->
-
-  <FinalCTA />
 </Layout>

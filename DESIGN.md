@@ -65,7 +65,7 @@ Class-triggered overrides defined in [CustomStyles.astro:50-88](src/components/C
 - `theme-prussian-orange` — navy primary (`20 33 61`) + bright orange accent (`252 163 17`)
 - `theme-refined-gold` — charcoal primary (`45 45 45`) + warm gold accent (`212 168 67`)
 
-**`theme-prussian-orange` is the production theme** — it is applied on `<html>` in [Layout.astro:27](src/layouts/Layout.astro#L27) and [ScorecardLayout.astro:24](src/layouts/ScorecardLayout.astro#L24). `theme-refined-gold` is dormant.
+**`theme-prussian-orange` is the production theme** — it is applied on `<html>` in [Layout.astro:27](src/layouts/Layout.astro#L27). `theme-refined-gold` is dormant.
 
 ---
 
