@@ -1,0 +1,62 @@
+---
+/**
+ * Client Logos — a four-mark rail at the foot of the hero.
+ * Establishes that real companies have hired me before the visitor reads
+ * a single argument. Rendered via the Hero `foot` slot so it stays above
+ * the fold. Tonal, not full-colour: every mark flattens to one cream tone
+ * so nothing competes with the orange CTA above it.
+ */
+import { Image } from 'astro:assets';
+import abm from '~/assets/images/logos/abm.svg';
+import apparelRedefined from '~/assets/images/logos/apparel-redefined.png';
+import b2btail from '~/assets/images/logos/b2btail.png';
+import coolChoir from '~/assets/images/logos/cool-choir.webp';
+---
+
+<div
+  class="border-t border-cream/15 pt-6 pb-9 md:pt-7 md:pb-9 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+>
+  <p class="font-mono text-xs uppercase tracking-label text-muted-on-dark/60">Who I&rsquo;ve helped</p>
+  <ul class="mt-5 grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-4 items-center">
+    <li>
+      <Image
+        src={abm}
+        alt="ABM"
+        height={30}
+        loading="eager"
+        densities={[1, 2]}
+        class="w-auto h-[30px] brightness-0 invert opacity-70"
+      />
+    </li>
+    <li>
+      <Image
+        src={apparelRedefined}
+        alt="Apparel Redefined"
+        height={30}
+        loading="eager"
+        densities={[1, 2]}
+        class="w-auto h-[30px] brightness-0 invert opacity-70"
+      />
+    </li>
+    <li>
+      <Image
+        src={b2btail}
+        alt="B2BTail"
+        height={26}
+        loading="eager"
+        densities={[1, 2]}
+        class="w-auto h-[26px] brightness-0 invert opacity-70"
+      />
+    </li>
+    <li>
+      <Image
+        src={coolChoir}
+        alt="Cool Choir"
+        height={44}
+        loading="eager"
+        densities={[1, 2]}
+        class="w-auto h-[44px] brightness-0 invert opacity-70"
+      />
+    </li>
+  </ul>
+</div>

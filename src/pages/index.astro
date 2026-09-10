@@ -5,6 +5,7 @@ import { getHomePermalink } from '~/utils/permalinks';
 import { dragMapUrl } from '~/navigation';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
+import ClientLogos from '~/components/widgets/ClientLogos.astro';
 import ProofStrip from '~/components/widgets/ProofStrip.astro';
 import DragSystem from '~/components/widgets/DragSystem.astro';
 import Offer from '~/components/widgets/Offer.astro';
@@ -89,6 +90,7 @@ const metadata = {
       <!-- Chalk map: the operation diagrammed as a system, right of the copy. Desktop only. -->
       <HeroChalkMap />
     </Fragment>
+    <ClientLogos slot="foot" />
   </Hero>
 
   <style is:global>

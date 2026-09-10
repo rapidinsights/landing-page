@@ -25,51 +25,54 @@ const {
     </slot>
   </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:pt-[76px]">
-    <div class="py-16 md:py-0 md:min-h-[calc(85vh-76px)] lg:min-h-[calc(88vh-76px)] flex items-center">
-      <div class="grid grid-cols-12 gap-6 w-full">
-        <div class="col-span-12 md:col-span-9 lg:col-span-8 xl:col-span-7">
-          {
-            tagline && (
-              <p
-                class="font-mono text-xs uppercase tracking-label text-accent mb-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
-                set:html={tagline}
-              />
-            )
-          }
-          {
-            title && (
-              <h1
-                class="text-5xl md:text-6xl lg:text-[78px] font-bold leading-[1.03] tracking-heading mb-6 md:mb-8 font-heading text-[#FAF5EF] intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
-                set:html={title}
-              />
-            )
-          }
-          {
-            subtitle && (
-              <p
-                class="text-lg md:text-xl text-[rgb(250_245_239_/_65%)] leading-relaxed max-w-[56ch] mb-8 md:mb-10 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
-                set:html={subtitle}
-              />
-            )
-          }
-          {
-            actions && (
-              <div class="flex flex-col sm:flex-row sm:justify-start gap-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-                {Array.isArray(actions) ? (
-                  actions.map((action) => (
-                    <div class="flex w-full sm:w-auto">
-                      <Button {...(action || {})} class="w-full sm:w-auto" />
-                    </div>
-                  ))
-                ) : (
-                  <Fragment set:html={actions} />
-                )}
-              </div>
-            )
-          }
-          {content && <Fragment set:html={content} />}
+    <div class="py-16 md:py-0 md:min-h-[calc(85vh-76px)] lg:min-h-[calc(88vh-76px)] flex flex-col">
+      <div class="flex-1 flex items-center w-full">
+        <div class="grid grid-cols-12 gap-6 w-full">
+          <div class="col-span-12 md:col-span-9 lg:col-span-8 xl:col-span-7">
+            {
+              tagline && (
+                <p
+                  class="font-mono text-xs uppercase tracking-label text-accent mb-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+                  set:html={tagline}
+                />
+              )
+            }
+            {
+              title && (
+                <h1
+                  class="text-5xl md:text-6xl lg:text-[78px] font-bold leading-[1.03] tracking-heading mb-6 md:mb-8 font-heading text-[#FAF5EF] intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+                  set:html={title}
+                />
+              )
+            }
+            {
+              subtitle && (
+                <p
+                  class="text-lg md:text-xl text-[rgb(250_245_239_/_65%)] leading-relaxed max-w-[56ch] mb-8 md:mb-10 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+                  set:html={subtitle}
+                />
+              )
+            }
+            {
+              actions && (
+                <div class="flex flex-col sm:flex-row sm:justify-start gap-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+                  {Array.isArray(actions) ? (
+                    actions.map((action) => (
+                      <div class="flex w-full sm:w-auto">
+                        <Button {...(action || {})} class="w-full sm:w-auto" />
+                      </div>
+                    ))
+                  ) : (
+                    <Fragment set:html={actions} />
+                  )}
+                </div>
+              )
+            }
+            {content && <Fragment set:html={content} />}
+          </div>
         </div>
       </div>
+      <slot name="foot" />
     </div>
     {
       image && (
