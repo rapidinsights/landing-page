@@ -347,7 +347,7 @@ const astro = `---
 ---
 
 <div
-  class="absolute top-0 md:top-[76px] bottom-0 left-4 right-4 sm:left-6 sm:right-6 hidden lg:block pointer-events-none"
+  class="absolute inset-0 hidden lg:block pointer-events-none"
   aria-hidden="true"
 >
   ${svg}
