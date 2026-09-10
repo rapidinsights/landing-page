@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # sharp 0.35 needs Node >= 20.9, so 18 is out.
+        # pnpm 11 needs Node >= 22.13, so 18 and 20 are out.
         node-version:
-          - 20
           - 22
+          - 24
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

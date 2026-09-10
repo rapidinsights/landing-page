@@ -4,7 +4,7 @@
   "description": "Landing page for Rapid Insights Consulting, driving visitors to the Drag Map.",
   "type": "module",
   "engines": {
-    "node": "^18.17.1 || ^20.3.0 || >= 21.0.0"
+    "node": ">=22.13.0"
   },
   "scripts": {
     "dev": "astro dev",
