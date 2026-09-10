@@ -8,11 +8,10 @@ import { join } from 'node:path';
 import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
 
-const ROUTES = ['/', '/scorecard'];
+const ROUTES = ['/'];
 const REPORT_DIR = '.lighthouse';
 
-// Guardrails from CLAUDE.md. LCP is a hard ceiling on both routes; Performance
-// is only gated on `/` because `/scorecard` ships the Svelte runtime.
+// Guardrails from CLAUDE.md, gated on `/`.
 const MIN_HOME_PERFORMANCE = 95;
 const MIN_ACCESSIBILITY = 100;
 const MAX_LCP_SECONDS = 2.0;

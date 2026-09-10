@@ -1,7 +1,7 @@
 {
   "name": "rapid-insights-landing-page",
   "version": "1.0.0-beta.52",
-  "description": "Landing page for Rapid Insights Consulting, driving visitors to the business visibility scorecard assessment.",
+  "description": "Landing page for Rapid Insights Consulting, driving visitors to the Drag Map.",
   "type": "module",
   "engines": {
     "node": "^18.17.1 || ^20.3.0 || >= 21.0.0"
@@ -24,7 +24,6 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.2",
-    "@astrojs/svelte": "^7.2.5",
     "@astrolib/analytics": "^0.6.1",
     "@astrolib/seo": "^1.0.0-beta.8",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
@@ -36,7 +35,6 @@
     "lenis": "^1.3.21",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
-    "svelte": "^5.53.0",
     "unpic": "^4.1.3"
   },
   "devDependencies": {
