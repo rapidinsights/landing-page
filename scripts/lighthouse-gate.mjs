@@ -1,5 +1,5 @@
 // Runs Lighthouse mobile against the built output and fails the build on the
-// performance guardrails documented in CLAUDE.md. Wired into CI as `npm run audit`.
+// performance guardrails documented in CLAUDE.md. Wired into CI as `pnpm run audit`.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { existsSync } from 'node:fs';
@@ -152,7 +152,7 @@ async function main() {
   if (existsSync('dist')) {
     console.log('Rebuilding so the audit measures current source.');
   }
-  await run('npm', ['run', 'build']);
+  await run('pnpm', ['run', 'build']);
 
   await mkdir(REPORT_DIR, { recursive: true });
 

@@ -1,0 +1,12 @@
+# Expose Astro dependencies for the flat node_modules Astro expects.
+shamefullyHoist: true
+# pnpm 11 blocks install scripts unless allowlisted; these two need their native binaries.
+allowBuilds:
+  esbuild: true
+  sharp: true
+# Security overrides for transitive copies (pnpm audit): astro 5 pins sharp 0.34,
+# astro-compress pins svgo 4.0 and deepmerge-ts 7. Remove when RAP-381 lands Astro 7.
+overrides:
+  sharp: 0.35.4
+  svgo: ^4.1.0
+  deepmerge-ts: ^8.0.0
