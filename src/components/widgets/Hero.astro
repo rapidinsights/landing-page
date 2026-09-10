@@ -26,7 +26,8 @@ const {
   </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:pt-[76px]">
     <div class="py-16 md:py-0 md:min-h-[calc(85vh-76px)] lg:min-h-[calc(88vh-76px)] flex flex-col">
-      <div class="flex-1 flex items-center w-full">
+      <!-- `relative` so the chalk map (absolute, in the content slot) spans the headline block, not the foot slot. -->
+      <div class="relative flex-1 flex items-center w-full">
         <div class="grid grid-cols-12 gap-6 w-full">
           <div class="col-span-12 md:col-span-9 lg:col-span-8 xl:col-span-7">
             {
@@ -72,6 +73,7 @@ const {
           </div>
         </div>
       </div>
+      <!-- Foot slot: content that must sit inside the first viewport, below the headline block (the client-logo rail). -->
       <slot name="foot" />
     </div>
     {
