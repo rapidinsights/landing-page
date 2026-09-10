@@ -4,7 +4,7 @@ export const dragMapUrl = '/map';
 
 export const headerData = {
   links: [{ text: 'Home', href: getHomePermalink() }],
-  actions: [{ text: 'Build your Drag Map', href: dragMapUrl }],
+  actions: [{ text: 'See what to fix first', href: dragMapUrl }],
 };
 
 export const footerData = {
