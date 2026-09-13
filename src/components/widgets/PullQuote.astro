@@ -1,0 +1,30 @@
+---
+/**
+ * Pull Quote — one named client vouching, under the offer, so "I" has a witness
+ * before the case cards. Sixth beat; added by RAP-380.
+ * Wireframe draft — the quote is the recovered Apparel Redefined testimonial,
+ * written for the old positioning, and wants a trim before it ships.
+ */
+import Image from '~/components/common/Image.astro';
+import headshot from '~/assets/images/johnlaroy.webp';
+---
+
+<section id="quote" class="relative not-prose bg-section">
+  <div
+    class="relative mx-auto max-w-4xl px-4 md:px-6 py-16 md:py-24 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+  >
+    <p class="font-mono text-[10px] uppercase tracking-label text-muted mb-6">Draft · beat 6 · pull quote · RAP-380</p>
+    <figure class="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
+      <Image src={headshot} alt="John Laroy" width={72} height={72} class="rounded-full flex-none grayscale" />
+      <div>
+        <blockquote class="font-display text-2xl md:text-3xl leading-snug text-default max-w-[30ch]">
+          &ldquo;Our managers are back to leading with clear and reliable data. Nothing feels impossible when Rapid
+          Insights is involved.&rdquo;
+        </blockquote>
+        <figcaption class="mt-5 font-mono text-xs uppercase tracking-label text-muted">
+          John Laroy &middot; CEO, Apparel Redefined
+        </figcaption>
+      </div>
+    </figure>
+  </div>
+</section>

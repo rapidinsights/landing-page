@@ -1,0 +1,42 @@
+---
+/**
+ * Scroll driver for the Method section.
+ *
+ * Contract: the Method widget's state is its three radio inputs (#m1, #m2, #m3).
+ * A driver's only job is to check one of them as the reader scrolls. This one
+ * uses three sentinels laid over the tall section and an IntersectionObserver
+ * whose root is a one-pixel line at the viewport's centre, so exactly one
+ * sentinel intersects at a time. Desktop only; phones show every step stacked.
+ *
+ * To try a library instead (e.g. GSAP ScrollTrigger), replace this component
+ * with one that checks the same radios. The markup and CSS in Method.astro
+ * need no change.
+ */
+---
+
+<!-- Spans exactly the scroll range where the block is pinned, measured at the viewport centre line the observer uses, so each step gets an equal hold. -->
+<div
+  class="method-sentinels absolute inset-x-0 top-[calc(50vh-76px)] bottom-[50vh] hidden md:block pointer-events-none"
+  aria-hidden="true"
+>
+  <div data-step="m1" class="absolute inset-x-0 top-0 h-1/3"></div>
+  <div data-step="m2" class="absolute inset-x-0 top-1/3 h-1/3"></div>
+  <div data-step="m3" class="absolute inset-x-0 top-2/3 h-1/3"></div>
+</div>
+
+<script>
+  if (matchMedia('(min-width: 768px)').matches) {
+    const sentinels = document.querySelectorAll<HTMLElement>('.method-sentinels [data-step]');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const radio = document.getElementById((e.target as HTMLElement).dataset.step!) as HTMLInputElement | null;
+          if (radio && !radio.checked) radio.checked = true;
+        }
+      },
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+    );
+    sentinels.forEach((s) => io.observe(s));
+  }
+</script>

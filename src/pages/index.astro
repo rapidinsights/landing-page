@@ -1,14 +1,15 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import { getHomePermalink } from '~/utils/permalinks';
-import { dragMapUrl } from '~/navigation';
+import { mapUrl, headerData } from '~/navigation';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import ClientLogos from '~/components/widgets/ClientLogos.astro';
-import ProofStrip from '~/components/widgets/ProofStrip.astro';
-import DragSystem from '~/components/widgets/DragSystem.astro';
+import Method from '~/components/widgets/Method.astro';
+import Examples from '~/components/widgets/Examples.astro';
 import Offer from '~/components/widgets/Offer.astro';
+import FinalCTA from '~/components/widgets/FinalCTA.astro';
+import PullQuote from '~/components/widgets/PullQuote.astro';
 import CaseStudies from '~/components/widgets/CaseStudies.astro';
 import HeroChalkMap from '~/components/widgets/HeroChalkMap.astro';
 const metadata = {
@@ -20,12 +21,12 @@ const metadata = {
 <Layout metadata={metadata}>
   <Fragment slot="header">
     <Header
-      links={[{ text: 'Home', href: getHomePermalink() }]}
+      links={headerData.links}
       actions={[
         {
           variant: 'primary',
           text: 'See what to fix first',
-          href: dragMapUrl,
+          href: mapUrl,
         },
       ]}
       isSticky
@@ -38,7 +39,7 @@ const metadata = {
     id="hero"
     title="I find what's costing your business money, and I fix it."
     subtitle="Every business is a system, and a few points in yours set the ceiling for the rest. I find those, price what they cost you, and clear them."
-    actions={[{ variant: 'primary', text: 'See what to fix first', href: dragMapUrl }]}
+    actions={[{ variant: 'primary', text: 'See what to fix first', href: mapUrl }]}
   >
     <Fragment slot="bg">
       <!-- Dot grid: graph-paper texture, 24px tile, 18% cream over Prussian base -->
@@ -169,19 +170,27 @@ const metadata = {
     }
   </script>
 
-  <!-- Proof Strip — quantified results, no context -->
+  <!-- Method — how I work, in three steps -->
 
-  <ProofStrip />
+  <Method />
 
-  <!-- Drag System — the enemy shown, the signature moment -->
+  <!-- Examples — concrete situations the reader recognises, draft for RAP-385 -->
 
-  <DragSystem />
+  <Examples />
 
-  <!-- Offer — the Drag Map itself -->
+  <!-- Offer — the free map itself -->
 
   <Offer />
+
+  <!-- Pull Quote — one named client, draft for RAP-380 -->
+
+  <PullQuote />
 
   <!-- Case Studies — proof the process works -->
 
   <CaseStudies />
+
+  <!-- Final CTA — the page's ending, draft for RAP-386 -->
+
+  <FinalCTA />
 </Layout>

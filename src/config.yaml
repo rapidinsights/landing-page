@@ -9,7 +9,7 @@ metadata:
   title:
     default: Rapid Insights
     template: '%s — Rapid Insights'
-  description: "I find what's quietly costing your business money, and I fix it. Operational drag is the hidden time, money and capacity lost between the things your business does. Rapid Insights finds it and removes it."
+  description: "I find what's quietly costing your business money, and I fix it. Most of it hides between the things your business does: the waiting, the handoffs, the work done twice. Rapid Insights finds those points and clears them."
   robots:
     index: true
     follow: true

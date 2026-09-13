@@ -1,0 +1,198 @@
+---
+/**
+ * Method — how I work in three steps: Look → Find → Fix.
+ * Sits right after the hero. Three numerals on the left act as tabs; the chosen
+ * step's scene shows on the right. Step one is the free map, so it carries the
+ * section's only CTA. Step three lists the ways I help, where they apply.
+ * Desktop is a tab set driven by radio inputs. On desktop the section is tall and
+ * the visible block sticks while scrolling; MethodScrollDriver checks the radios
+ * as the reader moves through it, and clicking a numeral still works. Below md
+ * every scene is shown stacked under its numeral, so nothing is hidden on a phone.
+ */
+import Button from '~/components/ui/Button.astro';
+import MethodScrollDriver from '~/components/widgets/MethodScrollDriver.astro';
+import { mapUrl } from '~/navigation';
+
+const steps = [
+  { id: 'm1', n: '1', word: 'Look', free: true },
+  { id: 'm2', n: '2', word: 'Find', free: false },
+  { id: 'm3', n: '3', word: 'Fix', free: false },
+];
+
+const ways = [
+  {
+    name: 'Automation',
+    icon: '<path d="M4 10a6 6 0 0 1 10.5-4M16 10a6 6 0 0 1-10.5 4"/><path d="M14 3v3h-3M6 17v-3h3"/>',
+  },
+  {
+    name: 'AI',
+    icon: '<path d="M10 3l1.6 4.4L16 9l-4.4 1.6L10 15l-1.6-4.4L4 9l4.4-1.6z"/><path d="M16 14l.7 1.8 1.8.7-1.8.7L16 19l-.7-1.8-1.8-.7 1.8-.7z"/>',
+  },
+  {
+    name: 'Software',
+    icon: '<rect x="2.5" y="4" width="15" height="12" rx="1.5"/><path d="M7 9l-2 1.5L7 12M13 9l2 1.5-2 1.5"/>',
+  },
+  {
+    name: 'Data',
+    icon: '<ellipse cx="10" cy="5" rx="6" ry="2.5"/><path d="M4 5v10c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5M4 10c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5"/>',
+  },
+  { name: 'Strategy', icon: '<circle cx="10" cy="10" r="7.5"/><path d="M13 7l-1.7 4.3L7 13l1.7-4.3z"/>' },
+];
+---
+
+<section id="method" class="relative not-prose bg-page md:min-h-[300vh]">
+  <MethodScrollDriver />
+  <div
+    class="method relative mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-20 md:sticky md:top-[76px] md:h-[calc(100vh-76px)] md:flex md:flex-col md:justify-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+  >
+    <h2 class="sr-only">How I work</h2>
+    <fieldset class="m-0 p-0 border-0 min-w-0 grid grid-cols-1 md:grid-cols-[380px_1fr] md:gap-x-24 items-start">
+      <legend class="font-mono text-xs uppercase tracking-label text-secondary mb-3 md:mb-5">How I work</legend>
+      {
+        steps.map((s, i) => (
+          <>
+            <input type="radio" name="method-step" id={s.id} class="sr-only" checked={i === 0} />
+            <label
+              for={s.id}
+              class:list={[
+                'step flex items-baseline gap-5 py-3 border-t border-default/15 transition-colors duration-200 md:cursor-pointer md:col-start-1',
+                i === 2 && 'md:border-b',
+              ]}
+            >
+              <b class="text-6xl font-extrabold tracking-[-0.03em] leading-none tabular-nums">{s.n}</b>
+              <span class="text-lg font-semibold">{s.word}</span>
+              {s.free && (
+                <span class="ml-auto font-mono text-xs uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
+                  free
+                </span>
+              )}
+            </label>
+            <div
+              class:list={[
+                'scene flex flex-col gap-5 pt-6 pb-10 md:pt-10 md:pb-0 md:col-start-2 md:row-start-1 md:row-span-3 md:self-start',
+                i === 2 && 'border-b border-default/15 md:border-b-0',
+              ]}
+            >
+              {i === 0 && (
+                <>
+                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
+                    I look at how your work moves.
+                  </h3>
+                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                    I draw the path a job takes through your shop. Where it starts, where it waits, where it stops. Not
+                    the org chart. The real path.
+                  </p>
+                  <p class="font-mono text-xs uppercase tracking-label text-muted">
+                    You get: a map of your business. It is free, and you keep it.
+                  </p>
+                  <div class="flex">
+                    <Button variant="primary" text="See what to fix first" href={mapUrl} />
+                  </div>
+                </>
+              )}
+              {i === 1 && (
+                <>
+                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
+                    I find the spot that slows it all.
+                  </h3>
+                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                    Most of the wait comes from one or two places on the map. I find them, and I show you what they
+                    cost.
+                  </p>
+                  <p class="font-mono text-xs uppercase tracking-label text-muted">
+                    You get: a short list, with a number on each line.
+                  </p>
+                </>
+              )}
+              {i === 2 && (
+                <>
+                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
+                    I build the fix.
+                  </h3>
+                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                    Small, specific, yours. Usually one or two of these:
+                  </p>
+                  <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
+                    {ways.map((w) => (
+                      <li class="flex items-center gap-2.5 font-semibold text-lg">
+                        <svg
+                          viewBox="0 0 20 20"
+                          class="w-5 h-5 text-secondary shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          set:html={w.icon}
+                        />
+                        {w.name}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </>
+        ))
+      }
+    </fieldset>
+  </div>
+</section>
+
+<style>
+  .step {
+    color: rgb(var(--aw-color-text-default) / 0.3);
+  }
+  .step:hover {
+    color: rgb(var(--aw-color-text-muted));
+  }
+  input:focus-visible + .step {
+    outline: 2px solid rgb(var(--aw-color-primary));
+    outline-offset: 2px;
+  }
+  /* Below md every step is expanded; the numerals are plain headings. */
+  @media (max-width: 767.98px) {
+    .step {
+      color: rgb(var(--aw-color-text-default));
+    }
+  }
+  @media (min-width: 768px) {
+    /* All three scenes share one grid cell, so the tallest sets the height and
+       switching never moves the section. Inactive scenes wait above or below the
+       active one depending on their order, so a change always reads as a scroll
+       in the direction the reader moved. */
+    .scene {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-160px);
+      transition:
+        opacity 450ms ease-out,
+        transform 700ms cubic-bezier(0.33, 1, 0.68, 1),
+        visibility 0s 700ms;
+    }
+    #m1:checked ~ .scene,
+    #m2:checked ~ .scene,
+    #m3:checked ~ .scene {
+      transform: translateY(160px);
+    }
+    #m1:checked + .step,
+    #m2:checked + .step,
+    #m3:checked + .step {
+      color: rgb(var(--aw-color-text-default));
+    }
+    #m1:checked + .step + .scene,
+    #m2:checked + .step + .scene,
+    #m3:checked + .step + .scene {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition-delay: 0s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scene {
+      transition: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+/**
+ * Examples — concrete situations, one line each, so a reader recognises their own
+ * operation in the words they would use themselves. Sits after the method and
+ * before the offer: the reader has just been told how I work, and this is where
+ * they decide it applies to them. Fourth beat.
+ * Wireframe draft — the real four lines land in RAP-385. The bodies below are
+ * placeholders shaped from the real engagements so the section reads.
+ */
+const examples = [
+  {
+    label: 'Writing it down',
+    body: 'Placeholder: the same procedure gets written from scratch every time, because the last version lives in somebody’s inbox.',
+  },
+  {
+    label: 'Receiving',
+    body: 'Placeholder: stock sits on the dock because the paperwork that releases it moves slower than the truck did.',
+  },
+  {
+    label: 'Knowing the margin',
+    body: 'Placeholder: the job is finished and invoiced before anyone can say whether it made money.',
+  },
+  {
+    label: 'The same number, twice',
+    body: 'Placeholder: a figure is keyed into one system, then keyed into another, and the two disagree by Friday.',
+  },
+];
+---
+
+<section id="examples" class="relative not-prose bg-page">
+  <div
+    class="relative mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-24 lg:py-32 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+  >
+    <p class="font-mono text-[10px] uppercase tracking-label text-muted mb-6">Draft · beat 4 · examples · RAP-385</p>
+
+    <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight text-default max-w-[18ch]">
+      You have probably seen one of these.
+    </h2>
+
+    <dl class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+      {
+        examples.map((e) => (
+          <div class="border-l-2 border-accent/70 pl-5">
+            <dt class="font-mono text-xs uppercase tracking-label text-secondary">{e.label}</dt>
+            <dd class="mt-2 text-base leading-relaxed text-default max-w-[56ch]">{e.body}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
