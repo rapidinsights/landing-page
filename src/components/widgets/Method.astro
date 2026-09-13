@@ -1,22 +1,20 @@
 ---
 /**
  * Method — how I work in three steps: Look → Find → Fix.
- * Sits right after the hero. Three numerals on the left act as tabs; the chosen
- * step's scene shows on the right. Step one is the free map, so it carries the
- * section's only CTA. Step three lists the ways I help, where they apply.
- * Desktop is a tab set driven by radio inputs. On desktop the section is tall and
- * the visible block sticks while scrolling; MethodScrollDriver checks the radios
- * as the reader moves through it, and clicking a numeral still works. Below md
- * every scene is shown stacked under its numeral, so nothing is hidden on a phone.
+ * Sits right after the hero. On desktop the three steps scroll past as ordinary
+ * page content, one viewport each, while a single large numeral pinned on the
+ * left ticks over as each step reaches the middle of the screen. The text moves
+ * at scroll speed and can always be scrolled back to. Step one is the free map.
+ * Step three lists the ways I help and carries the section's only CTA.
+ * On phones the numeral is a short bar pinned under the site header instead.
  */
 import Button from '~/components/ui/Button.astro';
-import MethodScrollDriver from '~/components/widgets/MethodScrollDriver.astro';
 import { mapUrl } from '~/navigation';
 
 const steps = [
-  { id: 'm1', n: '1', word: 'Look', free: true },
-  { id: 'm2', n: '2', word: 'Find', free: false },
-  { id: 'm3', n: '3', word: 'Fix', free: false },
+  { n: '01', word: 'Look', free: true },
+  { n: '02', word: 'Find', free: false },
+  { n: '03', word: 'Fix', free: false },
 ];
 
 const ways = [
@@ -40,159 +38,145 @@ const ways = [
 ];
 ---
 
-<section id="method" class="relative not-prose bg-page md:min-h-[300vh]">
-  <MethodScrollDriver />
-  <div
-    class="method relative mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-20 md:sticky md:top-[76px] md:h-[calc(100vh-76px)] md:flex md:flex-col md:justify-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
-  >
+<section id="method" class="relative not-prose bg-page" data-step="01">
+  <div class="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-0 grid grid-cols-1 md:grid-cols-12 md:gap-x-6">
     <h2 class="sr-only">How I work</h2>
-    <fieldset class="m-0 p-0 border-0 min-w-0 grid grid-cols-1 md:grid-cols-[380px_1fr] md:gap-x-24 items-start">
-      <legend class="font-mono text-xs uppercase tracking-label text-secondary mb-3 md:mb-5">How I work</legend>
+
+    <!-- Pinned numeral: one row of the ticker is visible; the row for the active step slides into view.
+         A short bar under the site header on phones, a full-height column on desktop. -->
+    <div
+      class="sticky top-[76px] z-10 bg-page pt-4 md:pt-0 flex flex-col md:justify-center md:col-span-5 md:h-[calc(100vh-76px)]"
+      aria-hidden="true"
+    >
+      <p class="font-mono text-xs uppercase tracking-label text-secondary mb-3 md:mb-5">How I work</p>
+      <div class="ticker h-20 md:h-28 overflow-clip border-t border-b border-default/15">
+        <div class="ticker-rows">
+          {
+            steps.map((s) => (
+              <div class="flex items-baseline gap-4 md:gap-5 h-20 md:h-28 leading-none">
+                <b class="text-6xl md:text-8xl font-extrabold tracking-[-0.03em] tabular-nums text-secondary">{s.n}</b>
+                <span class="text-lg md:text-2xl font-semibold">{s.word}</span>
+                {s.free && (
+                  <span class="ml-auto font-mono text-xs uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
+                    free
+                  </span>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <ol class="m-0 p-0 list-none md:col-start-7 md:col-span-6">
       {
         steps.map((s, i) => (
-          <>
-            <input type="radio" name="method-step" id={s.id} class="sr-only" checked={i === 0} />
-            <label
-              for={s.id}
-              class:list={[
-                'step flex items-baseline gap-5 py-3 border-t border-default/15 transition-colors duration-200 md:cursor-pointer md:col-start-1',
-                i === 2 && 'md:border-b',
-              ]}
-            >
-              <b class="text-6xl font-extrabold tracking-[-0.03em] leading-none tabular-nums">{s.n}</b>
-              <span class="text-lg font-semibold">{s.word}</span>
-              {s.free && (
-                <span class="ml-auto font-mono text-xs uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
-                  free
-                </span>
-              )}
-            </label>
-            <div
-              class:list={[
-                'scene flex flex-col gap-5 pt-6 pb-10 md:pt-10 md:pb-0 md:col-start-2 md:row-start-1 md:row-span-3 md:self-start',
-                i === 2 && 'border-b border-default/15 md:border-b-0',
-              ]}
-            >
-              {i === 0 && (
-                <>
-                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
-                    I look at how your work moves.
-                  </h3>
-                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                    I draw the path a job takes through your shop. Where it starts, where it waits, where it stops. Not
-                    the org chart. The real path.
-                  </p>
-                  <p class="font-mono text-xs uppercase tracking-label text-muted">
-                    You get: a map of your business. It is free, and you keep it.
-                  </p>
-                  <div class="flex">
-                    <Button variant="primary" text="See what to fix first" href={mapUrl} />
-                  </div>
-                </>
-              )}
-              {i === 1 && (
-                <>
-                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
-                    I find the spot that slows it all.
-                  </h3>
-                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                    Most of the wait comes from one or two places on the map. I find them, and I show you what they
-                    cost.
-                  </p>
-                  <p class="font-mono text-xs uppercase tracking-label text-muted">
-                    You get: a short list, with a number on each line.
-                  </p>
-                </>
-              )}
-              {i === 2 && (
-                <>
-                  <h3 class="font-heading text-3xl md:text-[40px] font-bold leading-tight tracking-heading max-w-[20ch]">
-                    I build the fix.
-                  </h3>
-                  <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                    Small, specific, yours. Usually one or two of these:
-                  </p>
-                  <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
-                    {ways.map((w) => (
-                      <li class="flex items-center gap-2.5 font-semibold text-lg">
-                        <svg
-                          viewBox="0 0 20 20"
-                          class="w-5 h-5 text-secondary shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                          set:html={w.icon}
-                        />
-                        {w.name}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </div>
-          </>
+          <li
+            data-step={s.n}
+            class="step flex flex-col gap-5 py-10 md:py-0 md:min-h-[calc(100vh-76px)] md:justify-center border-t first:border-0 border-default/15 md:border-0"
+          >
+            {i === 0 && (
+              <>
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                  I look at how your work moves.
+                </h3>
+                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                  I draw the path a job takes through your shop. Where it starts, where it waits, where it stops. Not
+                  the org chart. The real path.
+                </p>
+                <p class="font-mono text-xs uppercase tracking-label text-muted">
+                  You get: a map of your business. It is free, and you keep it.
+                </p>
+              </>
+            )}
+            {i === 1 && (
+              <>
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                  I find the spot that slows it all.
+                </h3>
+                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                  Most of the wait comes from one or two places on the map. I find them, and I show you what they cost.
+                </p>
+                <p class="font-mono text-xs uppercase tracking-label text-muted">
+                  You get: a short list, with a number on each line.
+                </p>
+              </>
+            )}
+            {i === 2 && (
+              <>
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                  I build the fix.
+                </h3>
+                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                  Small, specific, yours. Usually one or two of these:
+                </p>
+                <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
+                  {ways.map((w) => (
+                    <li class="flex items-center gap-2.5 font-semibold text-lg">
+                      <svg
+                        viewBox="0 0 20 20"
+                        class="w-5 h-5 text-secondary shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                        set:html={w.icon}
+                      />
+                      {w.name}
+                    </li>
+                  ))}
+                </ul>
+                <div class="flex">
+                  <Button variant="primary" text="See what to fix first" href={mapUrl} />
+                </div>
+              </>
+            )}
+          </li>
         ))
       }
-    </fieldset>
+    </ol>
   </div>
 </section>
 
 <style>
-  .step {
-    color: rgb(var(--aw-color-text-default) / 0.3);
-  }
-  .step:hover {
-    color: rgb(var(--aw-color-text-muted));
-  }
-  input:focus-visible + .step {
-    outline: 2px solid rgb(var(--aw-color-primary));
-    outline-offset: 2px;
-  }
-  /* Below md every step is expanded; the numerals are plain headings. */
-  @media (max-width: 767.98px) {
-    .step {
-      color: rgb(var(--aw-color-text-default));
-    }
+  .ticker {
+    --row: 5rem;
   }
   @media (min-width: 768px) {
-    /* All three scenes share one grid cell, so the tallest sets the height and
-       switching never moves the section. Inactive scenes wait above or below the
-       active one depending on their order, so a change always reads as a scroll
-       in the direction the reader moved. */
-    .scene {
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(-160px);
-      transition:
-        opacity 450ms ease-out,
-        transform 700ms cubic-bezier(0.33, 1, 0.68, 1),
-        visibility 0s 700ms;
-    }
-    #m1:checked ~ .scene,
-    #m2:checked ~ .scene,
-    #m3:checked ~ .scene {
-      transform: translateY(160px);
-    }
-    #m1:checked + .step,
-    #m2:checked + .step,
-    #m3:checked + .step {
-      color: rgb(var(--aw-color-text-default));
-    }
-    #m1:checked + .step + .scene,
-    #m2:checked + .step + .scene,
-    #m3:checked + .step + .scene {
-      visibility: visible;
-      opacity: 1;
-      transform: none;
-      transition-delay: 0s;
+    .ticker {
+      --row: 7rem;
     }
   }
+  .ticker-rows {
+    transition: transform 500ms cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  #method[data-step='02'] .ticker-rows {
+    transform: translateY(calc(var(--row) * -1));
+  }
+  #method[data-step='03'] .ticker-rows {
+    transform: translateY(calc(var(--row) * -2));
+  }
   @media (prefers-reduced-motion: reduce) {
-    .scene {
-      transition: none !important;
+    .ticker-rows {
+      transition: none;
     }
   }
 </style>
+
+<script>
+  // Tick the pinned numeral to whichever step is crossing the middle of the
+  // viewport. Observer root is a one-pixel line at the centre, so one step
+  // intersects at a time.
+  const section = document.getElementById('method')!;
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) section.dataset.step = (e.target as HTMLElement).dataset.step;
+      }
+    },
+    { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+  );
+  section.querySelectorAll<HTMLElement>('.step').forEach((s) => io.observe(s));
+</script>
