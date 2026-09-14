@@ -106,6 +106,36 @@ Global rule in [tailwind.css:29-31](src/assets/styles/tailwind.css#L29-L31):
 
 Body `line-height: 1.6` is set on `body` in [tailwind.css:12-14](src/assets/styles/tailwind.css#L12-L14).
 
+## Type scale
+
+Every piece of text on the page takes one role from this table. Pick the role,
+copy its classes. Sizes step up by roughly 1.25x above body, so each jump reads
+as a deliberate change in rank.
+
+| Role      | Classes                            | Size (px, mobile → md → lg) | Family and weight                       | Used for                                          |
+| --------- | ---------------------------------- | --------------------------- | --------------------------------------- | ------------------------------------------------- |
+| `label`   | `text-xs`                          | 12                          | `font-mono` uppercase `tracking-label`  | Eyebrows, meta lines, card labels, client rail    |
+| `small`   | `text-sm`                          | 14                          | `font-sans`                             | Case card detail lists, fine print, footer        |
+| `body`    | `text-base`                        | 16                          | `font-sans` `leading-relaxed`           | Example lines, FAQ answers, case card lines       |
+| `lead`    | `text-lg md:text-xl`               | 18 → 20                     | `font-sans` `leading-relaxed`           | Hero subline, every section intro, Method copy    |
+| `title`   | `text-2xl md:text-3xl`             | 24 → 30                     | `font-heading` semibold/bold            | Method step titles, Offer price, the pull quote\* |
+| `metric`  | `text-3xl md:text-4xl`             | 30 → 36                     | `font-heading` bold `tabular-nums`      | Case study numbers                                |
+| `section` | `text-3xl md:text-5xl`             | 30 → 48                     | `font-heading` bold `tracking-heading`  | Every section H2                                  |
+| `display` | `text-5xl md:text-6xl lg:text-7xl` | 48 → 60 → 72                | `font-heading` bold `leading-[1.03]`    | Hero H1 only                                      |
+| `numeral` | `text-6xl md:text-8xl`             | 60 → 96                     | `font-heading` extrabold `tabular-nums` | Method's step numerals only (signature moment)    |
+
+\* The pull quote uses `title` size in `font-display`.
+
+Rules:
+
+- **No arbitrary sizes.** `text-[10px]`, `text-[78px]` and the like are off the
+  scale. If no role fits, that is a design conversation, not a new value.
+- **Nothing under 12px.** Mono uppercase labels are already hard to read small.
+- **`display` and `numeral` appear once each.** They are the Hero and Method
+  focal points; reusing their size anywhere else flattens both.
+- **Headings use `tracking-heading`**, not Tailwind's `tracking-tight`.
+- Header nav and footer brand are site chrome and sit outside this scale.
+
 ---
 
 ## Shape
