@@ -62,11 +62,14 @@ const cases = [
       </p>
     </div>
 
-    <ul class="cs-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-start m-0 p-0 list-none">
+    <ul class="cs-grid grid grid-cols-1 md:grid-cols-3 gap-6 m-0 p-0 list-none">
       {
         cases.map((c, i) => (
-          <li class="cs-card intersect intersect-once intersect-quarter" style={`--d: ${i * 250}ms`}>
-            <article class="cs-rise relative flex flex-col gap-5 rounded-2xl bg-white p-5 pb-7">
+          <li
+            class="cs-card intersect intersect-once intersect-quarter md:grid md:grid-rows-subgrid md:row-span-6"
+            style={`--d: ${i * 250}ms`}
+          >
+            <article class="cs-rise relative flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-6 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
               <div
                 class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-xs uppercase tracking-label text-muted"
                 aria-hidden="true"
@@ -117,7 +120,10 @@ const cases = [
                   <dt class="font-mono text-xs uppercase tracking-label text-muted">How long</dt>
                   <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.took}</dd>
                 </div>
-                <div class="col-span-2">
+              </dl>
+
+              <dl class="px-2 m-0">
+                <div>
                   <dt class="font-mono text-xs uppercase tracking-label text-muted">The surprise</dt>
                   <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.surprise}</dd>
                 </div>
