@@ -62,11 +62,11 @@ const cases = [
       </p>
     </div>
 
-    <ul class="cases grid grid-cols-1 md:grid-cols-3 gap-6 items-start m-0 p-0 list-none">
+    <ul class="cs-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-start m-0 p-0 list-none">
       {
         cases.map((c, i) => (
-          <li class="case intersect intersect-once intersect-quarter" style={`--d: ${i * 250}ms`}>
-            <article class="rise relative flex flex-col gap-5 rounded-2xl bg-white p-5 pb-7">
+          <li class="cs-card intersect intersect-once intersect-quarter" style={`--d: ${i * 250}ms`}>
+            <article class="cs-rise relative flex flex-col gap-5 rounded-2xl bg-white p-5 pb-7">
               <div
                 class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-xs uppercase tracking-label text-muted"
                 aria-hidden="true"
@@ -82,12 +82,12 @@ const cases = [
               <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
                 <p class="font-mono text-xs uppercase tracking-label text-muted">Result</p>
                 <p class="flex flex-col items-start font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight">
-                  <s class="strike no-underline font-semibold text-muted">
+                  <s class="cs-strike no-underline font-semibold text-muted">
                     <span class="sr-only">Was </span>
                     {c.before}
                   </s>
                   <svg
-                    class="arrowin text-accent my-1 ml-0.5"
+                    class="cs-arrow text-accent my-1 ml-0.5"
                     width="20"
                     height="28"
                     viewBox="0 0 20 28"
@@ -100,12 +100,12 @@ const cases = [
                   >
                     <path d="M10 2v22M3 17l7 7 7-7" />
                   </svg>
-                  <span class="after text-primary">
+                  <span class="cs-after text-primary">
                     <span class="sr-only">now </span>
                     {c.after}
                   </span>
                 </p>
-                <p class="after text-sm text-muted">{c.measure}</p>
+                <p class="cs-after text-sm text-muted">{c.measure}</p>
               </div>
 
               <dl class="px-2 m-0 grid grid-cols-2 gap-x-5 gap-y-4">
@@ -125,7 +125,7 @@ const cases = [
 
               <a
                 href={`/cases/${c.slug}`}
-                class="cta mx-2 self-start font-mono text-xs uppercase tracking-label text-primary"
+                class="cs-link mx-2 self-start font-mono text-xs uppercase tracking-label text-primary"
               >
                 Read the case study
                 <span class="sr-only">: {c.label}</span>
@@ -139,15 +139,18 @@ const cases = [
   </div>
 </section>
 
-<style>
-  .cases {
+<!-- Inline, not bundled: this CSS sits below the fold, and in the shared stylesheet it delays
+     the hero's first paint. Bundled, it pushed / LCP past the 2.0s gate. Class names carry a
+     cs- prefix because inline styles are not scoped. -->
+<style is:inline>
+  .cs-grid {
     --ease: cubic-bezier(0.33, 1, 0.68, 1);
   }
 
-  .strike {
+  .cs-strike {
     position: relative;
   }
-  .strike::after {
+  .cs-strike::after {
     content: '';
     position: absolute;
     left: -3px;
@@ -162,55 +165,55 @@ const cases = [
   /* Reveal: the card rises, then the before is struck and the after drops in.
      Cards trigger one at a time as they scroll in; desktop staggers them via --d. */
   @media (prefers-reduced-motion: no-preference) {
-    .rise {
+    .cs-rise {
       opacity: 0;
       transform: translateY(16px);
     }
-    .strike::after {
+    .cs-strike::after {
       transform: scaleX(0);
     }
-    .arrowin {
+    .cs-arrow {
       opacity: 0;
       transform: translateY(-10px);
     }
-    .after {
+    .cs-after {
       opacity: 0;
       transform: translateY(-8px);
     }
-    .case:not([no-intersect]) .rise {
-      animation: rise 900ms var(--ease) forwards;
+    .cs-card:not([no-intersect]) .cs-rise {
+      animation: cs-rise 900ms var(--ease) forwards;
       animation-delay: var(--d);
     }
-    .case:not([no-intersect]) .strike::after {
-      animation: strike 700ms var(--ease) forwards;
+    .cs-card:not([no-intersect]) .cs-strike::after {
+      animation: cs-strike 700ms var(--ease) forwards;
       animation-delay: calc(var(--d) + 1100ms);
     }
-    .case:not([no-intersect]) .arrowin {
-      animation: drop 600ms var(--ease) forwards;
+    .cs-card:not([no-intersect]) .cs-arrow {
+      animation: cs-drop 600ms var(--ease) forwards;
       animation-delay: calc(var(--d) + 1650ms);
     }
-    .case:not([no-intersect]) .after {
-      animation: drop 750ms var(--ease) forwards;
+    .cs-card:not([no-intersect]) .cs-after {
+      animation: cs-drop 750ms var(--ease) forwards;
       animation-delay: calc(var(--d) + 1850ms);
     }
   }
   @media (max-width: 767px) {
-    .case {
+    .cs-card {
       --d: 0ms !important;
     }
   }
-  @keyframes rise {
+  @keyframes cs-rise {
     to {
       opacity: 1;
       transform: none;
     }
   }
-  @keyframes strike {
+  @keyframes cs-strike {
     to {
       transform: scaleX(1);
     }
   }
-  @keyframes drop {
+  @keyframes cs-drop {
     to {
       opacity: 1;
       transform: none;
@@ -218,15 +221,15 @@ const cases = [
   }
 
   /* Focus: the other cards step back and the link underline grows. */
-  .case {
+  .cs-card {
     transition: opacity 450ms ease;
   }
   @media (hover: hover) {
-    .cases:has(.case:hover) .case:not(:hover) {
+    .cs-grid:has(.cs-card:hover) .cs-card:not(:hover) {
       opacity: 0.5;
     }
   }
-  .cta {
+  .cs-link {
     padding-bottom: 6px;
     background-image:
       linear-gradient(rgb(var(--aw-color-accent)), rgb(var(--aw-color-accent))),
@@ -240,15 +243,15 @@ const cases = [
     background-repeat: no-repeat;
     transition: background-size 550ms var(--ease);
   }
-  .case:hover .cta,
-  .cta:focus-visible {
+  .cs-card:hover .cs-link,
+  .cs-link:focus-visible {
     background-size:
       100% 2px,
       100% 2px;
   }
   @media (prefers-reduced-motion: reduce) {
-    .case,
-    .cta {
+    .cs-card,
+    .cs-link {
       transition: none;
     }
   }
