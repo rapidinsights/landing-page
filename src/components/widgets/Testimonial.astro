@@ -1,0 +1,53 @@
+---
+/**
+ * Testimonial — one client card right after the Method steps, so the reader
+ * sees a named result before the examples. Photo, quote, the outcome it
+ * delivered, and a link to the full case study page.
+ * /cases/apparel-redefined does not exist yet; it lands with the case pages.
+ */
+import Image from '~/components/common/Image.astro';
+import headshot from '~/assets/images/johnlaroy.webp';
+---
+
+<section id="testimonial" class="relative not-prose bg-prussian">
+  <div class="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-24 lg:py-28 flex justify-center">
+    <figure
+      class="w-full max-w-5xl bg-white rounded-2xl p-6 md:p-14 md:pr-16 grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)] gap-6 md:gap-14 items-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    >
+      <div class="flex md:block items-center gap-4">
+        <Image
+          src={headshot}
+          alt="John Laroy"
+          width={240}
+          height={300}
+          class="w-[72px] h-[90px] md:w-[240px] md:h-[300px] rounded-lg md:rounded-xl object-cover grayscale"
+        />
+        <figcaption class="md:hidden font-mono text-xs uppercase tracking-label text-muted leading-relaxed">
+          John Laroy<br />CEO, Apparel Redefined
+        </figcaption>
+      </div>
+      <div class="flex flex-col gap-5 md:gap-6">
+        <div class="flex flex-wrap items-baseline gap-4">
+          <p class="font-mono text-xs uppercase tracking-label text-secondary">Who this has worked for</p>
+          <span class="font-mono text-xs uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
+            Reduce labor
+          </span>
+        </div>
+        <blockquote class="font-display text-2xl md:text-3xl leading-snug text-default">
+          &ldquo;Our managers are back to leading with clear and reliable data. Nothing feels impossible when Rapid
+          Insights is involved.&rdquo;
+        </blockquote>
+        <figcaption class="hidden md:block font-mono text-xs uppercase tracking-label text-muted">
+          John Laroy &middot; CEO, Apparel Redefined
+        </figcaption>
+        <a
+          href="/cases/apparel-redefined"
+          data-astro-prefetch
+          class="self-start border-t border-default/10 pt-5 font-mono text-xs uppercase tracking-label text-primary underline decoration-accent decoration-2 underline-offset-4 hover:decoration-primary"
+        >
+          Read the full case study
+        </a>
+      </div>
+    </figure>
+  </div>
+</section>

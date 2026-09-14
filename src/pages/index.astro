@@ -6,10 +6,8 @@ import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import ClientLogos from '~/components/widgets/ClientLogos.astro';
 import Method from '~/components/widgets/Method.astro';
-import Examples from '~/components/widgets/Examples.astro';
-import Offer from '~/components/widgets/Offer.astro';
+import Testimonial from '~/components/widgets/Testimonial.astro';
 import FinalCTA from '~/components/widgets/FinalCTA.astro';
-import PullQuote from '~/components/widgets/PullQuote.astro';
 import CaseStudies from '~/components/widgets/CaseStudies.astro';
 import HeroChalkMap from '~/components/widgets/HeroChalkMap.astro';
 const metadata = {
@@ -174,23 +172,15 @@ const metadata = {
 
   <Method />
 
-  <!-- Examples — concrete situations the reader recognises, draft for RAP-385 -->
+  <!-- Testimonial — one named client, right after the steps -->
 
-  <Examples />
-
-  <!-- Offer — the free map itself -->
-
-  <Offer />
-
-  <!-- Pull Quote — one named client, draft for RAP-380 -->
-
-  <PullQuote />
+  <Testimonial />
 
   <!-- Case Studies — proof the process works -->
 
   <CaseStudies />
 
-  <!-- Final CTA — the page's ending, draft for RAP-386 -->
+  <!-- Final CTA — the offer and the page's ending, draft for RAP-386 -->
 
   <FinalCTA />
 </Layout>

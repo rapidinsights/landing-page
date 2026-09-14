@@ -1,28 +1,56 @@
 ---
 /**
- * Final CTA — the page's ending. Repeats the one action at the point of highest
- * intent, on the same prussian field as the hero so the page opens and shuts on
- * the same ground. Eighth beat, and the last thing anyone reads.
- * Wireframe draft — the real copy lands in RAP-386. The direct contact line is a
- * reserved slot only: the contact route is undecided and is its own issue.
+ * Final CTA — the offer and the page's ending. Says what the free map is, what
+ * you leave with and why it is free, then repeats the one action at the point of
+ * highest intent, on the same prussian field as the hero so the page opens and
+ * shuts on the same ground. Fifth beat, and the last thing anyone reads.
+ * Wireframe draft — the real copy lands in RAP-386 (offer blocks were RAP-375).
+ * The direct contact line is a reserved slot only: the contact route is
+ * undecided and is its own issue.
  */
 import Button from '~/components/ui/Button.astro';
 import { mapUrl } from '~/navigation';
+
+const blocks = [
+  {
+    heading: 'What it is',
+    body: 'A guided walkthrough that maps how work moves through your business and finds where it gets stuck. You answer structured questions; the diagram draws itself. You never draw.',
+  },
+  {
+    heading: 'What you leave with',
+    body: 'Your operation drawn as a flow, the stuck points marked and scored, a ranked list of what to fix first, a fix pattern for each, and an hours-to-dollars estimate with the arithmetic shown.',
+  },
+  {
+    heading: 'Why it is free',
+    body: 'It is my method, packaged. The map is the first thing I would build with you anyway. If it shows enough to work with, I offer to review it. Nothing ships unreviewed.',
+  },
+];
 ---
 
 <section id="final-cta" class="relative not-prose bg-prussian text-cream">
   <div
     class="relative mx-auto max-w-4xl px-4 md:px-6 py-16 md:py-24 lg:py-32 text-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
   >
-    <p class="font-mono text-[10px] uppercase tracking-label text-cream/60 mb-6">
-      Draft · beat 8 · final CTA · RAP-386
-    </p>
+    <p class="font-mono text-xs uppercase tracking-label text-cream/60 mb-6">Draft · beat 5 · offer + final CTA · RAP-386</p>
 
-    <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight text-cream max-w-[20ch] mx-auto">
+    <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-heading text-cream max-w-[20ch] mx-auto">
       Find out what to fix first.
     </h2>
 
-    <p class="mt-5 text-lg text-cream/65 max-w-[46ch] mx-auto leading-relaxed">Free. 8 minutes. No email needed.</p>
+    <p class="mt-5 text-lg md:text-xl text-cream/65 max-w-[46ch] mx-auto leading-relaxed">
+      Free. 8 minutes. No email needed.
+    </p>
+
+    <dl class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+      {
+        blocks.map((b) => (
+          <div>
+            <dt class="font-mono text-xs uppercase tracking-label text-cream/60 mb-3">{b.heading}</dt>
+            <dd class="m-0 text-base leading-relaxed text-cream/85">{b.body}</dd>
+          </div>
+        ))
+      }
+    </dl>
 
     <div class="mt-10 flex justify-center">
       <Button variant="primary" text="See what to fix first" href={mapUrl} />
@@ -30,7 +58,7 @@ import { mapUrl } from '~/navigation';
 
     <!-- Reserved: the quiet direct ask, for the reader who would rather talk than
          use the tool. Not wired here; the contact route is its own issue. -->
-    <p class="mt-12 font-mono text-[11px] uppercase tracking-label text-cream/60">
+    <p class="mt-12 font-mono text-xs uppercase tracking-label text-cream/60">
       Placeholder: direct contact line — not wired (structure only)
     </p>
   </div>
