@@ -1,20 +1,70 @@
 ---
 /**
- * Method — how I work in three steps: Look → Find → Fix.
+ * Method — The 90-Day Profit Recovery System, in three steps: Discover → Prove → Build.
  * Sits right after the hero. On desktop the three steps scroll past as ordinary
  * page content, one viewport each, while a single large numeral pinned on the
  * left ticks over as each step reaches the middle of the screen. The text moves
- * at scroll speed and can always be scrolled back to. Step one is the free map.
- * Step three lists the ways I help and carries the section's only CTA.
+ * at scroll speed and can always be scrolled back to. Step one shows the shape
+ * of what comes back as findings with the numbers left blank, then the
+ * no-find-no-fee line. Step three lists the ways I
+ * help, the monitoring that follows, and the section's only CTA.
  * On phones the numeral is a short bar pinned under the site header instead.
  */
 import Button from '~/components/ui/Button.astro';
 import { mapUrl } from '~/navigation';
 
 const steps = [
-  { n: '01', word: 'Look', free: true },
-  { n: '02', word: 'Find', free: false },
-  { n: '03', word: 'Fix', free: false },
+  { n: '01', word: 'Discover' },
+  { n: '02', word: 'Prove' },
+  { n: '03', word: 'Build' },
+];
+
+// Step one's findings, written as the finished report reads with the answers
+// withheld. Two withholdings, two arguments: the first line is struck out in
+// ink, because what is behind it is a name and not a number. The other two spin
+// like a reel that has not stopped, because the number is real and moving and
+// not yours yet. Reels hold six faces and loop on the seventh, which repeats the
+// first so the cycle closes without a jump.
+// Redacted names, not redacted numbers: what is struck out on the first line is
+// the list itself, so the bars run at the lengths real names run at.
+const redact = (w: number) =>
+  `<span class="redacted" style="--w:${w}em" aria-hidden="true"></span><span class="sr-only">redacted</span>`;
+
+// One wheel per digit, each on its own spindle like the wheels in a slot
+// machine. They spin once when the step scrolls into view and decelerate onto
+// the real figure — then a marker crosses it out, left to right, the same
+// ink that redacts the names in the first finding. The number is real; it is
+// just not yours yet. SPINS is how many faces pass before a wheel stops.
+const SPINS = 30;
+const dur = (i: number) => 2.15 + i * 0.18;
+
+const wheel = (i: number, land: string) => {
+  const faces =
+    Array.from({ length: SPINS }, (_, k) => `<span class="reel-face">${(k * 7 + i * 3) % 10}</span>`).join('') +
+    `<span class="reel-face">${land}</span>`;
+  return `<span class="reel" aria-hidden="true"><span class="reel-track" style="animation-duration:${dur(i).toFixed(
+    2
+  )}s;--end:-${(SPINS * 1.15).toFixed(2)}em">${faces}</span></span>`;
+};
+
+const rolling = (sample: string, label: string) => {
+  const chars = [...sample];
+  const wheels = chars.map((c, i) => (/\d/.test(c) ? wheel(i, c) : `<span class="reel-static">${c}</span>`)).join('');
+  // The marker starts a beat BEFORE the first wheel settles, and draws in the
+  // same direction the wheels stop in, so no digit is ever shown at rest.
+  const delay = (Math.min(...chars.map((c, i) => (/\d/.test(c) ? dur(i) : Infinity))) - 0.3).toFixed(2);
+  return `<span class="strike" style="--delay:${delay}s">${wheels}<span class="strike-ink" aria-hidden="true"></span></span><span class="sr-only">${label}</span>`;
+};
+
+const words = ['jobs', 'customers', 'channels'];
+const wordReel = `<span class="word-reel" aria-hidden="true"><span class="word-track">${[...words, words[0]]
+  .map((w) => `<span class="word-face">${w}</span>`)
+  .join('')}</span></span><span class="sr-only">${words.join(', ')}</span>`;
+
+const findings = [
+  `${redact(4.4)}, ${redact(3.1)} and ${redact(5.6)} are your most profitable ${wordReel}<br />${redact(3.6)} and ${redact(4.9)} are costing you money`,
+  `Your turn times could improve <span class="nowrap">${rolling('23', 'redacted')}%</span> once we take out this one bottleneck`,
+  `Manual work that could be automated is costing you <span class="nowrap">$${rolling('76,000', 'redacted')}</span> a year`,
 ];
 
 const ways = [
@@ -40,7 +90,7 @@ const ways = [
 
 <section id="method" class="relative not-prose bg-page" data-step="01">
   <div class="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-0 grid grid-cols-1 md:grid-cols-12 md:gap-x-6">
-    <h2 class="sr-only">How I work</h2>
+    <h2 class="sr-only">The 90-Day Profit Recovery System</h2>
 
     <!-- Pinned numeral: one row of the ticker is visible; the row for the active step slides into view.
          A short bar under the site header on phones, a full-height column on desktop. -->
@@ -48,7 +98,9 @@ const ways = [
       class="sticky top-[76px] z-10 bg-page pt-4 md:pt-0 flex flex-col md:justify-center md:col-span-5 md:h-[calc(100vh-76px)]"
       aria-hidden="true"
     >
-      <p class="font-mono text-xs uppercase tracking-label text-secondary mb-3 md:mb-5">How I work</p>
+      <p class="font-mono text-xs uppercase tracking-label text-secondary mb-3 md:mb-5">
+        The 90-Day Profit Recovery System
+      </p>
       <div class="ticker h-20 md:h-28 overflow-clip border-t border-b border-default/15">
         <div class="ticker-rows">
           {
@@ -56,11 +108,6 @@ const ways = [
               <div class="flex items-baseline gap-4 md:gap-5 h-20 md:h-28 leading-none">
                 <b class="text-6xl md:text-8xl font-extrabold tracking-[-0.03em] tabular-nums text-secondary">{s.n}</b>
                 <span class="text-2xl md:text-3xl font-semibold">{s.word}</span>
-                {s.free && (
-                  <span class="ml-auto font-mono text-xs uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
-                    free
-                  </span>
-                )}
               </div>
             ))
           }
@@ -73,42 +120,62 @@ const ways = [
         steps.map((s, i) => (
           <li
             data-step={s.n}
-            class="step flex flex-col gap-5 py-10 md:py-0 md:min-h-[calc(100vh-76px)] md:justify-center border-t first:border-0 border-default/15 md:border-0"
+            class="step intersect intersect-once intersect-quarter flex flex-col gap-5 py-10 md:py-0 md:min-h-[calc(100vh-76px)] md:justify-center border-t first:border-0 border-default/15 md:border-0"
           >
             {i === 0 && (
               <>
                 <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-                  I look at how your work moves.
+                  Show me the money.
                 </h3>
-                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  I draw the path a job takes through your shop. Where it starts, where it waits, where it stops. Not
-                  the org chart. The real path.
-                </p>
-                <p class="font-mono text-xs uppercase tracking-label text-muted">
-                  You get: a map of your business. It is free, and you keep it.
+                <ul class="m-0 p-0 list-none flex flex-col gap-4 max-w-[46ch]">
+                  {findings.map((f) => (
+                    <li class="flex gap-3 text-lg md:text-xl leading-relaxed">
+                      <span class="mt-[0.7em] h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true" />
+                      <span set:html={f} />
+                    </li>
+                  ))}
+                </ul>
+                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch] border-l-2 border-accent pl-4">
+                  I find the biggest profit opportunity in your business. If you decide it is not worth fixing, you do
+                  not pay.
                 </p>
               </>
             )}
             {i === 1 && (
               <>
                 <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-                  I find the spot that slows it all.
+                  <span class="daycount">
+                    <span class="oldwrap" aria-hidden="true">
+                      <span class="old">120</span>
+                    </span>
+                    <span class="newwrap" aria-hidden="true">
+                      <span class="new">10</span>
+                    </span>
+                    <span class="sr-only">10</span>
+                  </span>{' '}
+                  days to results.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  Most of the wait comes from one or two places on the map. I find them, and I show you what they cost.
+                  Ten working days from the day I get access, I am fixing something, not writing a report. The first win
+                  is real money, in your numbers, checked by your people.
+                </p>
+                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                  Small fix first, on purpose. You watch it pay before you say yes to the big one. Nothing big gets
+                  built on a plan that has not already worked once in your business.
                 </p>
                 <p class="font-mono text-xs uppercase tracking-label text-muted">
-                  You get: a short list, with a number on each line.
+                  You get: the first money back, and proof the rest will pay.
                 </p>
               </>
             )}
             {i === 2 && (
               <>
                 <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-                  I build the fix.
+                  Build it. Keep it paying.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  Small, specific, yours. Usually one or two of these:
+                  The money keeps coming back long after I am gone, and your team never takes on another project to get
+                  it. My crew or yours. Whatever it takes:
                 </p>
                 <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
                   {ways.map((w) => (
@@ -128,6 +195,9 @@ const ways = [
                     </li>
                   ))}
                 </ul>
+                <p class="font-mono text-xs uppercase tracking-label text-muted">
+                  You get: the full amount, counted, and watched.
+                </p>
                 <div class="flex">
                   <Button variant="primary" text="See what to fix first" href={mapUrl} />
                 </div>
@@ -139,6 +209,268 @@ const ways = [
     </ol>
   </div>
 </section>
+
+<style is:global>
+  /* Redacted answer: struck out in ink until step one runs. Uneven corners, a
+     fraction of a degree off level and a second stroke laid over the first, so
+     it reads as done by hand with a marker rather than drawn by a stylesheet. */
+  #method .redacted {
+    position: relative;
+    display: inline-block;
+    width: var(--w, 3em);
+    height: 0.82em;
+    margin: 0 0.14em;
+    vertical-align: -0.04em;
+    background: rgb(var(--aw-color-bg-prussian));
+    border-radius: 3px 1px 4px 2px / 2px 4px 1px 3px;
+    transform: rotate(-0.5deg);
+  }
+  #method .redacted::after {
+    content: '';
+    position: absolute;
+    left: -1.5%;
+    right: -2.5%;
+    top: 14%;
+    height: 68%;
+    background: rgb(var(--aw-color-bg-prussian));
+    border-radius: 2px 4px 1px 3px / 3px 1px 4px 2px;
+    transform: rotate(0.7deg);
+  }
+
+  /* Reel: a number still spinning. One face tall, rolling at a constant speed
+     like the number wheels in a slot machine that has not stopped yet. */
+  #method .reel {
+    display: inline-block;
+    height: 1.15em;
+    overflow: hidden;
+    vertical-align: -0.22em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  /* Paused until the step is in view, then one decelerating pass that ends on
+     the ink face and stays there. */
+  #method .reel-track {
+    display: block;
+    animation: reel-land 1.2s cubic-bezier(0.1, 0.76, 0.16, 1) 1 forwards paused;
+  }
+  #method .step:not([no-intersect]) .reel-track,
+  #method .step:not([no-intersect]) .strike,
+  #method .step:not([no-intersect]) .strike-ink,
+  #method .step:not([no-intersect]) .old::before,
+  #method .step:not([no-intersect]) .old::after,
+  #method .step:not([no-intersect]) .oldwrap,
+  #method .step:not([no-intersect]) .newwrap,
+  #method .step:not([no-intersect]) .new,
+  #method .step:not([no-intersect]) .word-track {
+    animation-play-state: running;
+  }
+  /* Marker stroke: the same hand-drawn ink that redacts the names above, drawn
+     across the settled figure left to right once the wheels stop. */
+  #method .strike {
+    position: relative;
+    display: inline-block;
+    /* The digits go with the ink, so nothing peeks out from under the stroke. */
+    animation: strike-hide 0.42s linear var(--delay) 1 forwards paused;
+  }
+  @keyframes strike-hide {
+    to {
+      color: transparent;
+    }
+  }
+  #method .strike-ink {
+    position: absolute;
+    left: -3%;
+    top: 0.33em;
+    width: 0;
+    height: 0.84em;
+    background: rgb(var(--aw-color-bg-prussian));
+    border-radius: 3px 1px 4px 2px / 2px 4px 1px 3px;
+    transform: rotate(-0.5deg);
+    animation: strike-draw 0.42s cubic-bezier(0.4, 0, 0.1, 1) var(--delay) 1 forwards paused;
+  }
+  #method .strike-ink::after {
+    content: '';
+    position: absolute;
+    inset: 14% -2% 18% 0;
+    background: rgb(var(--aw-color-bg-prussian));
+    border-radius: 2px 4px 1px 3px / 3px 1px 4px 2px;
+    transform: rotate(0.7deg);
+  }
+  @keyframes strike-draw {
+    to {
+      width: 106%;
+    }
+  }
+  #method .reel-static {
+    display: inline-block;
+  }
+
+  /* Step two headline: the number of days this normally takes, crossed out and
+     replaced by the number it takes here. Same marker as the redactions above,
+     drawn as a slash rather than a bar because the digits underneath are meant
+     to stay readable while it happens. Both numerals are width-animated, so the
+     line closes up on itself instead of jumping. */
+  #method .daycount {
+    /* One tabular digit at this weight and tracking, measured. The two numerals
+       are sized in digits so the swap lands on the same metric the text would
+       have had if it were typed there. */
+    --digit: 0.57em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  #method .oldwrap,
+  #method .newwrap {
+    display: inline-block;
+    overflow: hidden;
+    height: 1em;
+    line-height: 1;
+    vertical-align: -0.09em;
+  }
+  #method .oldwrap {
+    width: calc(var(--digit) * 3);
+    animation: count-out 0.3s cubic-bezier(0.5, 0, 0.75, 0) 1s 1 forwards paused;
+  }
+  /* The gap opens first and the number arrives into it, so no half-digit is
+     ever on screen. */
+  #method .newwrap {
+    width: 0;
+    animation: count-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) 1.26s 1 forwards paused;
+  }
+  #method .new {
+    display: inline-block;
+    opacity: 0;
+    animation: count-fade 0.34s ease-out 1.46s 1 forwards paused;
+  }
+  #method .old {
+    position: relative;
+    display: inline-block;
+  }
+  /* The stroke itself, drawn in two passes laid a fraction apart so it thickens
+     and thins the way a marker does instead of sitting at one even weight. */
+  #method .old::before,
+  #method .old::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 0;
+    background: rgb(var(--aw-color-bg-prussian));
+    transform-origin: left center;
+    animation: count-strike 0.4s cubic-bezier(0.35, 0, 0.1, 1) 0.55s 1 forwards paused;
+  }
+  #method .old::before {
+    top: 46%;
+    height: 0.1em;
+    border-radius: 3px 1px 4px 2px / 2px 4px 1px 3px;
+    transform: rotate(-7deg);
+  }
+  #method .old::after {
+    top: 47.5%;
+    height: 0.075em;
+    border-radius: 2px 4px 1px 3px / 3px 1px 4px 2px;
+    transform: rotate(-6.5deg);
+  }
+  @keyframes count-strike {
+    to {
+      width: 100%;
+    }
+  }
+  @keyframes count-out {
+    to {
+      width: 0;
+    }
+  }
+  @keyframes count-in {
+    to {
+      width: calc(var(--digit) * 2);
+    }
+  }
+  @keyframes count-fade {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Word wheel: same drum, much slower, and it rests on each word long enough
+     to be read before it turns. No mask — a word held still has to be legible
+     edge to edge, where a number mid-roll does not. */
+  #method .word-reel {
+    display: inline-block;
+    height: 1.4em;
+    overflow: hidden;
+    vertical-align: -0.34em;
+    font-weight: 600;
+  }
+  #method .word-track {
+    display: block;
+    animation: word-roll 7.5s infinite paused;
+  }
+  #method .word-face {
+    display: block;
+    height: 1.4em;
+    line-height: 1.4em;
+  }
+  @keyframes word-roll {
+    0%,
+    28% {
+      transform: translateY(0);
+    }
+    33.3%,
+    61.3% {
+      transform: translateY(-1.4em);
+    }
+    66.6%,
+    94.6% {
+      transform: translateY(-2.8em);
+    }
+    100% {
+      transform: translateY(-4.2em);
+    }
+  }
+  #method .nowrap {
+    white-space: nowrap;
+  }
+  #method .reel-face {
+    display: block;
+    height: 1.15em;
+    line-height: 1.15em;
+  }
+  @keyframes reel-land {
+    to {
+      transform: translateY(var(--end));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #method .reel-track {
+      animation: none;
+      transform: translateY(var(--end));
+    }
+    #method .strike-ink {
+      animation: none;
+      width: 106%;
+    }
+    #method .strike {
+      animation: none;
+      color: transparent;
+    }
+    #method .word-track {
+      animation: none;
+    }
+    #method .oldwrap {
+      display: none;
+    }
+    #method .newwrap {
+      animation: none;
+      width: calc(var(--digit) * 2);
+    }
+    #method .new {
+      animation: none;
+      opacity: 1;
+    }
+    #method .redacted {
+      transform: none;
+    }
+  }
+</style>
 
 <style>
   .ticker {

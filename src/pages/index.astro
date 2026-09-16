@@ -36,7 +36,7 @@ const metadata = {
   <Hero
     id="hero"
     title="I find what's costing your business money, and I fix it."
-    subtitle="Every business is a system, and a few points in yours set the ceiling for the rest. I find those, price what they cost you, and clear them."
+    subtitle="Recover lost profits from inefficiencies, waste, unbilled work, 3X greater than our fees in 90 days or you don't pay."
     actions={[{ variant: 'primary', text: 'See what to fix first', href: mapUrl }]}
   >
     <Fragment slot="bg">
@@ -80,12 +80,24 @@ const metadata = {
       </div>
     </Fragment>
     <Fragment slot="content">
-      <p
-        class="flex items-center gap-2 text-sm text-muted-on-dark/80 mt-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      <ul
+        class="flex flex-col gap-1.5 m-0 p-0 list-none text-sm text-muted-on-dark/80 mt-6 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
       >
-        <span class="text-accent" aria-hidden="true">&bull;</span>
-        Free tool. 8 minutes. No email needed.
-      </p>
+        {
+          [
+            'Free diagnostic tool to uncover your hidden opportunities.',
+            'Takes under 8 minutes.',
+            'No email needed.',
+          ].map((line) => (
+            <li class="flex items-center gap-2">
+              <span class="text-accent" aria-hidden="true">
+                &bull;
+              </span>
+              {line}
+            </li>
+          ))
+        }
+      </ul>
       <!-- Chalk map: the operation diagrammed as a system, right of the copy. Desktop only. -->
       <HeroChalkMap />
     </Fragment>
