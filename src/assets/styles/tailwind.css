@@ -89,6 +89,7 @@ body:has(#hero) #header > div:first-child {
 }
 
 /* Header over the dark hero — light text until the user scrolls past the hero.
+   Scoped to pages with a hero; elsewhere the header sits on the light page.
    Uses ID-level specificity to override Tailwind utility color classes. */
 #header .logo-text,
 #header nav a,
@@ -98,18 +99,18 @@ body:has(#hero) #header > div:first-child {
     color 200ms ease,
     background-color 200ms ease;
 }
-#header:not(.scroll):not(.expanded) .logo-text {
+body:has(#hero) #header:not(.scroll):not(.expanded) .logo-text {
   color: #faf5ef;
 }
-#header:not(.scroll):not(.expanded) nav a,
-#header:not(.scroll):not(.expanded) nav button {
+body:has(#hero) #header:not(.scroll):not(.expanded) nav a,
+body:has(#hero) #header:not(.scroll):not(.expanded) nav button {
   color: rgb(250 245 239 / 90%);
 }
-#header:not(.scroll):not(.expanded) nav a:hover,
-#header:not(.scroll):not(.expanded) nav button:hover {
+body:has(#hero) #header:not(.scroll):not(.expanded) nav a:hover,
+body:has(#hero) #header:not(.scroll):not(.expanded) nav button:hover {
   color: #faf5ef;
 }
-#header:not(.scroll):not(.expanded) [data-aw-toggle-menu] span {
+body:has(#hero) #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] span {
   background-color: #faf5ef;
 }
 /* #header.scroll > div:last-child {

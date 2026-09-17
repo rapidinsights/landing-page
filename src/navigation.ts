@@ -6,6 +6,7 @@ export const mapUrl = '/map';
 export const headerData = {
   links: [
     { text: 'Home', href: getHomePermalink() },
+    { text: 'Case Studies', href: '/#case-studies' },
     { text: 'About', href: getPermalink('/about') },
     { text: 'Blog', href: getPermalink('/blog') },
   ],

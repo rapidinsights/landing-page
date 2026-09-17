@@ -1,51 +1,17 @@
 ---
 /**
- * Case Studies — three jobs told from the owner's side, so a reader spots their
- * own problem and sees it has been fixed before. Each card opens on the problem
- * in the owner's words, then answers the questions a buyer asks: what changed,
- * was the business like mine, how long did it take, and what surprised us.
- * Each links to its own page at /cases/[slug]; those pages land with RAP-376.
- * Motion: as a card scrolls in it rises, the before is struck through and the
- * after drops in beneath it. On hover the other cards step back.
+ * Case Studies — three jobs told from the owner's side, so a reader spots a
+ * business like theirs and sees the problem has been fixed before. Each card
+ * carries the value equation: who the business is (likelihood), the problem,
+ * the value captured in dollars (dream outcome) with where it came from, and
+ * how long it took (time delay). The section total in the heading is the sum of the three values.
+ * Each links to its own page at /cases/[slug]. Data lives in ~/data/cases.
+ * Motion: as a card scrolls in it rises. On hover the card turns into a preview
+ * of the story, fading out mid-paragraph like a paywalled article.
  * Bracketed values are placeholders until the real figures and images land.
  */
 
-const cases = [
-  {
-    slug: 'abm-sop-generator',
-    label: 'SOP creation',
-    problem: 'Writing one procedure by hand takes a whole day.',
-    before: '8 hrs',
-    after: '5 min',
-    measure: 'to create one SOP',
-    business: 'Facility services, Fortune 500 division',
-    took: '[X weeks]',
-    surprise: '[One line: what was unexpected, or that it was simpler than it looked]',
-  },
-  {
-    slug: 'abm-budget-reporting',
-    label: 'budget reporting',
-    problem:
-      'Every month your team loses days pulling numbers out of four systems, and the report is stale by the time it lands.',
-    before: '200 hrs',
-    after: '20 hrs',
-    measure: 'a month spent on budget reporting',
-    business: 'Facility services, Fortune 500 division, four systems that do not talk',
-    took: '[X weeks]',
-    surprise: '[One line]',
-  },
-  {
-    slug: 'apparel-redefined-receiving',
-    label: 'receiving bottleneck',
-    problem: 'Your scorecard says the team is slow, and it does not feel true.',
-    before: '[Before]',
-    after: '[After]',
-    measure: '[What the number measures]',
-    business: 'Apparel Redefined, Chicago. Embroidery, print and fulfilment',
-    took: '[X weeks]',
-    surprise: 'The team was never the problem. Receiving was.',
-  },
-];
+import { cases, readMinutes } from '~/data/cases';
 ---
 
 <section id="case-studies" class="relative not-prose bg-page scroll-mt-[72px]">
@@ -55,11 +21,8 @@ const cases = [
     >
       <p class="font-mono text-xs uppercase tracking-label text-secondary mb-3">Case studies</p>
       <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-heading text-default">
-        You have probably seen one of these before.
+        [$Total] saved for three businesses like yours
       </h2>
-      <p class="mt-4 text-lg md:text-xl leading-relaxed text-muted">
-        Three jobs, told from the owner's side. If one reads like your week, I have fixed it before.
-      </p>
     </div>
 
     <ul class="cs-grid grid grid-cols-1 md:grid-cols-3 gap-6 m-0 p-0 list-none">
@@ -69,7 +32,7 @@ const cases = [
             class="cs-card intersect intersect-once intersect-quarter md:grid md:grid-rows-subgrid md:row-span-6"
             style={`--d: ${i * 250}ms`}
           >
-            <article class="cs-rise relative flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-6 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
+            <article class="cs-rise relative overflow-hidden flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-6 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
               <div
                 class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-xs uppercase tracking-label text-muted"
                 aria-hidden="true"
@@ -77,56 +40,24 @@ const cases = [
                 [Image]
               </div>
 
-              <div class="px-2 flex flex-col gap-2.5">
-                <p class="font-mono text-xs uppercase tracking-label text-muted">Sound familiar?</p>
-                <h3 class="text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
+              <div class="px-2 flex flex-col gap-1">
+                <p class="text-lg font-bold text-default">{c.name}</p>
+                <p class="font-mono text-xs uppercase tracking-label text-muted">{c.business}</p>
               </div>
+
+              <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
 
               <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
-                <p class="font-mono text-xs uppercase tracking-label text-muted">Result</p>
-                <p class="flex flex-col items-start font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight">
-                  <s class="cs-strike no-underline font-semibold text-muted">
-                    <span class="sr-only">Was </span>
-                    {c.before}
-                  </s>
-                  <svg
-                    class="cs-arrow text-accent my-1 ml-0.5"
-                    width="20"
-                    height="28"
-                    viewBox="0 0 20 28"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M10 2v22M3 17l7 7 7-7" />
-                  </svg>
-                  <span class="cs-after text-primary">
-                    <span class="sr-only">now </span>
-                    {c.after}
-                  </span>
+                <p class="font-mono text-xs uppercase tracking-label text-muted">Value captured</p>
+                <p class="font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight text-primary">
+                  {c.value}
                 </p>
-                <p class="cs-after text-sm text-muted">{c.measure}</p>
+                <p class="text-sm leading-relaxed text-muted">{c.basis}</p>
               </div>
 
-              <dl class="px-2 m-0 grid grid-cols-2 gap-x-5 gap-y-4">
-                <div>
-                  <dt class="font-mono text-xs uppercase tracking-label text-muted">Business like yours?</dt>
-                  <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.business}</dd>
-                </div>
-                <div>
-                  <dt class="font-mono text-xs uppercase tracking-label text-muted">How long</dt>
-                  <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.took}</dd>
-                </div>
-              </dl>
-
               <dl class="px-2 m-0">
-                <div>
-                  <dt class="font-mono text-xs uppercase tracking-label text-muted">The surprise</dt>
-                  <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.surprise}</dd>
-                </div>
+                <dt class="font-mono text-xs uppercase tracking-label text-muted">How long</dt>
+                <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.took}</dd>
               </dl>
 
               <a
@@ -137,6 +68,21 @@ const cases = [
                 <span class="sr-only">: {c.label}</span>
                 <span class="absolute inset-0 rounded-2xl" aria-hidden="true" />
               </a>
+
+              <div class="cs-preview absolute inset-0 bg-white px-7 pt-7 pb-20 flex flex-col gap-3" aria-hidden="true">
+                <p class="font-mono text-xs uppercase tracking-label text-muted">
+                  {c.name} · {readMinutes(c)} min read
+                </p>
+                <p class="font-display text-xl font-semibold leading-snug text-default">{c.problem}</p>
+                <div class="cs-fade relative flex-1 overflow-hidden">
+                  {c.story[0].paragraphs.map((p) => (
+                    <p class="font-display text-base leading-relaxed text-default mb-3">{p}</p>
+                  ))}
+                </div>
+                <span class="absolute left-7 bottom-7 rounded-full bg-primary px-4 py-2.5 font-mono text-xs uppercase tracking-label text-white">
+                  Keep reading
+                </span>
+              </div>
             </article>
           </li>
         ))
@@ -153,54 +99,15 @@ const cases = [
     --ease: cubic-bezier(0.33, 1, 0.68, 1);
   }
 
-  .cs-strike {
-    position: relative;
-  }
-  .cs-strike::after {
-    content: '';
-    position: absolute;
-    left: -3px;
-    right: -3px;
-    top: 54%;
-    height: 3px;
-    border-radius: 2px;
-    background: currentColor;
-    transform-origin: left;
-  }
-
-  /* Reveal: the card rises, then the before is struck and the after drops in.
-     Cards trigger one at a time as they scroll in; desktop staggers them via --d. */
+  /* Reveal: cards rise one at a time as they scroll in; desktop staggers them via --d. */
   @media (prefers-reduced-motion: no-preference) {
     .cs-rise {
       opacity: 0;
       transform: translateY(16px);
     }
-    .cs-strike::after {
-      transform: scaleX(0);
-    }
-    .cs-arrow {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    .cs-after {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
     .cs-card:not([no-intersect]) .cs-rise {
       animation: cs-rise 900ms var(--ease) forwards;
       animation-delay: var(--d);
-    }
-    .cs-card:not([no-intersect]) .cs-strike::after {
-      animation: cs-strike 700ms var(--ease) forwards;
-      animation-delay: calc(var(--d) + 1100ms);
-    }
-    .cs-card:not([no-intersect]) .cs-arrow {
-      animation: cs-drop 600ms var(--ease) forwards;
-      animation-delay: calc(var(--d) + 1650ms);
-    }
-    .cs-card:not([no-intersect]) .cs-after {
-      animation: cs-drop 750ms var(--ease) forwards;
-      animation-delay: calc(var(--d) + 1850ms);
     }
   }
   @media (max-width: 767px) {
@@ -214,25 +121,30 @@ const cases = [
       transform: none;
     }
   }
-  @keyframes cs-strike {
-    to {
-      transform: scaleX(1);
-    }
-  }
-  @keyframes cs-drop {
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
 
-  /* Focus: the other cards step back and the link underline grows. */
-  .cs-card {
-    transition: opacity 450ms ease;
+  /* Peek: on hover the card becomes a preview of its story. Pointer events pass
+     through to the card's stretched link underneath. The 400ms delay (NN/g) keeps
+     a cursor passing over the row from flashing previews; leaving hides at once. */
+  .cs-preview {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition:
+      opacity 400ms var(--ease),
+      transform 500ms var(--ease);
+  }
+  .cs-fade::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 160px;
+    background: linear-gradient(rgb(255 255 255 / 0), rgb(255 255 255));
   }
   @media (hover: hover) {
-    .cs-grid:has(.cs-card:hover) .cs-card:not(:hover) {
-      opacity: 0.5;
+    .cs-card:hover .cs-preview {
+      opacity: 1;
+      transform: none;
+      transition-delay: 400ms;
     }
   }
   .cs-link {
@@ -249,14 +161,15 @@ const cases = [
     background-repeat: no-repeat;
     transition: background-size 550ms var(--ease);
   }
-  .cs-card:hover .cs-link,
   .cs-link:focus-visible {
     background-size:
       100% 2px,
       100% 2px;
   }
   @media (prefers-reduced-motion: reduce) {
-    .cs-card,
+    .cs-preview {
+      transform: none;
+    }
     .cs-link {
       transition: none;
     }
