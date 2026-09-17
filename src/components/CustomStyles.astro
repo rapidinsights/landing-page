@@ -1,6 +1,11 @@
 ---
 import '~/assets/styles/fonts.css';
+// The heading font sets the hero H1, the page's LCP element. Preloading it means
+// the download starts with the HTML instead of after the stylesheet is parsed.
+import headingFont from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 ---
+
+<link rel="preload" href={headingFont} as="font" type="font/woff2" crossorigin />
 
 <style is:inline>
   /* Colour tokens are bare space-separated CHANNEL LISTS ("1 28 66"), never

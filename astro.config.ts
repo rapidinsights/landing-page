@@ -29,6 +29,11 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
 
+  // Both stylesheets were render-blocking round trips ahead of the hero's first
+  // paint (Lighthouse: ~750ms). Inlining them trades cross-page caching, which a
+  // one-page site barely uses, for a shorter critical path.
+  build: { inlineStylesheets: 'always' },
+
   integrations: [
     tailwind({
       applyBaseStyles: false,
