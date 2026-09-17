@@ -114,7 +114,7 @@ as a deliberate change in rank.
 
 | Role      | Classes                            | Size (px, mobile → md → lg) | Family and weight                       | Used for                                          |
 | --------- | ---------------------------------- | --------------------------- | --------------------------------------- | ------------------------------------------------- |
-| `label`   | `text-xs`                          | 12                          | `font-mono` uppercase `tracking-label`  | Eyebrows, meta lines, card labels, client rail    |
+| `label`   | `text-sm`                          | 14                          | `font-mono` uppercase `tracking-label`  | Eyebrows, meta lines, card labels, client rail    |
 | `small`   | `text-sm`                          | 14                          | `font-sans`                             | Case card detail lists, fine print, footer        |
 | `body`    | `text-base`                        | 16                          | `font-sans` `leading-relaxed`           | Example lines, FAQ answers, case card lines       |
 | `lead`    | `text-lg md:text-xl`               | 18 → 20                     | `font-sans` `leading-relaxed`           | Hero subline, every section intro, Method copy    |
