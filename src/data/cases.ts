@@ -2,6 +2,8 @@
 // peek shows the opening of the same story the page tells in full.
 // Bracketed values and the lorem ipsum story are placeholders until the real cases land.
 
+import abmTechnicians from '~/assets/images/abm-semiconductor-technicians.webp';
+
 const lorem = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -24,6 +26,9 @@ export interface Case {
   // Where the value came from, e.g. "Labor reduction: 180 hrs a month at $45 an hour".
   basis: string;
   took: string;
+  // Photo at the top of the case page. From the client's own site; confirm they are fine with its use before publishing.
+  image?: ImageMetadata;
+  imageAlt?: string;
   story: { heading: string; paragraphs: string[]; quote?: { text: string; source: string } }[];
 }
 
@@ -32,11 +37,14 @@ export const cases: Case[] = [
     slug: 'abm-sop-generator',
     label: 'SOP creation',
     name: 'ABM',
-    business: 'Facility services, semiconductor accounts, Fortune 500 division',
-    problem: 'Writing one maintenance procedure by hand takes half a day.',
+    business: 'Facility services, Fortune 500 division',
+    problem: 'Needed to provide thousands of maintenance procedures, but they took half a day each.',
     value: '$647,000',
-    basis: 'Writing time freed: 8,625 hours at $75 an hour, across the 3,000 documents planned',
+    basis: 'Technical writer capacity freed: 8,625 hours at $75 an hour, across the 3,000 documents needed',
     took: '60 days',
+    image: abmTechnicians,
+    imageAlt:
+      'Two technicians in cleanroom suits on a semiconductor fab floor, one holding a tablet and pointing at equipment.',
     story: [
       {
         heading: 'What was going wrong',

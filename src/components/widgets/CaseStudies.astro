@@ -11,6 +11,7 @@
  * Bracketed values are placeholders until the real figures and images land.
  */
 
+import { Image } from 'astro:assets';
 import { cases, readMinutes } from '~/data/cases';
 ---
 
@@ -19,7 +20,7 @@ import { cases, readMinutes } from '~/data/cases';
     <div
       class="max-w-3xl mb-12 md:mb-16 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
     >
-      <p class="font-mono text-xs uppercase tracking-label text-secondary mb-3">Case studies</p>
+      <p class="font-mono text-sm uppercase tracking-label text-secondary mb-3">Case studies</p>
       <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-heading text-default">
         [$Total] saved for three businesses like yours
       </h2>
@@ -33,22 +34,32 @@ import { cases, readMinutes } from '~/data/cases';
             style={`--d: ${i * 250}ms`}
           >
             <article class="cs-rise relative overflow-hidden flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-6 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
-              <div
-                class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-xs uppercase tracking-label text-muted"
-                aria-hidden="true"
-              >
-                [Image]
-              </div>
+              {c.image ? (
+                <Image
+                  src={c.image}
+                  alt={c.imageAlt ?? ''}
+                  widths={[400, 600, 828]}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  class="h-[200px] w-full rounded-lg object-cover object-[50%_28%]"
+                />
+              ) : (
+                <div
+                  class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-sm uppercase tracking-label text-muted"
+                  aria-hidden="true"
+                >
+                  [Image]
+                </div>
+              )}
 
               <div class="px-2 flex flex-col gap-1">
                 <p class="text-lg font-bold text-default">{c.name}</p>
-                <p class="font-mono text-xs uppercase tracking-label text-muted">{c.business}</p>
+                <p class="font-mono text-sm uppercase tracking-label text-muted">{c.business}</p>
               </div>
 
               <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
 
               <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
-                <p class="font-mono text-xs uppercase tracking-label text-muted">Value captured</p>
+                <p class="font-mono text-sm uppercase tracking-label text-muted">Value captured</p>
                 <p class="font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight text-primary">
                   {c.value}
                 </p>
@@ -56,13 +67,13 @@ import { cases, readMinutes } from '~/data/cases';
               </div>
 
               <dl class="px-2 m-0">
-                <dt class="font-mono text-xs uppercase tracking-label text-muted">How long</dt>
+                <dt class="font-mono text-sm uppercase tracking-label text-muted">How long</dt>
                 <dd class="m-0 mt-1 text-base leading-relaxed text-default">{c.took}</dd>
               </dl>
 
               <a
                 href={`/cases/${c.slug}`}
-                class="cs-link mx-2 self-start font-mono text-xs uppercase tracking-label text-primary"
+                class="cs-link mx-2 self-start font-mono text-sm uppercase tracking-label text-primary"
               >
                 Read the case study
                 <span class="sr-only">: {c.label}</span>
@@ -70,7 +81,7 @@ import { cases, readMinutes } from '~/data/cases';
               </a>
 
               <div class="cs-preview absolute inset-0 bg-white px-7 pt-7 pb-20 flex flex-col gap-3" aria-hidden="true">
-                <p class="font-mono text-xs uppercase tracking-label text-muted">
+                <p class="font-mono text-sm uppercase tracking-label text-muted">
                   {c.name} · {readMinutes(c)} min read
                 </p>
                 <p class="font-display text-xl font-semibold leading-snug text-default">{c.problem}</p>
@@ -79,7 +90,7 @@ import { cases, readMinutes } from '~/data/cases';
                     <p class="font-display text-base leading-relaxed text-default mb-3">{p}</p>
                   ))}
                 </div>
-                <span class="absolute left-7 bottom-7 rounded-full bg-primary px-4 py-2.5 font-mono text-xs uppercase tracking-label text-white">
+                <span class="absolute left-7 bottom-7 rounded-full bg-primary px-4 py-2.5 font-mono text-sm uppercase tracking-label text-white">
                   Keep reading
                 </span>
               </div>
