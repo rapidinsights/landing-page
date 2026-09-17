@@ -1,13 +1,15 @@
 ---
 /**
- * Method — The 90-Day Profit Recovery System, in three steps: Discover → Prove → Build.
+ * Method — The 90-Day Profit Recovery System, in three steps: Discover → Prove → Scale.
  * Sits right after the hero. On desktop the three steps scroll past as ordinary
  * page content, one viewport each, while a single large numeral pinned on the
  * left ticks over as each step reaches the middle of the screen. The text moves
  * at scroll speed and can always be scrolled back to. Step one shows the shape
- * of what comes back as findings with the numbers left blank, then the
- * no-find-no-fee line. Step three lists the ways I
- * help, the monitoring that follows, and the section's only CTA.
+ * of what comes back as findings with the numbers left blank, then what I
+ * commit to finding. Step three lists the ways I
+ * help, the monitoring that follows, and the section's only CTA. Step three
+ * runs build and sustain: implement the fix, verify it against real numbers,
+ * then leave the monitoring behind that keeps it closed.
  * On phones the numeral is a short bar pinned under the site header instead.
  */
 import Button from '~/components/ui/Button.astro';
@@ -16,7 +18,7 @@ import { mapUrl } from '~/navigation';
 const steps = [
   { n: '01', word: 'Discover' },
   { n: '02', word: 'Prove' },
-  { n: '03', word: 'Build' },
+  { n: '03', word: 'Scale' },
 ];
 
 // Step one's findings, written as the finished report reads with the answers
@@ -136,8 +138,7 @@ const ways = [
                   ))}
                 </ul>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch] border-l-2 border-accent pl-4">
-                  I find the biggest profit opportunity in your business. If you decide it is not worth fixing, you do
-                  not pay.
+                  I find the biggest profit opportunity in your business, and I put a dollar value on it.
                 </p>
               </>
             )}
@@ -156,26 +157,39 @@ const ways = [
                   days to results.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  Ten working days from the day I get access, I am fixing something, not writing a report. The first win
-                  is real money, in your numbers, checked by your people.
+                  You get a high-value slice of the larger problem quickly. You can be confident that
                 </p>
+                <ul class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                  <li>the problem is worth solving</li>
+                  <li>it can be fixed</li>
+                  <li>you'll love working with us</li>
+                </ul>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  Small fix first, on purpose. You watch it pay before you say yes to the big one. Nothing big gets
-                  built on a plan that has not already worked once in your business.
+                  If ANY of that isn't true, there's no obligation to continue.
                 </p>
-                <p class="font-mono text-xs uppercase tracking-label text-muted">
-                  You get: the first money back, and proof the rest will pay.
-                </p>
+                <div class="relative mt-3 max-w-[46ch] border-2 border-primary px-7 pt-7 pb-6">
+                  <span class="absolute -top-2.5 left-5 bg-page px-2 font-mono text-xs uppercase tracking-label text-muted">
+                    You get our
+                  </span>
+                  <p class="font-heading text-2xl md:text-[1.75rem] font-extrabold leading-tight tracking-[-0.01em] mb-2">
+                    10-Day Proof-or-Release Guarantee
+                  </p>
+                  <p class="text-base leading-relaxed text-muted">
+                    If in the first 10 days you don't feel violently delighted by the service and value you get, walk
+                    away with no strings attached.
+                  </p>
+                </div>
               </>
             )}
             {i === 2 && (
               <>
                 <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-                  Build it. Keep it paying.
+                  The Payoff.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  The money keeps coming back long after I am gone, and your team never takes on another project to get
-                  it. My crew or yours. Whatever it takes:
+                  We build the complete profit recovery solution that works best for your business. You own it. We
+                  design and document it so that it takes little to no training. And if you want support, we got your
+                  back.
                 </p>
                 <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
                   {ways.map((w) => (
@@ -195,9 +209,6 @@ const ways = [
                     </li>
                   ))}
                 </ul>
-                <p class="font-mono text-xs uppercase tracking-label text-muted">
-                  You get: the full amount, counted, and watched.
-                </p>
                 <div class="flex">
                   <Button variant="primary" text="See what to fix first" href={mapUrl} />
                 </div>
