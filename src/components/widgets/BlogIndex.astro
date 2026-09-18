@@ -33,6 +33,9 @@ const chips = [{ href: '/blog', title: 'All', current: !active && !tag }].concat
 const tagLinks = [{ href: '/blog', title: 'Any result', current: !tag }].concat(
   tags.map((t) => ({ href: `/blog/tag/${tagSlug(t)}`, title: t, current: t === tag }))
 );
+
+// A loose loop that overshoots its own start, so it reads as circled by hand.
+const penCircle = `<svg class="pen-circle" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M30 12 C80 2 170 4 192 26 C206 44 180 70 110 74 C50 78 6 66 8 42 C10 20 50 8 124 10" /></svg>`;
 ---
 
 <section class="mx-auto max-w-7xl px-4 md:px-6 pt-16 md:pt-24 pb-16 md:pb-24 lg:pb-32">
@@ -113,15 +116,16 @@ const tagLinks = [{ href: '/blog', title: 'Any result', current: !tag }].concat(
           <p class="font-mono text-sm uppercase tracking-label text-secondary">
             {lead.entryLabel} · {lead.name} · {lead.business}
           </p>
-          <h2 class="mt-3 font-display text-3xl md:text-4xl font-semibold leading-tight text-default decoration-accent decoration-2 underline-offset-[6px] group-hover:underline">
-            {lead.problem}
+          <h2 class="mt-3 font-display text-3xl md:text-4xl font-semibold leading-tight text-default">
+            <span class="pen-underline">{lead.problem}</span>
           </h2>
           <p class="mt-4 font-display text-lg leading-relaxed text-default">{lead.story[0].paragraphs[0]}</p>
           <p class="mt-4 text-sm text-muted">{lead.outcomes.join(', ')}</p>
           <div class="mt-7 pt-5 border-t border-default/10 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-            <p class="flex items-baseline gap-1.5 font-heading text-4xl font-bold tracking-heading tabular-nums leading-none text-primary">
+            <p class="relative flex items-baseline gap-1.5 font-heading text-4xl font-bold tracking-heading tabular-nums leading-none text-primary">
               {lead.value}
               {lead.valueUnit && <span class="text-lg font-semibold tracking-normal">{lead.valueUnit}</span>}
+              <Fragment set:html={penCircle} />
             </p>
             <div class="font-mono text-sm uppercase tracking-label text-muted">
               <p>{lead.valueLabel}</p>
@@ -160,14 +164,15 @@ const tagLinks = [{ href: '/blog', title: 'Any result', current: !tag }].concat(
               <p class="mt-5 font-mono text-sm uppercase tracking-label text-secondary">
                 {c.entryLabel} · {c.name} · {c.business}
               </p>
-              <h2 class="mt-2 font-display text-2xl font-semibold leading-snug text-default decoration-accent decoration-2 underline-offset-[6px] group-hover:underline">
-                {c.problem}
+              <h2 class="mt-2 font-display text-2xl font-semibold leading-snug text-default">
+                <span class="pen-underline">{c.problem}</span>
               </h2>
               <p class="mt-3 text-sm text-muted">{c.outcomes.join(', ')}</p>
               <div class="mt-5 flex items-baseline justify-between gap-4">
-                <p class="flex items-baseline gap-1 font-heading text-2xl font-bold tracking-heading tabular-nums text-primary">
+                <p class="relative flex items-baseline gap-1 font-heading text-2xl font-bold tracking-heading tabular-nums text-primary">
                   {c.value}
                   {c.valueUnit && <span class="text-base font-semibold tracking-normal">{c.valueUnit}</span>}
+                  <Fragment set:html={penCircle} />
                 </p>
                 <p class="font-mono text-sm uppercase tracking-label text-muted">{finishedMonth(c, 'short')}</p>
               </div>
@@ -178,3 +183,59 @@ const tagLinks = [{ href: '/blog', title: 'Any result', current: !tag }].concat(
     )
   }
 </section>
+
+<style>
+  /* Hovering a post draws the underline under its title left to right, like a
+     pen. The line is a background on the inline span, so on a title that wraps
+     it runs along the first line, then the next, in reading order. */
+  .pen-underline {
+    background-image: linear-gradient(rgb(var(--aw-color-accent)), rgb(var(--aw-color-accent)));
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 0% 2px;
+    padding-bottom: 4px;
+    transition: background-size 250ms ease-in;
+  }
+  :global(.group):hover .pen-underline,
+  :global(.group):focus-visible .pen-underline {
+    background-size: 100% 2px;
+    transition: background-size 700ms cubic-bezier(0.45, 0.05, 0.35, 1);
+  }
+  /* Then the pen circles the result: the loop draws itself once the underline is
+     mostly done, and is wiped quickly on leave. It stretches to fit each figure. */
+  :global(.pen-circle) {
+    position: absolute;
+    top: -14px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 28px);
+    overflow: visible;
+    pointer-events: none;
+  }
+  :global(.pen-circle path) {
+    fill: none;
+    stroke: rgb(var(--aw-color-accent));
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.01;
+    transition: stroke-dashoffset 200ms ease-in;
+  }
+  :global(.group):hover :global(.pen-circle path),
+  :global(.group):focus-visible :global(.pen-circle path) {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 800ms cubic-bezier(0.45, 0.05, 0.35, 1) 450ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.pen-circle path),
+    :global(.group):hover :global(.pen-circle path),
+    :global(.group):focus-visible :global(.pen-circle path) {
+      transition: none;
+    }
+    .pen-underline,
+    :global(.group):hover .pen-underline,
+    :global(.group):focus-visible .pen-underline {
+      transition: none;
+    }
+  }
+</style>

@@ -167,17 +167,33 @@ const ways = [
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
                   If ANY of that isn't true, there's no obligation to continue.
                 </p>
-                <div class="relative mt-3 max-w-[46ch] border-2 border-primary px-7 pt-7 pb-6">
-                  <span class="absolute -top-2.5 left-5 bg-page px-2 font-mono text-sm uppercase tracking-label text-muted">
-                    You get our
-                  </span>
-                  <p class="font-heading text-2xl md:text-[1.75rem] font-extrabold leading-tight tracking-[-0.01em] mb-2">
-                    10-Day Proof-or-Release Guarantee
-                  </p>
-                  <p class="text-base leading-relaxed text-muted">
-                    If in the first 10 days you don't feel violently delighted by the service and value you get, walk
-                    away with no strings attached.
-                  </p>
+                <div class="mt-3">
+                  <svg width="0" height="0" class="absolute" aria-hidden="true">
+                    <filter id="stamp-ink">
+                      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="noise" />
+                      <feColorMatrix
+                        in="noise"
+                        type="matrix"
+                        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.7 1.45"
+                        result="mask"
+                      />
+                      <feComposite in="SourceGraphic" in2="mask" operator="in" />
+                    </filter>
+                  </svg>
+                  <div class="stamp inline-block rounded-md border-4 border-primary p-1.5 text-primary text-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-stamp">
+                    <div class="rounded-sm border-[1.5px] border-primary px-6 pt-4 pb-3.5 md:px-7">
+                      <p class="font-mono text-sm font-bold uppercase tracking-[0.3em]">You get our</p>
+                      <p class="mt-2 font-heading text-xl md:text-[1.9rem] font-extrabold uppercase leading-[1.05] tracking-[0.01em]">
+                        10-Day
+                        <br />
+                        Proof-or-Release
+                        <br />
+                        Guarantee
+                      </p>
+                      <div class="mx-auto my-2.5 h-[1.5px] w-[70%] bg-primary" />
+                      <p class="font-mono text-sm font-bold uppercase tracking-[0.3em]">No strings attached</p>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
@@ -187,9 +203,9 @@ const ways = [
                   The Payoff.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                  We build the complete profit recovery solution that works best for your business. You own it. We
-                  design and document it so that it takes little to no training. And if you want support, we got your
-                  back.
+                  We build the complete profit recovery solution that works best for your business. On average it's done
+                  in under <strong>90 days</strong>. You own it. We design and document it so that it takes little to no
+                  training. And if you want support, we got your back.
                 </p>
                 <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
                   {ways.map((w) => (
@@ -505,6 +521,13 @@ const ways = [
     .ticker-rows {
       transition: none;
     }
+  }
+
+  /* The guarantee as a rubber stamp: tilted, ink-grained, and pressed down once
+     as it scrolls in. The grain is kept light so the text keeps its contrast. */
+  .stamp {
+    transform: rotate(-2.5deg);
+    filter: url(#stamp-ink);
   }
 </style>
 

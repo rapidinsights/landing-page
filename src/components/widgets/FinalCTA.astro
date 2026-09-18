@@ -2,93 +2,172 @@
 /**
  * Final CTA — the page's ending, on the same prussian field as the hero so the
  * page opens and shuts on the same ground. Fifth beat, and the last thing anyone
- * reads. Structure follows docs/final-cta-research.md: a bridge heading, what
- * happens when you click, the one button with its cost line, a quiet line for
- * the reader who would rather talk, and nothing after it. The last doubts about
- * starting the free tool sit beside the action, each answered at once, because
- * a doubt raised without an answer hurts more than silence.
- * The direct contact line is a reserved slot only, left out of the render: the
- * contact route is undecided and is its own issue.
- * The steps and the answer about where answers go describe the map prototype;
- * the shipped tool has to keep them true.
+ * reads. Structure follows docs/final-cta-research.md: a bridge heading, a look
+ * at the tool in use, the one button, and under it the costs and the last doubts
+ * about starting, answered in two short lines. It mirrors the hero's shape, copy
+ * on the left and the moving picture on the right, so the page closes the way it
+ * opened. On phones the video sits between the copy and the button, so the
+ * reader sees the tool before being asked to use it.
+ * The direct line is a booking link under the button, beside a headshot, so it
+ * reads as meeting a person rather than a second equal choice. The calendar
+ * takes about three seconds to load, so it loads hidden inside a dialog once the
+ * link scrolls into view, and a click only has to show it. Without the script,
+ * the link opens the booking page in a new tab.
+ * Until the recording of the tool lands, a labelled wireframe box holds its
+ * place. The line about where answers go describes the map prototype; the
+ * shipped tool has to keep it true.
  */
+import { Image } from 'astro:assets';
 import Button from '~/components/ui/Button.astro';
-import { mapUrl } from '~/navigation';
+import { bookingUrl, mapUrl } from '~/navigation';
+import headshot from '~/assets/images/derek-wayne-headshot.webp';
 
-const steps = [
-  'Answer plain questions about how an order moves through your business. Nothing to look up.',
-  'Watch a map of your operation build as you go, with the stuck spots marked.',
-  'Leave with the one fix worth doing first, and about what it costs you each year.',
-];
-
-const doubts = [
-  {
-    question: 'Why is it free?',
-    answer:
-      "It does the first hour of my job. If it finds something big, you'll want to talk, and I'll already know where to look. If not, you spent eight minutes, not a sales meeting.",
-  },
-  {
-    question: 'What happens to my answers?',
-    answer: 'They stay in your browser. Nothing reaches me unless you send it.',
-  },
-  {
-    question: 'Will someone chase me?',
-    answer: "No. I don't have your email, so I can't. If you want to talk, you reach out.",
-  },
-  {
-    question: 'Will it work for my kind of business?',
-    answer: "It's built for businesses that make, move, or install things. If work moves through steps, it fits.",
-  },
-  {
-    question: 'What if it finds nothing?',
-    answer: "Then it says so. Some businesses run tight, and that's worth knowing too.",
-  },
-];
+const finalCtaBookingUrl = `${bookingUrl}?hide_event_type_details=1&hide_gdpr_banner=1&utm_source=website&utm_medium=home&utm_content=final-cta`;
 ---
 
 <section id="final-cta" class="relative not-prose bg-prussian text-cream">
   <div
-    class="relative mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-[7fr_6fr] gap-14 lg:gap-24 items-start intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    class="relative mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-[5fr_6fr] lg:grid-rows-[auto_auto] gap-y-10 lg:gap-x-16 lg:gap-y-10 items-start intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
   >
-    <div>
+    <div class="lg:self-end">
       <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-heading text-cream max-w-[20ch]">
         Stop fighting the same fires. Get back to growing profitably.
       </h2>
       <p class="mt-5 text-lg md:text-xl leading-relaxed text-cream/80 max-w-[40ch]">
         Most consulting starts with two months of discovery. This starts with eight minutes.
       </p>
-
-      <ol class="mt-10 m-0 p-0 list-none flex flex-col gap-4">
-        {
-          steps.map((step, i) => (
-            <li class="grid grid-cols-[2.25rem_1fr] text-lg leading-relaxed text-cream">
-              <span class="pt-1 font-mono text-xs text-accent" aria-hidden="true">
-                0{i + 1}
-              </span>
-              {step}
-            </li>
-          ))
-        }
-      </ol>
-
-      <div class="mt-10">
-        <Button variant="primary" text="See what to fix first" href={mapUrl} />
-        <p class="mt-3 text-sm text-cream/80">Free. Under 8 minutes. No email needed.</p>
-      </div>
-
-      <!-- Reserved: the quiet direct ask, for the reader who would rather talk than
-           use the tool. Not rendered; the contact route is its own issue. -->
     </div>
 
-    <dl class="m-0 flex flex-col gap-7 border-t border-cream/15 pt-10 lg:border-t-0 lg:pt-0 lg:border-l lg:pl-12">
-      {
-        doubts.map((d) => (
-          <div>
-            <dt class="text-lg font-bold leading-snug text-cream">{d.question}</dt>
-            <dd class="m-0 mt-1.5 text-base leading-relaxed text-cream/75">{d.answer}</dd>
-          </div>
-        ))
-      }
-    </dl>
+    <!-- Wireframe: the recording of the Free Process Map goes here, as a muted looping video
+         that loads as the section nears the screen, with a still frame for reduced motion. -->
+    <div
+      class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center aspect-video w-full rounded-xl border-2 border-dashed border-cream/30 flex flex-col items-center justify-center gap-2 text-center px-6"
+    >
+      <p class="font-mono text-sm uppercase tracking-label text-cream/70">[Video: the Free Process Map in action]</p>
+      <p class="text-sm text-cream/60">10 to 20 second silent loop · coming soon</p>
+    </div>
+
+    <div class="lg:col-start-1 lg:row-start-2">
+      <Button variant="primary" text="See what to fix first" href={mapUrl} />
+      <p class="mt-3 text-sm leading-relaxed text-cream/80 max-w-[46ch]">
+        Free. Under 8 minutes. No email needed.<br />
+        Everything saved in your own browser.
+      </p>
+
+      <div class="mt-8 max-w-[46ch] grid grid-cols-[4rem_1fr] items-center gap-4 border-t border-cream/15 pt-6">
+        <Image
+          src={headshot}
+          alt="Derek Wayne"
+          width={64}
+          height={64}
+          densities={[2, 3]}
+          class="h-16 w-16 rounded-full"
+        />
+        <p class="m-0 text-base leading-relaxed text-cream/85">
+          Rather talk first? I'll hear what keeps breaking and tell you straight if I can help.
+          <a
+            href={finalCtaBookingUrl}
+            target="_blank"
+            rel="noopener"
+            data-calendly
+            class="font-semibold text-cream underline decoration-accent decoration-2 underline-offset-4 hover:decoration-cream"
+            >Book a 30-minute call</a
+          >
+        </p>
+      </div>
+    </div>
   </div>
 </section>
+
+<dialog id="booking-dialog" aria-label="Book a 30-minute call" data-lenis-prevent inert>
+  <button type="button" aria-label="Close" class="booking-close">&times;</button>
+</dialog>
+
+<style>
+  /* Closed, the dialog stays laid out and transparent rather than hidden: browsers
+     do not draw a hidden iframe, so the calendar would only start rendering on
+     click. The inert attribute keeps it out of reach until it opens. */
+  #booking-dialog {
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(1000px, calc(100vw - 2rem));
+    height: min(760px, calc(100vh - 4rem));
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  #booking-dialog[open] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #booking-dialog::backdrop {
+    background: rgb(var(--aw-color-bg-prussian) / 0.7);
+  }
+  #booking-dialog :global(iframe) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .booking-close {
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+    line-height: 1;
+    color: rgb(var(--aw-color-text-cream));
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#booking-dialog');
+  const link = document.querySelector<HTMLAnchorElement>('a[data-calendly]');
+
+  if (dialog && link) {
+    const loadCalendar = () => {
+      if (dialog.querySelector('iframe')) return;
+      const frame = document.createElement('iframe');
+      frame.title = 'Pick a time for a 30-minute call';
+      frame.src = `${link.href}&embed_domain=${encodeURIComponent(location.host)}&embed_type=PopupText`;
+      dialog.append(frame);
+    };
+
+    const seen = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        loadCalendar();
+        seen.disconnect();
+      },
+      { rootMargin: '200px' }
+    );
+    seen.observe(link);
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadCalendar();
+      dialog.inert = false;
+      dialog.showModal();
+      document.documentElement.style.overflow = 'hidden';
+    });
+
+    dialog.addEventListener('close', () => {
+      dialog.inert = true;
+      document.documentElement.style.overflow = '';
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.querySelector('.booking-close')?.addEventListener('click', () => dialog.close());
+  }
+</script>

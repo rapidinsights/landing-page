@@ -11,6 +11,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Button from '~/components/ui/Button.astro';
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import { headerData, mapUrl } from '~/navigation';
 import portrait from '~/assets/images/derek-wayne-portrait.jpg';
 ---
@@ -42,6 +43,15 @@ import portrait from '~/assets/images/derek-wayne-portrait.jpg';
       <h1 class="mt-3 font-heading text-4xl md:text-5xl font-bold tracking-heading text-default">
         I'm Derek. I find what slows your business down, and I fix it.
       </h1>
+      <a
+        href="https://www.linkedin.com/in/derek-wayne/"
+        target="_blank"
+        rel="noopener"
+        class="mt-5 inline-flex items-center gap-2 text-base font-semibold text-primary underline decoration-accent decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        <Icon name="tabler:brand-linkedin" class="w-6 h-6" aria-hidden="true" />
+        Connect with me on LinkedIn
+      </a>
 
       <p class="mt-8 font-display text-xl leading-relaxed text-default">
         Most owners know something is off. Orders wait. People type the same numbers twice. Month end takes a week. You
@@ -98,7 +108,9 @@ import portrait from '~/assets/images/derek-wayne-portrait.jpg';
         <h2 class="font-heading text-2xl md:text-3xl font-bold tracking-heading text-default">
           Find where your business is losing money.
         </h2>
-        <p class="mt-3 text-lg leading-relaxed text-muted">The free map takes 8 minutes and shows what to fix first.</p>
+        <p class="mt-3 text-lg leading-relaxed text-muted">
+          The Free Process Map takes under 8 minutes and shows what to fix first.
+        </p>
         <div class="mt-8">
           <Button variant="primary" text="See what to fix first" href={mapUrl} />
         </div>

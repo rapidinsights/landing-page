@@ -1,6 +1,7 @@
 import { getPermalink, getHomePermalink } from './utils/permalinks';
 
 export const mapUrl = '/map';
+export const bookingUrl = 'https://calendly.com/derek-getrapidinsights/30min';
 
 export const headerData = {
   links: [
@@ -25,9 +26,7 @@ export const footerData = {
     { text: 'Terms', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
-  socialLinks: [
-    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/derek-wayne/' },
-  ],
+  socialLinks: [{ text: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/derek-wayne/' }],
   footNote: `
     &copy; ${new Date().getFullYear()} Rapid Insights Consulting Inc. All rights reserved.
   `,

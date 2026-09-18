@@ -37,12 +37,18 @@ export default {
 
       animation: {
         fade: 'fadeInUp 1s both',
+        stamp: 'stampDown 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2) both',
       },
 
       keyframes: {
         fadeInUp: {
           '0%': { opacity: 0, transform: 'translateY(2rem)' },
           '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+        stampDown: {
+          '0%': { opacity: 0, transform: 'scale(1.35) rotate(-2.5deg)' },
+          '60%': { opacity: 1, transform: 'scale(0.97) rotate(-2.5deg)' },
+          '100%': { opacity: 1, transform: 'scale(1) rotate(-2.5deg)' },
         },
       },
     },

@@ -40,10 +40,10 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
       {
         cases.map((c, i) => (
           <li
-            class="cs-card intersect intersect-once intersect-quarter md:grid md:grid-rows-subgrid md:row-span-6"
+            class="cs-card intersect intersect-once intersect-quarter md:grid md:grid-rows-subgrid md:row-span-5"
             style={`--d: ${i * 250}ms`}
           >
-            <article class="cs-rise relative overflow-hidden flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-6 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
+            <article class="cs-rise relative overflow-hidden flex flex-col gap-5 md:grid md:grid-rows-subgrid md:row-span-5 md:gap-y-5 rounded-2xl bg-white p-5 pb-7">
               {c.image ? (
                 <Image
                   src={c.image}
@@ -88,11 +88,11 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
 
               <a
                 href={`/cases/${c.slug}`}
-                class="cs-link mx-2 self-start font-mono text-sm uppercase tracking-label text-primary"
+                class="absolute inset-0 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
-                Read the case study
-                <span class="sr-only">: {c.label}</span>
-                <span class="absolute inset-0 rounded-2xl" aria-hidden="true" />
+                <span class="sr-only">
+                  Read the case study: {c.name}, {c.label}
+                </span>
               </a>
 
               <div class="cs-preview absolute inset-0 bg-white px-7 pt-7 pb-20 flex flex-col gap-3" aria-hidden="true">
@@ -149,8 +149,9 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
   }
 
   /* Peek: on hover the card becomes a preview of its story. Pointer events pass
-     through to the card's stretched link underneath. The 400ms delay (NN/g) keeps
-     a cursor passing over the row from flashing previews; leaving hides at once. */
+     through to the card's stretched link underneath. The 700ms delay keeps a
+     cursor passing over the row, or pausing to read the card, from flashing
+     previews; leaving hides at once. */
   .cs-preview {
     opacity: 0;
     transform: translateY(12px);
@@ -170,7 +171,7 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
     .cs-card:hover .cs-preview {
       opacity: 1;
       transform: none;
-      transition-delay: 400ms;
+      transition-delay: 700ms;
     }
   }
   .cs-link {
@@ -182,16 +183,35 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
       left bottom,
       left bottom;
     background-size:
-      0% 2px,
-      100% 2px;
+      0% 3px,
+      100% 3px;
     background-repeat: no-repeat;
     transition: background-size 550ms var(--ease);
   }
   .cs-link:hover,
   .cs-link:focus-visible {
     background-size:
-      100% 2px,
-      100% 2px;
+      100% 3px,
+      100% 3px;
+  }
+  /* Loading bar for the peek: a full-width line along the card's bottom edge that
+     fills at a steady rate over the same 700ms the preview waits, so the visitor
+     can see something is about to open. It empties at once on leave. */
+  @media (hover: hover) {
+    .cs-rise::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0 0;
+      z-index: 1;
+      height: 5px;
+      background: rgb(var(--aw-color-accent));
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .cs-card:hover .cs-rise::after {
+      transform: scaleX(1);
+      transition: transform 700ms linear;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .cs-preview {
