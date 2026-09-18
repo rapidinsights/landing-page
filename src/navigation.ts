@@ -2,11 +2,9 @@ import { getPermalink, getHomePermalink } from './utils/permalinks';
 
 export const mapUrl = '/map';
 
-// About (RAP-377) and Blog (RAP-382) are draft links: the routes do not exist yet.
 export const headerData = {
   links: [
     { text: 'Home', href: getHomePermalink() },
-    { text: 'Case Studies', href: '/#case-studies' },
     { text: 'About', href: getPermalink('/about') },
     { text: 'Blog', href: getPermalink('/blog') },
   ],

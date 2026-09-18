@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import BlogIndex from '~/components/widgets/BlogIndex.astro';
+import { headerData, mapUrl } from '~/navigation';
+import { tags, tagSlug } from '~/data/blog';
+import type { Outcome } from '~/data/cases';
+
+export function getStaticPaths() {
+  return tags.map((tag) => ({ params: { tag: tagSlug(tag) }, props: { tag } }));
+}
+
+const { tag } = Astro.props as { tag: Outcome };
+---
+
+<Layout metadata={{ title: `Blog: ${tag}` }}>
+  <Fragment slot="header">
+    <Header
+      links={headerData.links}
+      actions={[{ variant: 'primary', text: 'See what to fix first', href: mapUrl }]}
+      isSticky
+    />
+  </Fragment>
+  <BlogIndex tag={tag} />
+</Layout>
