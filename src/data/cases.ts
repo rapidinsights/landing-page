@@ -3,6 +3,7 @@
 
 import abmTechnicians from '~/assets/images/abm-semiconductor-technicians.webp';
 import apparelRedefinedDock from '~/assets/images/apparel-redefined-dock.webp';
+import apparelRedefinedDesk from '~/assets/images/apparel-redefined-invoicing-desk.webp';
 
 // The outcomes an engagement can land (CLAUDE.md). The blog filters by these, so a
 // case only claims one its story can back up.
@@ -167,9 +168,12 @@ export const cases: Case[] = [
     valueLabel: 'Accounting time freed',
     basis:
       "74 invoices a month now arrive built and coded, at 10 to 20 minutes each by the accountant's own count. 150 is the low end.",
-    took: '9 weeks',
+    took: '40 days',
     finished: '2026-08',
     outcomes: ['Reduce labor', 'Remove frustrating manual work', 'Eliminate recurring errors'],
+    image: apparelRedefinedDesk,
+    imageAlt:
+      'An accounting desk in a print shop, buried in stacks of paper invoices and purchase orders, with screen printing presses visible through the window behind it.',
     story: [
       {
         heading: 'What was going wrong',
@@ -194,7 +198,7 @@ export const cases: Case[] = [
         heading: 'What changed',
         paragraphs: [
           'Reps now tag what each quote line is, once. When the deal closes, the invoice is built and coded: the right income line, the right channel. If a tag is missing, the invoice is held and an email says what is missing. It does not guess.',
-          'When a quote changes, the invoice follows it. A deal closed twice no longer makes two orders. A failure sends an email instead of vanishing, and the deal in Zoho shows whether its invoice went through. It shipped in pieces between June 22 and August 23, on top of a link another vendor built before me.',
+          'When a quote changes, the invoice follows it. A deal closed twice no longer makes two orders. A failure sends an email instead of vanishing, and the deal in Zoho shows whether its invoice went through. It shipped in pieces, on top of a link another vendor built before me.',
           'In the three weeks after the last fix, 48 of 67 deals were invoiced and coded the moment they closed. Before, it was none. That is about 74 invoices a month the accountant no longer builds. She puts a hand-built one at 10 to 20 minutes, so that is 12 to 25 hours a month, or 150 to 300 hours a year. I stand behind the low end.',
           "The bigger change does not fit in a number. How to code an invoice used to live in one person's head, and that person was leaving. Now it lives in the system, and the rest of the time a hold email tells her exactly what to finish, instead of her walking the floor to find out.",
         ],
