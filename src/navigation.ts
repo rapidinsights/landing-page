@@ -27,7 +27,9 @@ export const footerData = {
     { text: 'Terms', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
-  socialLinks: [],
+  socialLinks: [
+    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/derek-wayne/' },
+  ],
   footNote: `
     &copy; ${new Date().getFullYear()} Rapid Insights Consulting Inc. All rights reserved.
   `,
