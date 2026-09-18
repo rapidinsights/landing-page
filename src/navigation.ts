@@ -1,6 +1,6 @@
 import { getPermalink, getHomePermalink } from './utils/permalinks';
 
-export const mapUrl = '/map';
+export const mapUrl = 'https://app.getrapidinsights.com';
 export const bookingUrl = 'https://calendly.com/derek-getrapidinsights/30min';
 
 export const headerData = {
