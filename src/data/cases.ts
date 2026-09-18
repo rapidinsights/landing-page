@@ -72,15 +72,15 @@ export const cases: Case[] = [
         paragraphs: [
           'A chip plant asked ABM for a written procedure for every machine it maintains. Each one is a step by step guide a technician follows, and each one needs a matching test that proves the technician can do the job.',
           'A writer took about four hours to get one procedure to a first draft, then about half an hour more to make the test. The plan needed thousands of documents.',
-          'Then most of that team was moved onto other plants. The work was not slow because anyone was slow. It was slow because every document started from a blank page.',
+          'Then most of that team was moved onto other plants. Every document still started from a blank page, and that is where the hours went.',
         ],
       },
       {
         heading: 'What I found',
         paragraphs: [
-          'The writers already knew the answers. They were spending their four hours typing what they knew into the right shape: the right sections, the right headings, the right template, the right wording.',
+          'The writers already knew the answers. They were spending their four hours typing what they knew into the right sections, headings, template and wording.',
           'The tests were worse. Nobody wrote one from scratch. They opened an old test, copied it, and edited it to match the new machine, which is how small errors travel from document to document.',
-          'So the real job was not writing. It was formatting and checking. That part a machine can do, and the part only an expert can do, reading a draft and saying yes or no, was never the thing eating the week.',
+          'So most of the four hours went to formatting, and a machine can do that. The part only an expert can do, reading a draft and saying yes or no, never took much of the time.',
         ],
       },
       {
@@ -88,8 +88,8 @@ export const cases: Case[] = [
         paragraphs: [
           "A writer now pastes what they know about the job. The tool puts it into ABM's sections and hands back a Word file already on their template. One more click reads that procedure and drafts the matching test, with the answer key and the sign-off pages, tied to the procedure it came from.",
           'On one morning in July, ABM timed it. A procedure took twelve minutes with heavy edits, and three minutes with none. It used to take four hours. A test took three minutes instead of twenty eight.',
-          'Four hundred documents have been built this way so far. The number on this page counts those and nothing else, so none of it is a forecast. Larry Gillett, who runs the program, put the time back into winning new business for ABM. ABM is now planning thousands more and taking the tool to the rest of the organization, which is the part I would pay attention to: they used it, then they decided to do far more of it.',
-          'Nothing gets certified by the tool. Every document still leaves marked as a draft, and an expert still signs it off before it is used. That review happened before and it happens now. Everything in front of it is what changed.',
+          'Four hundred documents have been built this way so far. The number on this page counts those and nothing else, so none of it is a forecast. Larry Gillett, who runs the program, put the time back into winning new business for ABM. ABM is now planning thousands more and taking the tool to the rest of the organization. They made that call after using it, and that is the part I would pay attention to.',
+          'The tool certifies nothing. Every document leaves marked as a draft, and an expert signs it off before anyone uses it, the same as before. Only the work ahead of that review changed.',
         ],
         quote: {
           text: 'About a 90% reduction in creation from old creation method of 4 hours.',
