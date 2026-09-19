@@ -79,33 +79,26 @@ const finalCtaBookingUrl = `${bookingUrl}?hide_event_type_details=1&hide_gdpr_ba
   </div>
 </section>
 
-<dialog id="booking-dialog" aria-label="Book a 30-minute call" data-lenis-prevent inert>
+<dialog id="booking-dialog" aria-label="Book a 30-minute call" data-lenis-prevent>
   <button type="button" aria-label="Close" class="booking-close">&times;</button>
 </dialog>
 
 <style>
-  /* Closed, the dialog stays laid out and transparent rather than hidden: browsers
-     do not draw a hidden iframe, so the calendar would only start rendering on
-     click. The inert attribute keeps it out of reach until it opens. */
   #booking-dialog {
-    display: block;
-    opacity: 0;
-    pointer-events: none;
     position: fixed;
     inset: 0;
     margin: auto;
-    width: min(1000px, calc(100vw - 2rem));
-    height: min(760px, calc(100vh - 4rem));
+    /* Under ~650px wide Calendly fills the frame edge to edge. Wider, it centers a
+       smaller card inside, and the close button above the right edge floats off
+       beside it. The height cap keeps room above for that button. */
+    width: min(560px, calc(100vw - 2rem));
+    height: min(760px, calc(100dvh - 7rem));
     max-width: none;
     max-height: none;
     padding: 0;
     border: 0;
-    background: transparent;
+    background: white;
     overflow: visible;
-  }
-  #booking-dialog[open] {
-    opacity: 1;
-    pointer-events: auto;
   }
   #booking-dialog::backdrop {
     background: rgb(var(--aw-color-bg-prussian) / 0.7);
@@ -143,26 +136,14 @@ const finalCtaBookingUrl = `${bookingUrl}?hide_event_type_details=1&hide_gdpr_ba
       dialog.append(frame);
     };
 
-    const seen = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
-        loadCalendar();
-        seen.disconnect();
-      },
-      { rootMargin: '200px' }
-    );
-    seen.observe(link);
-
     link.addEventListener('click', (e) => {
       e.preventDefault();
       loadCalendar();
-      dialog.inert = false;
       dialog.showModal();
       document.documentElement.style.overflow = 'hidden';
     });
 
     dialog.addEventListener('close', () => {
-      dialog.inert = true;
       document.documentElement.style.overflow = '';
     });
     dialog.addEventListener('click', (e) => {
