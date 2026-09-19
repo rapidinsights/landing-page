@@ -38,80 +38,85 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
 
     <ul class="cs-grid grid grid-cols-1 lg:grid-cols-3 gap-6 m-0 p-0 list-none">
       {
-        cases.map((c, i) => (
-          <li
-            class="cs-card intersect intersect-once intersect-quarter lg:grid lg:grid-rows-subgrid lg:row-span-5"
-            style={`--d: ${i * 250}ms`}
-          >
-            <article class="cs-rise relative overflow-hidden flex flex-col gap-5 lg:grid lg:grid-rows-subgrid lg:row-span-5 lg:gap-y-5 rounded-2xl bg-white p-5 pb-7">
-              {c.image ? (
-                <Image
-                  src={c.image}
-                  alt={c.imageAlt ?? ''}
-                  widths={[400, 600, 828]}
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  class="h-[200px] w-full rounded-lg object-cover object-[50%_28%]"
-                />
-              ) : (
+        cases
+          .filter((c) => c.onHome !== false)
+          .map((c, i) => (
+            <li
+              class="cs-card intersect intersect-once intersect-quarter lg:grid lg:grid-rows-subgrid lg:row-span-5"
+              style={`--d: ${i * 250}ms`}
+            >
+              <article class="cs-rise relative overflow-hidden flex flex-col gap-5 lg:grid lg:grid-rows-subgrid lg:row-span-5 lg:gap-y-5 rounded-2xl bg-white p-5 pb-7">
+                {c.image ? (
+                  <Image
+                    src={c.image}
+                    alt={c.imageAlt ?? ''}
+                    widths={[400, 600, 828]}
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    class="h-[200px] w-full rounded-lg object-cover object-[50%_28%]"
+                  />
+                ) : (
+                  <div
+                    class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-sm uppercase tracking-label text-muted"
+                    aria-hidden="true"
+                  >
+                    [Image]
+                  </div>
+                )}
+
+                <div class="px-2 flex flex-col gap-1">
+                  <p class="text-lg font-bold text-default">{c.name}</p>
+                  <p class="font-mono text-sm uppercase tracking-label text-muted">{c.business}</p>
+                </div>
+
+                <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
+
+                <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
+                  <p class="font-mono text-sm uppercase tracking-label text-muted">{c.valueLabel}</p>
+                  {/* flex, so the source newline between figure and unit is not rendered as a word space */}
+                  <p class="flex items-baseline gap-1.5 font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight text-primary">
+                    {c.value}
+                    {c.valueUnit && <span class="text-lg md:text-xl font-semibold tracking-normal">{c.valueUnit}</span>}
+                  </p>
+                  <p class="mt-1 text-base leading-relaxed text-muted">{c.teaser}</p>
+                </div>
+
+                <dl class="px-2 m-0">
+                  <dt class="font-mono text-sm uppercase tracking-label text-muted">How long</dt>
+                  <dd class="m-0 mt-1 text-base leading-relaxed text-default">
+                    <span class="font-bold">{c.took}</span>
+                    <span class="text-muted">· {finishedMonth(c, 'short')}</span>
+                  </dd>
+                </dl>
+
+                <a
+                  href={`/cases/${c.slug}`}
+                  class="absolute inset-0 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  <span class="sr-only">
+                    Read the case study: {c.name}, {c.label}
+                  </span>
+                </a>
+
                 <div
-                  class="h-[200px] rounded-lg bg-section flex items-center justify-center font-mono text-sm uppercase tracking-label text-muted"
+                  class="cs-preview absolute inset-0 bg-white px-7 pt-7 pb-20 flex flex-col gap-3"
                   aria-hidden="true"
                 >
-                  [Image]
+                  <p class="font-mono text-sm uppercase tracking-label text-muted">
+                    {c.name} · {readMinutes(c)} min read
+                  </p>
+                  <p class="font-display text-xl font-semibold leading-snug text-default">{c.problem}</p>
+                  <div class="cs-fade relative flex-1 overflow-hidden">
+                    {c.story[0].paragraphs.map((p) => (
+                      <p class="font-display text-base leading-relaxed text-default mb-3">{p}</p>
+                    ))}
+                  </div>
+                  <span class="absolute left-7 bottom-7 rounded-full bg-primary px-4 py-2.5 font-mono text-sm uppercase tracking-label text-white">
+                    Keep reading
+                  </span>
                 </div>
-              )}
-
-              <div class="px-2 flex flex-col gap-1">
-                <p class="text-lg font-bold text-default">{c.name}</p>
-                <p class="font-mono text-sm uppercase tracking-label text-muted">{c.business}</p>
-              </div>
-
-              <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
-
-              <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
-                <p class="font-mono text-sm uppercase tracking-label text-muted">{c.valueLabel}</p>
-                {/* flex, so the source newline between figure and unit is not rendered as a word space */}
-                <p class="flex items-baseline gap-1.5 font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight text-primary">
-                  {c.value}
-                  {c.valueUnit && <span class="text-lg md:text-xl font-semibold tracking-normal">{c.valueUnit}</span>}
-                </p>
-                <p class="mt-1 text-base leading-relaxed text-muted">{c.teaser}</p>
-              </div>
-
-              <dl class="px-2 m-0">
-                <dt class="font-mono text-sm uppercase tracking-label text-muted">How long</dt>
-                <dd class="m-0 mt-1 text-base leading-relaxed text-default">
-                  <span class="font-bold">{c.took}</span>
-                  <span class="text-muted">· {finishedMonth(c, 'short')}</span>
-                </dd>
-              </dl>
-
-              <a
-                href={`/cases/${c.slug}`}
-                class="absolute inset-0 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-              >
-                <span class="sr-only">
-                  Read the case study: {c.name}, {c.label}
-                </span>
-              </a>
-
-              <div class="cs-preview absolute inset-0 bg-white px-7 pt-7 pb-20 flex flex-col gap-3" aria-hidden="true">
-                <p class="font-mono text-sm uppercase tracking-label text-muted">
-                  {c.name} · {readMinutes(c)} min read
-                </p>
-                <p class="font-display text-xl font-semibold leading-snug text-default">{c.problem}</p>
-                <div class="cs-fade relative flex-1 overflow-hidden">
-                  {c.story[0].paragraphs.map((p) => (
-                    <p class="font-display text-base leading-relaxed text-default mb-3">{p}</p>
-                  ))}
-                </div>
-                <span class="absolute left-7 bottom-7 rounded-full bg-primary px-4 py-2.5 font-mono text-sm uppercase tracking-label text-white">
-                  Keep reading
-                </span>
-              </div>
-            </article>
-          </li>
-        ))
+              </article>
+            </li>
+          ))
       }
     </ul>
   </div>

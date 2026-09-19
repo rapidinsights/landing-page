@@ -1,12 +1,11 @@
 ---
 /**
  * Testimonial — one client card right after the Method steps, so the reader
- * sees a named result before the examples. Photo, quote, the outcome it
- * delivered, and a link to the full case study page.
+ * sees a named result before the examples. Photo, quote, and a link to the
+ * full case study page.
  * The whole card is that link: the anchor's ::after is stretched over the card,
  * so there is still exactly one tab stop and one accessible name. On hover the
  * card tips toward the reader on a diagonal and lifts its shadow off the band.
- * /cases/apparel-redefined-receiving does not exist yet; it lands with the case pages.
  */
 import Image from '~/components/common/Image.astro';
 import headshot from '~/assets/images/johnlaroy.webp';
@@ -35,21 +34,22 @@ import headshot from '~/assets/images/johnlaroy.webp';
           </figcaption>
         </div>
         <div class="flex flex-col gap-5 md:gap-6">
-          <div class="flex flex-wrap items-baseline gap-4">
-            <p class="font-mono text-sm uppercase tracking-label text-secondary">Who this has worked for</p>
-            <span class="font-mono text-sm uppercase tracking-label text-primary border-b-2 border-accent pb-0.5">
-              Reduce labor
-            </span>
-          </div>
-          <blockquote class="font-display text-2xl md:text-3xl leading-snug text-default">
-            &ldquo;Our managers are back to leading with clear and reliable data. Nothing feels impossible when Rapid
-            Insights is involved.&rdquo;
+          <p class="font-mono text-sm uppercase tracking-label text-secondary">Who this has worked for</p>
+          <blockquote class="font-display text-default">
+            <p class="text-2xl md:text-3xl leading-snug">
+              &ldquo;Our managers are back to leading with clear and reliable data.
+            </p>
+            <p class="mt-4 text-lg md:text-xl leading-relaxed text-default/75">
+              Working with Rapid Insights has been a win for our team. They delivered exactly what we needed through
+              smart data analysis, performance tracking, dashboard development, and production capacity planning.
+              Nothing feels impossible when Rapid Insights is involved. We highly recommend their work.&rdquo;
+            </p>
           </blockquote>
           <figcaption class="hidden md:block font-mono text-sm uppercase tracking-label text-muted">
             John Laroy &middot; CEO, Apparel Redefined
           </figcaption>
           <a
-            href="/cases/apparel-redefined-receiving"
+            href="/cases/apparel-redefined-late-orders"
             data-astro-prefetch
             class="t-link self-start border-t border-default/10 pt-5 font-mono text-sm uppercase tracking-label text-primary underline decoration-accent decoration-2 underline-offset-4 hover:decoration-primary"
           >

@@ -4,6 +4,7 @@
 import abmTechnicians from '~/assets/images/abm-semiconductor-technicians.webp';
 import apparelRedefinedDock from '~/assets/images/apparel-redefined-dock.webp';
 import apparelRedefinedDesk from '~/assets/images/apparel-redefined-invoicing-desk.webp';
+import apparelRedefinedFloorWatch from '~/assets/images/apparel-redefined-floor-watch-dark.webp';
 
 // The outcomes an engagement can land (CLAUDE.md). The blog filters by these, so a
 // case only claims one its story can back up.
@@ -48,6 +49,8 @@ export interface Case {
   // Photo at the top of the case page. From the client's own site; confirm they are fine with its use before publishing.
   image?: ImageMetadata;
   imageAlt?: string;
+  // False keeps a case off the home page's three cards; it still gets its page and a blog entry.
+  onHome?: false;
   story: { heading: string; paragraphs: string[]; quote?: { text: string; source: string } }[];
 }
 
@@ -219,6 +222,69 @@ export const cases: Case[] = [
           'Fourth, the double orders. There have been none since the fix. But they only happened about once every two months, so five weeks without one proves very little. The cause is gone. The count will take most of a year to show it.',
           "One thing did not last. I also had reps add the supplier's order number to garment lines, so the dock could match boxes faster. It went from about 1 line in 70 to 1 in 4 within a month. Then, the week of July 20, it fell to almost none, with no change on our side. Nobody noticed, because nothing was watching. A check that says when a field stops getting filled in is the next thing worth building.",
           'The other piece left is the rest of the business. Orders that do not come through Zoho are nine in ten by count, and every one of them is still coded by hand. That is where most of the hand work still sits.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'apparel-redefined-late-orders',
+    label: 'late orders',
+    name: 'Apparel Redefined',
+    business: 'Apparel decoration, Chicago',
+    problem: 'The shop found out an order was late when the customer did.',
+    teaser:
+      "We built a live list of orders about to run late, each judged against its own customer's normal pace, so the team can step in before the date slips.",
+    value: '62%',
+    valueUnit: 'fewer',
+    valueLabel: 'Orders finishing 5+ days late',
+    basis:
+      'Down from 6.4% of orders to 2.4%, April to August, against the 2023 and 2024 average. Lower in each of the five largest accounts.',
+    took: '63 days',
+    finished: '2026-03',
+    outcomes: ['Improve visibility', 'Improve customer experience'],
+    onHome: false,
+    image: apparelRedefinedFloorWatch,
+    imageAlt:
+      'The Floor Watch dashboard, shown with sample data: a list of orders at risk of running late with what is holding each one, turn time over 26 weeks, and each account measured against its own normal pace.',
+    story: [
+      {
+        heading: 'What was going wrong',
+        paragraphs: [
+          'Apparel Redefined prints and embroiders clothing in Chicago. They make thousands of orders a year, for wholesale partners, online stores, and customers who order direct.',
+          "Every order passes through four systems: the one that runs production, the one sales uses, the supplier's, and accounting. None of them could answer the questions the owners asked every day. How long do our jobs really take? What is in the queue right now? Which orders are about to miss their date?",
+          'So the team found out an order was late when the customer did. Every fix came after the fact.',
+        ],
+      },
+      {
+        heading: 'What I found',
+        paragraphs: [
+          'Once I put the order history in one place, two things everyone believed turned out to be wrong.',
+          'The first was skipped steps. Lots of orders seemed to skip a step, and it looked like sloppy work. It was not. Each kind of decoration has its own normal path through the shop. Screen print jobs skip the in-production step 62% of the time, because that is how screen print works. Judging every order against one path made healthy orders look broken, and hid the ones that really were.',
+          "The second was what makes a job slow. Mostly it was the customer, not the job. Three accounts make up 76% of all orders. The same kind of decoration takes 6.7 days for one of them and 16.8 days for another. A shop-wide average would warn about the wrong orders. Each order had to be judged against its own customer's normal pace.",
+        ],
+      },
+      {
+        heading: 'What changed',
+        paragraphs: [
+          'I joined the four systems into one order history that refreshes every four hours.',
+          "On top of it sits a list of orders at risk. Every open order gets a score for how much of its time it has used, measured against that customer's normal pace. The list also flags what is holding an order up: art, sizing, paperwork, or blank garments that have not arrived.",
+          'The owners can now see on-time and turn time by customer and by kind of decoration. And when an order is taken, a model suggests the earliest due date the shop can really hit. Half its guesses land within four working days.',
+          'It went live in March 2026. From April to August, 2.4% of orders finished more than five days late. In the same months of 2023 and 2024, it was 6.4%. That is about 540 fewer badly late orders a year. Orders ten or more days late fell from 2.8% to 1.2%.',
+        ],
+        quote: {
+          text: 'Our managers are back to leading with clear and reliable data. Working with Rapid Insights has been a win for our team. They delivered exactly what we needed through smart data analysis, performance tracking, dashboard development, and production capacity planning. Nothing feels impossible when Rapid Insights is involved. We highly recommend their work.',
+          source: 'John Laroy, CEO, Apparel Redefined',
+        },
+      },
+      {
+        heading: 'What I checked before I believed it',
+        paragraphs: [
+          'First, whether 2025 was just a bad year. For this measure it was not. Badly late orders were 7.4% in 2023, 5.6% in 2024, and 6.7% in 2025. I still left 2025 out of the baseline and compared against the average of 2023 and 2024.',
+          'Second, whether the mix of work changed. A drop in one big customer could be luck. So I checked the five largest one at a time. Every one of them is lower in 2026 than in any year before. One went from 28.9% of its orders badly late in 2025 to 1.6%.',
+          'Third, turn time. I do not claim it. Jobs got faster than in 2025, but not faster than in 2023 and 2024, because a large customer with longer jobs grew from none of the orders to more than a third of them.',
+          'Fourth, the money. A late order costs the shop in credits, discounts, and reprints. The books show $53,046 a year in credits and rework. If a badly late order draws 5 to 10 times the average credit, the drop is worth $11,000 to $22,000 a year. That multiple is my estimate, not a measurement, so it stays off the headline. The true cost is higher than the books show, because the garments, ink, and press time for a reprint are booked as normal production.',
+          'Fifth, the part I have not settled. The receiving fix went live a month earlier, at the same shop. An order stuck on the dock for a week is very likely to finish late, so some of this drop may belong to that fix. I have not split the two apart yet. The test is to look only at orders that never got stuck at the dock. Until I run it, read this result as what the two fixes did together.',
+          'Two things would make this number stronger. Credit memos already have a field for the production order number. If staff fill it in, the guessed cost of a late order becomes a measured one. And logging what the team does when an order shows up at risk would show which of those fixes work.',
         ],
       },
     ],
