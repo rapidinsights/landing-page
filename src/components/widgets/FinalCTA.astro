@@ -13,9 +13,9 @@
  * takes about three seconds to load, so it loads hidden inside a dialog once the
  * link scrolls into view, and a click only has to show it. Without the script,
  * the link opens the booking page in a new tab.
- * Until the recording of the tool lands, a labelled wireframe box holds its
- * place. The line about where answers go describes the map prototype; the
- * shipped tool has to keep it true.
+ * The recording of the tool and its poster load as the section nears the screen;
+ * with reduced motion it stays on the poster, the last frame, which shows the answer. The
+ * line about where answers go describes the map; the tool has to keep it true.
  */
 import { Image } from 'astro:assets';
 import Button from '~/components/ui/Button.astro';
@@ -38,13 +38,37 @@ const finalCtaBookingUrl = `${bookingUrl}?hide_event_type_details=1&hide_gdpr_ba
       </p>
     </div>
 
-    <!-- Wireframe: the recording of the Free Process Map goes here, as a muted looping video
-         that loads as the section nears the screen, with a still frame for reduced motion. -->
-    <div
-      class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center aspect-video w-full rounded-xl border-2 border-dashed border-cream/30 flex flex-col items-center justify-center gap-2 text-center px-6"
-    >
-      <p class="font-mono text-sm uppercase tracking-label text-cream/70">[Video: the Free Process Map in action]</p>
-      <p class="text-sm text-cream/60">10 to 20 second silent loop · coming soon</p>
+    <!-- The Free Process Map in use, recorded by scripts/record-demo.mjs in rapid-insights-app.
+         One clip per layout; only the one on screen loads, and only as the section nears. -->
+    <div class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center w-full">
+      <video
+        class="demo hidden md:block w-full h-auto rounded-xl ring-1 ring-cream/20 bg-white"
+        width="1600"
+        height="1000"
+        data-poster="/videos/free-process-map-desktop.webp"
+        preload="none"
+        muted
+        loop
+        playsinline
+        aria-label="The Free Process Map: an owner sends some work back from checking to making, and the map moves its look-here-first ring to making."
+      >
+        <source src="/videos/free-process-map-desktop.mp4" type="video/mp4" />
+        <source src="/videos/free-process-map-desktop.webm" type="video/webm" />
+      </video>
+      <video
+        class="demo md:hidden mx-auto block h-auto max-h-[70vh] w-auto max-w-full rounded-xl ring-1 ring-cream/20 bg-white"
+        width="780"
+        height="1688"
+        data-poster="/videos/free-process-map-phone.webp"
+        preload="none"
+        muted
+        loop
+        playsinline
+        aria-label="The Free Process Map: an owner sends some work back from checking to making, and the map moves its look-here-first ring to making."
+      >
+        <source src="/videos/free-process-map-phone.mp4" type="video/mp4" />
+        <source src="/videos/free-process-map-phone.webm" type="video/webm" />
+      </video>
     </div>
 
     <div class="lg:col-start-1 lg:row-start-2">
@@ -124,6 +148,26 @@ const finalCtaBookingUrl = `${bookingUrl}?hide_event_type_details=1&hide_gdpr_ba
 </style>
 
 <script>
+  // The poster is set here, not in the HTML: in the HTML it loads with the page and pushes LCP past 2s.
+  const motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const near = new IntersectionObserver(
+    (entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        // The clip for the other layout is display:none and never loads.
+        if (!video.offsetParent) continue;
+        if (!isIntersecting) {
+          video.pause();
+          continue;
+        }
+        if (!video.poster && video.dataset.poster) video.poster = video.dataset.poster;
+        if (motion) video.play().catch(() => {});
+      }
+    },
+    { rootMargin: '200px' }
+  );
+  document.querySelectorAll<HTMLVideoElement>('#final-cta video.demo').forEach((v) => near.observe(v));
+
   const dialog = document.querySelector<HTMLDialogElement>('#booking-dialog');
   const link = document.querySelector<HTMLAnchorElement>('a[data-calendly]');
 
