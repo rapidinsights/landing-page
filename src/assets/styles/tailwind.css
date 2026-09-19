@@ -189,31 +189,76 @@ body:has(#hero) #header > div:first-child {
     color 200ms ease,
     background-color 200ms ease;
 }
-body:has(#hero) #header:not(.scroll):not(.expanded) .logo-text {
+body:has(#hero) #header:not(.scroll) .logo-text {
   color: #faf5ef;
 }
-body:has(#hero) #header:not(.scroll):not(.expanded) nav a,
-body:has(#hero) #header:not(.scroll):not(.expanded) nav button {
+body:has(#hero) #header:not(.scroll) nav a,
+body:has(#hero) #header:not(.scroll) nav button {
   color: rgb(250 245 239 / 90%);
 }
-body:has(#hero) #header:not(.scroll):not(.expanded) nav a:hover,
-body:has(#hero) #header:not(.scroll):not(.expanded) nav button:hover {
+body:has(#hero) #header:not(.scroll) nav a:hover,
+body:has(#hero) #header:not(.scroll) nav button:hover {
   color: #faf5ef;
 }
-body:has(#hero) #header:not(.scroll):not(.expanded) [data-aw-toggle-menu] span {
+body:has(#hero) #header:not(.scroll) [data-aw-toggle-menu] span {
   background-color: #faf5ef;
 }
 /* #header.scroll > div:last-child {
   @apply py-3;
 } */
 
+/* Open mobile menu. Three destinations and one action, so the links get the
+   space: large type, hairline-separated rows, and a solid footer bar the page
+   cannot show through. */
 #header.expanded nav {
   position: fixed;
   top: 70px;
   left: 0;
   right: 0;
-  bottom: 70px !important;
-  padding: 0 5px;
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 0;
+}
+
+#header.expanded nav > ul {
+  @apply px-3 pt-2;
+}
+
+#header.expanded nav > ul > li + li {
+  border-top: 1px solid rgb(0 0 0 / 10%);
+}
+
+#header.expanded nav > ul > li > a,
+#header.expanded nav > ul > li > button {
+  @apply font-heading text-3xl py-5 px-3;
+}
+
+#header.expanded > div > div:last-child {
+  background-color: rgb(var(--aw-color-bg-page));
+  border-top: 1px solid rgb(0 0 0 / 10%);
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+#header.expanded > div > div:last-child > div {
+  @apply w-full;
+}
+
+#header.expanded > div > div:last-child span {
+  @apply ml-0 w-full;
+}
+
+#header.expanded > div > div:last-child span > a {
+  @apply ml-0 w-full py-3 text-base;
+}
+
+/* Over the hero the panel is navy, so its rules and footer bar go light too.
+   Same condition that paints the backdrop navy above. */
+body:has(#hero) #header.expanded:not(.scroll) nav > ul > li + li {
+  border-top-color: rgb(250 245 239 / 12%);
+}
+
+body:has(#hero) #header.expanded:not(.scroll) > div > div:last-child {
+  background-color: #011c42;
+  border-top-color: rgb(250 245 239 / 12%);
 }
 
 .dropdown:focus .dropdown-menu,
