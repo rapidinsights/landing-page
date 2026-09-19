@@ -8,6 +8,12 @@ on:
     branches:
       - main
 
+# A second push to a PR supersedes the first; without this the older run
+# finishes anyway and burns the private-repo Actions minutes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
