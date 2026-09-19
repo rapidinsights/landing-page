@@ -68,12 +68,12 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
                   <p class="font-mono text-sm uppercase tracking-label text-muted">{c.business}</p>
                 </div>
 
-                <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed text-default">{c.problem}</h3>
+                <h3 class="px-2 text-lg md:text-xl font-semibold leading-relaxed md:leading-7 text-default">{c.problem}</h3>
 
                 <div class="px-2 pt-5 border-t border-default/10 flex flex-col gap-1.5">
                   <p class="font-mono text-sm uppercase tracking-label text-muted">{c.valueLabel}</p>
                   {/* flex, so the source newline between figure and unit is not rendered as a word space */}
-                  <p class="flex items-baseline gap-1.5 font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight text-primary">
+                  <p class="flex items-baseline gap-1.5 font-heading text-3xl md:text-4xl font-bold tracking-heading tabular-nums leading-tight md:leading-10 text-primary">
                     {c.value}
                     {c.valueUnit && <span class="text-lg md:text-xl font-semibold tracking-normal">{c.valueUnit}</span>}
                   </p>
@@ -90,7 +90,7 @@ import { cases, finishedMonth, readMinutes } from '~/data/cases';
 
                 <a
                   href={`/cases/${c.slug}`}
-                  class="absolute inset-0 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  class="absolute inset-0 rounded-2xl focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   <span class="sr-only">
                     Read the case study: {c.name}, {c.label}

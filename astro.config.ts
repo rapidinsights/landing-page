@@ -1,10 +1,12 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
+
+import { unified } from '@astrojs/markdown-remark';
 
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
@@ -24,6 +26,10 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  // Astro 7 defaults to 'jsx', which strips the whitespace between inline
+  // elements that the copy relies on.
+  compressHTML: true,
+
   // Prefetch is enabled for internal links that opt in via `data-astro-prefetch`.
   prefetch: {
     defaultStrategy: 'hover',
@@ -34,10 +40,41 @@ export default defineConfig({
   // one-page site barely uses, for a shorter critical path.
   build: { inlineStylesheets: 'always' },
 
+  // The voice palette, self-hosted from the build. Latin subset only: the
+  // browser never fetches the others, and font bytes are the LCP budget. Keep
+  // it to three families (see CLAUDE.md). Each is mapped onto the --aw-font-*
+  // tokens in CustomStyles.astro, which also preloads the heading font.
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Plus Jakarta Sans',
+      cssVariable: '--font-jakarta',
+      weights: ['200 800'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['sans-serif'],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'JetBrains Mono',
+      cssVariable: '--font-jetbrains-mono',
+      weights: ['100 800'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['monospace'],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Lora',
+      cssVariable: '--font-lora',
+      weights: ['400 700'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['serif'],
+    },
+  ],
+
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
     sitemap(),
     mdx(),
     icon({
@@ -62,7 +99,9 @@ export default defineConfig({
       })
     ),
     compress({
-      CSS: true,
+      // csso drops the media range syntax Tailwind 4 emits for breakpoints
+      // (`@media (width>=48rem)`), which silently removes every md:/lg: rule.
+      CSS: { csso: false, lightningcss: { minify: true } },
       HTML: {
         'html-minifier-terser': {
           removeAttributeQuotes: false,
@@ -83,11 +122,14 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [readingTimeRemarkPlugin],
-    rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    processor: unified({
+      remarkPlugins: [readingTimeRemarkPlugin],
+      rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    }),
   },
 
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),

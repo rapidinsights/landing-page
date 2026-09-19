@@ -100,13 +100,13 @@ const penCircle = `<svg class="pen-circle" viewBox="0 0 200 80" preserveAspectRa
             alt={lead.imageAlt ?? ''}
             widths={[640, 960, 1320]}
             sizes="(min-width: 1024px) 700px, 100vw"
-            class="aspect-[4/3] w-full rounded-xl object-cover object-[50%_28%]"
+            class="aspect-4/3 w-full rounded-xl object-cover object-[50%_28%]"
             loading="eager"
             fetchpriority="high"
           />
         ) : (
           <div
-            class="aspect-[4/3] rounded-xl bg-section flex items-center justify-center font-mono text-sm uppercase tracking-label text-muted"
+            class="aspect-4/3 rounded-xl bg-section flex items-center justify-center font-mono text-sm uppercase tracking-label text-muted"
             aria-hidden="true"
           >
             [Image]
@@ -116,7 +116,7 @@ const penCircle = `<svg class="pen-circle" viewBox="0 0 200 80" preserveAspectRa
           <p class="font-mono text-sm uppercase tracking-label text-secondary">
             {lead.entryLabel} · {lead.name} · {lead.business}
           </p>
-          <h2 class="mt-3 font-display text-3xl md:text-4xl font-semibold leading-tight text-default">
+          <h2 class="mt-3 font-display text-3xl md:text-4xl font-semibold leading-tight md:leading-10 text-default">
             <span class="pen-underline">{lead.problem}</span>
           </h2>
           <p class="mt-4 font-display text-lg leading-relaxed text-default">{lead.story[0].paragraphs[0]}</p>

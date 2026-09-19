@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative md:-mt-[76px] not-prose bg-[rgb(1_28_66)]" {...id ? { id } : {}}>
+<section class="relative md:mt-[-76px] not-prose bg-[rgb(1_28_66)]" {...id ? { id } : {}}>
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
     <slot name="bg">
       {bg ? <Fragment set:html={bg} /> : null}
@@ -41,7 +41,7 @@ const {
             {
               title && (
                 <h1
-                  class="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.03] tracking-heading mb-6 md:mb-8 font-heading text-[#FAF5EF] intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+                  class="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.03] md:leading-none tracking-heading mb-6 md:mb-8 font-heading text-[#FAF5EF] intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
                   set:html={title}
                 />
               )
@@ -49,7 +49,7 @@ const {
             {
               subtitle && (
                 <p
-                  class="text-lg md:text-xl text-[rgb(250_245_239_/_65%)] leading-relaxed max-w-[56ch] mb-8 md:mb-10 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+                  class="text-lg md:text-xl text-[rgb(250_245_239/65%)] leading-relaxed md:leading-7 max-w-[56ch] mb-8 md:mb-10 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
                   set:html={subtitle}
                 />
               )

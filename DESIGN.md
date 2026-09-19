@@ -14,7 +14,7 @@ When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.m
 
 ## Color tokens
 
-Defined as CSS variables in [CustomStyles.astro](src/components/CustomStyles.astro), exposed to Tailwind in [tailwind.config.js:9-22](tailwind.config.js#L9-L22). Always use the Tailwind alias — never hardcode hex.
+Defined as CSS variables in [CustomStyles.astro](src/components/CustomStyles.astro), exposed to Tailwind in the `@theme inline` block of [tailwind.css:17](src/assets/styles/tailwind.css#L17). Always use the Tailwind alias — never hardcode hex.
 
 ### The channel-list convention (read before adding a token)
 
@@ -25,30 +25,30 @@ Every colour token is a **bare space-separated channel list**, never wrapped in 
 --aw-color-primary: rgb(20 33 61); /* WRONG — breaks opacity modifiers */
 ```
 
-`tailwind.config.js` then composes each one with the `<alpha-value>` placeholder:
+The `@theme inline` block in `tailwind.css` then wraps each one in `rgb()`:
 
-```js
-primary: 'rgb(var(--aw-color-primary) / <alpha-value>)',
+```css
+--color-primary: rgb(var(--aw-color-primary));
 ```
 
-**This is not cosmetic.** Tailwind can only apply an opacity modifier to a colour written with `<alpha-value>`. Given a bare `var(--token)`, a utility like `text-primary/10` is **silently dropped** — no CSS rule is emitted at all, the element just inherits its parent's colour, and nothing warns. `npm run check` passes, the class looks right in the markup, and the page renders wrong. Non-alpha utilities keep working either way, which is what makes the failure so quiet.
+Tailwind 4 builds opacity modifiers (`text-primary/10`) on top of that with `color-mix()`. **This is not cosmetic.** Wrap a token in `rgb()` in `CustomStyles.astro` as well and every utility using it becomes `rgb(rgb(...))`, an invalid colour the browser silently discards. `npm run check` passes, the class looks right in the markup, and the page renders wrong.
 
 A channel list **cannot itself carry an alpha**. A token that needs one either flattens to its composite over that block's own `--aw-color-bg-page`, or drops the alpha and states it at the call site — which is why `muted-on-dark` is used as `text-muted-on-dark/80`.
 
-| CSS variable                    | Value         | Tailwind alias     | Role                                                                                                 |
-| ------------------------------- | ------------- | ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `--aw-color-primary`            | `20 33 61`    | `primary`          | Prussian navy — focus rings, primary-button hover fill, link accents                                 |
-| `--aw-color-secondary`          | `45 106 159`  | `secondary`        | Mid blue — eyebrow text, secondary accents. 5.7:1 on white                                           |
-| `--aw-color-accent`             | `252 163 17`  | `accent`           | Orange — the scarce accent. 2.0:1 on white, so decorative use only, never body text                  |
-| `--aw-color-text-default`       | `26 26 46`    | `default`          | Body text (near-black navy)                                                                          |
-| `--aw-color-text-muted`         | `71 85 105`   | `muted`            | De-emphasized copy, captions. Clears WCAG AA at 6.6:1 on `bg-section`                                |
-| `--aw-color-text-muted-on-dark` | `250 245 239` | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections. **Always used as `/80`**; clears AA (10.2:1) |
-| `--aw-color-bg-section`         | `237 240 247` | `section`          | Cool grey-white section backgrounds                                                                  |
-| `--aw-color-bg-prussian`        | `1 28 66`     | `prussian`         | The deep Prussian field behind the Hero, ProblemAgitation and FinalCTA bands                         |
-| `--aw-color-text-cream`         | `250 245 239` | `cream`            | Full-strength cream copy on the Prussian field                                                       |
-| `--aw-color-text-heading`       | `26 26 46`    | _(not aliased)_    | Headings; used via CSS var                                                                           |
-| `--aw-color-bg-page`            | `250 250 250` | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:35-37](src/assets/styles/tailwind.css#L35-L37) |
-| `--aw-color-bg-page-dark`       | `20 33 61`    | _(via `.bg-dark`)_ | Navy; used for dark-background sections                                                              |
+| CSS variable                    | Value         | Tailwind alias     | Role                                                                                                     |
+| ------------------------------- | ------------- | ------------------ | -------------------------------------------------------------------------------------------------------- |
+| `--aw-color-primary`            | `20 33 61`    | `primary`          | Prussian navy — focus rings, primary-button hover fill, link accents                                     |
+| `--aw-color-secondary`          | `45 106 159`  | `secondary`        | Mid blue — eyebrow text, secondary accents. 5.7:1 on white                                               |
+| `--aw-color-accent`             | `252 163 17`  | `accent`           | Orange — the scarce accent. 2.0:1 on white, so decorative use only, never body text                      |
+| `--aw-color-text-default`       | `26 26 46`    | `default`          | Body text (near-black navy)                                                                              |
+| `--aw-color-text-muted`         | `71 85 105`   | `muted`            | De-emphasized copy, captions. Clears WCAG AA at 6.6:1 on `bg-section`                                    |
+| `--aw-color-text-muted-on-dark` | `250 245 239` | `muted-on-dark`    | De-emphasized cream copy on the Prussian/deep sections. **Always used as `/80`**; clears AA (10.2:1)     |
+| `--aw-color-bg-section`         | `237 240 247` | `section`          | Cool grey-white section backgrounds                                                                      |
+| `--aw-color-bg-prussian`        | `1 28 66`     | `prussian`         | The deep Prussian field behind the Hero, ProblemAgitation and FinalCTA bands                             |
+| `--aw-color-text-cream`         | `250 245 239` | `cream`            | Full-strength cream copy on the Prussian field                                                           |
+| `--aw-color-text-heading`       | `26 26 46`    | _(not aliased)_    | Headings; used via CSS var                                                                               |
+| `--aw-color-bg-page`            | `250 250 250` | _(via `.bg-page`)_ | Page background; applied via utility in [tailwind.css:131-133](src/assets/styles/tailwind.css#L131-L133) |
+| `--aw-color-bg-page-dark`       | `20 33 61`    | _(via `.bg-dark`)_ | Navy; used for dark-background sections                                                                  |
 
 Direct consumers outside Tailwind must wrap the token themselves — `rgb(var(--aw-color-bg-page))`, as the `@layer utilities` block in [tailwind.css](src/assets/styles/tailwind.css) does.
 
@@ -71,7 +71,7 @@ Class-triggered overrides defined in [CustomStyles.astro:50-88](src/components/C
 
 ## Typography — voice palette
 
-Three variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. `@font-face` declarations in [src/assets/styles/fonts.css](src/assets/styles/fonts.css), mapping in [CustomStyles.astro:19-23](src/components/CustomStyles.astro#L19-L23), Tailwind aliases in [tailwind.config.js:24-28](tailwind.config.js#L24-L28).
+Three variable font families, each with a deliberate role. The interplay **is** the voice; reach for each one deliberately. Families configured in `fonts` in [astro.config.ts:47](astro.config.ts#L47), mapping in [CustomStyles.astro](src/components/CustomStyles.astro), Tailwind aliases in the `@theme inline` block of [tailwind.css:17](src/assets/styles/tailwind.css#L17).
 
 | Tailwind alias | Family                     | Role                                                               |
 | -------------- | -------------------------- | ------------------------------------------------------------------ |
@@ -88,23 +88,23 @@ past the 2.0s ceiling. Three fits at ~105 KB and 1.73s. Plus Jakarta Sans
 absorbed body copy when Inter went, since the two were doing the same job.
 Adding a family means removing one — `npm run audit` will tell you.
 
-Faces are declared by hand rather than through `@fontsource-variable/<family>`,
-whose `index.css` ships six unicode subsets per family when the browser only
+Each family is limited to `subsets: ['latin']` in the Fonts API config. The
+Fontsource default ships six unicode subsets per family, and the browser only
 ever fetches latin.
 
 ## Type tokens
 
-Custom scale extensions in [tailwind.config.js:25-31](tailwind.config.js#L25-L31):
+Custom scale extensions in the `@theme` block of [tailwind.css:41](src/assets/styles/tailwind.css#L41):
 
 - `leading-tighter` — `1.2`
 - `tracking-heading` — `-0.02em`
 - `tracking-label` — `0.12em` (use with `uppercase` + `font-mono` for eyebrows)
 
-Global rule in [tailwind.css:29-31](src/assets/styles/tailwind.css#L29-L31):
+Global rule in [tailwind.css:126](src/assets/styles/tailwind.css#L126):
 
 - `text-wrap: balance` is applied to every `h1` and `h2`. Don't override it without a line-break reason.
 
-Body `line-height: 1.6` is set on `body` in [tailwind.css:12-14](src/assets/styles/tailwind.css#L12-L14).
+Body `line-height: 1.6` is set on `body` in [tailwind.css:108](src/assets/styles/tailwind.css#L108).
 
 ## Type scale
 
@@ -140,7 +140,7 @@ Rules:
 
 ## Shape
 
-- **Buttons are pill.** `.btn` base uses `rounded-full` in [tailwind.css:54](src/assets/styles/tailwind.css#L54). The pill shape is the signature button language — do not sharpen it.
+- **Buttons are pill.** `.btn` base uses `rounded-full` in [tailwind.css:147](src/assets/styles/tailwind.css#L147). The pill shape is the signature button language — do not sharpen it.
 - **Cards use `rounded-xl` / `rounded-2xl`** across widgets. Pick per section; stay in that range.
 - Sharp-corner experiments need a design conversation first — they invert the current shape language.
 
@@ -169,7 +169,7 @@ Vary container width across sections — the rhythm of width changes is itself a
 
 ## Button primitives
 
-Defined in [tailwind.css:52-68](src/assets/styles/tailwind.css#L52-L68); consumed via [Button.astro](src/components/ui/Button.astro) with a `variant` prop.
+Defined in [tailwind.css:146-160](src/assets/styles/tailwind.css#L146-L160); consumed via [Button.astro](src/components/ui/Button.astro) with a `variant` prop.
 
 | Class            | Variant               | Visual                                                                                        |
 | ---------------- | --------------------- | --------------------------------------------------------------------------------------------- |
@@ -200,7 +200,7 @@ Four lines of script. **Do not expand.** Destroy/re-init logic is only needed un
 
 ### 2. Intersect reveal — scroll-triggered fade/translate
 
-CSS + a tiny `IntersectionObserver` helper in [BasicScripts.astro:160-263](src/components/common/BasicScripts.astro#L160-L263). The `intersect` Tailwind variant is registered in [tailwind.config.js:47-49](tailwind.config.js#L47-L49) as `&:not([no-intersect])`.
+CSS + a tiny `IntersectionObserver` helper in [BasicScripts.astro:160-263](src/components/common/BasicScripts.astro#L160-L263). The `intersect` Tailwind variant is registered in [tailwind.css:11](src/assets/styles/tailwind.css#L11) as `@custom-variant intersect (&:not([no-intersect]))`.
 
 **Default class chain** (use this; don't invent new motion):
 
@@ -218,11 +218,20 @@ Modifiers:
 
 ### 3. CSS transitions / `@keyframes`
 
-For hover states, button press feedback, micro-interactions. The one project-level keyframe is `fadeInUp` in [tailwind.config.js:33-42](tailwind.config.js#L33-L42):
+For hover states, button press feedback, micro-interactions. The one project-level keyframe is `fadeInUp` in the `@theme` block of [tailwind.css:50](src/assets/styles/tailwind.css#L50):
 
-```js
-fadeInUp: { '0%': { opacity: 0, translateY: '2rem' }, '100%': { opacity: 1, translateY: 0 } }
-// exposed as: animation: { fade: 'fadeInUp 1s both' }
+```css
+--animate-fade: fadeInUp 1s both;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 ```
 
 Applied via the `animate-fade` utility inside the intersect chain above.
@@ -233,7 +242,7 @@ Anything that doesn't fit one of these three primitives is a design conversation
 
 ## Grain overlay
 
-Defined at `body::after` in [tailwind.css:17-27](src/assets/styles/tailwind.css#L17-L27). Intentional texture that breaks digital flatness.
+Defined at `body::after` in [tailwind.css:112-127](src/assets/styles/tailwind.css#L112-L127). Intentional texture that breaks digital flatness.
 
 - Fixed full-viewport SVG fractal noise (`feTurbulence`, `baseFrequency='0.85'`, 4 octaves)
 - Opacity `0.035` — extremely subtle by design
@@ -255,7 +264,7 @@ Defined at `body::after` in [tailwind.css:17-27](src/assets/styles/tailwind.css#
 | Concern                                                           | File                                                                                 |
 | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | CSS variables, font imports, alt themes                           | [src/components/CustomStyles.astro](src/components/CustomStyles.astro)               |
-| Tailwind token exposure, intersect variant, keyframes             | [tailwind.config.js](tailwind.config.js)                                             |
+| Tailwind token exposure, intersect variant, keyframes             | `@theme` blocks in [src/assets/styles/tailwind.css](src/assets/styles/tailwind.css)  |
 | Base layer, grain overlay, `.btn` primitives, header scroll state | [src/assets/styles/tailwind.css](src/assets/styles/tailwind.css)                     |
 | Intersect reveal engine, header scroll detection                  | [src/components/common/BasicScripts.astro](src/components/common/BasicScripts.astro) |
 | Lenis smooth scroll                                               | [src/components/common/SmoothScroll.astro](src/components/common/SmoothScroll.astro) |
