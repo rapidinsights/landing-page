@@ -136,7 +136,7 @@ export const cases: Case[] = [
       {
         heading: 'What I found',
         paragraphs: [
-          'None of the information was missing. Their largest supplier already knew what it had packed in each box. The carrier already knew when it arrived. NOMOS already held every open order. The three had just never met at the moment a receiver was standing in front of the carton.',
+          'None of the information was missing. S&S Activewear, their largest supplier, already knew what it had packed in each box. The carrier already knew when it arrived. NOMOS already held every open order. The three had just never met at the moment a receiver was standing in front of the carton.',
           'The company could also already prove what it cost. NOMOS has stamped two moments on every order since 2019: when a package was logged in, and when the count was finished. The gap between them is how long a box sat. Nobody had ever looked at it.',
           'So the baseline did not have to be built. Three years of the same measure, over the same months of each year, before I touched anything.',
         ],
