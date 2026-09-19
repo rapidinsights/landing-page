@@ -27,8 +27,9 @@ compressed PNG is ~14 KB. Keep the result under 100 KB.
   one-off `npx --yes playwright@<version>` invocation above, or install it to a
   scratch directory outside the repo.
 - `scripts/og-image.html` is standalone: inline `<style>`, no imports from
-  `src/`, no network fonts. It loads Lora and Plus Jakarta Sans by relative
-  path out of `node_modules/@fontsource-variable/`, so `npm install` must have
-  run before rendering.
+  `src/`, no network fonts. It loads Lora and Plus Jakarta Sans (latin, variable
+  weight, SIL Open Font License) from `scripts/og-fonts/`. They are committed
+  because the site now gets its fonts from the Astro Fonts API, whose build
+  output uses hashed file names.
 - The headline wrap is forced with explicit `<br>` so re-rendering reproduces
   the same image.

@@ -242,7 +242,7 @@ Anything that doesn't fit one of these three primitives is a design conversation
 
 ## Grain overlay
 
-Defined at `body::after` in [tailwind.css:112-127](src/assets/styles/tailwind.css#L112-L127). Intentional texture that breaks digital flatness.
+Defined at `body::after` in [tailwind.css:111-121](src/assets/styles/tailwind.css#L111-L121). Intentional texture that breaks digital flatness.
 
 - Fixed full-viewport SVG fractal noise (`feTurbulence`, `baseFrequency='0.85'`, 4 octaves)
 - Opacity `0.035` — extremely subtle by design
