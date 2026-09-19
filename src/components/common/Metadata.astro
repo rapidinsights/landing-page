@@ -1,11 +1,11 @@
 ---
 import merge from 'lodash.merge';
-import { AstroSeo } from '@astrolib/seo';
+import { SEO } from 'astro-seo';
 
-import type { Props as AstroSeoProps } from '@astrolib/seo';
+import type { Props as SEOProps } from 'astro-seo';
 
 import { SITE, METADATA, I18N } from 'astrowind:config';
-import type { MetaData } from '~/types';
+import type { MetaData, MetaDataOpenGraph, MetaDataTwitter } from '~/types';
 import { getCanonical } from '~/utils/permalinks';
 
 import { adaptOpenGraphImages } from '~/utils/images';
@@ -24,45 +24,73 @@ const {
   twitter = {},
 } = Astro.props;
 
-const seoProps: AstroSeoProps = merge(
+const resolvedTitle = title || METADATA?.title?.default || '';
+const resolvedDescription = description || METADATA?.description;
+
+const mergedOg: MetaDataOpenGraph = merge(
   {
-    title: '',
-    titleTemplate: '%s',
-    canonical: canonical,
-    noindex: true,
-    nofollow: true,
-    description: undefined,
-    openGraph: {
-      url: canonical,
-      site_name: SITE?.name,
-      images: [],
-      locale: I18N?.language || 'en',
-      type: 'website',
-    },
-    twitter: {
-      cardType: openGraph?.images?.length ? 'summary_large_image' : 'summary',
-    },
+    url: canonical,
+    siteName: SITE?.name,
+    images: [],
+    locale: I18N?.language || 'en',
+    type: 'website',
   },
-  {
-    title: METADATA?.title?.default,
-    titleTemplate: METADATA?.title?.template,
-    noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
-    nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
-    description: METADATA?.description,
-    openGraph: METADATA?.openGraph,
-    twitter: METADATA?.twitter,
-  },
-  {
-    title: title,
-    titleTemplate: ignoreTitleTemplate ? '%s' : undefined,
-    canonical: canonical,
-    noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
-    nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
-    description: description,
-    openGraph: { url: canonical, ...openGraph },
-    twitter: twitter,
-  }
+  METADATA?.openGraph,
+  { url: canonical, ...openGraph }
 );
+
+const adaptedOg = await adaptOpenGraphImages(mergedOg, Astro.site);
+const firstImage = adaptedOg.images?.[0];
+
+const mergedTwitter: MetaDataTwitter = merge(
+  { cardType: openGraph?.images?.length ? 'summary_large_image' : 'summary' },
+  METADATA?.twitter,
+  twitter
+);
+
+const seoProps: SEOProps = {
+  title: resolvedTitle,
+  titleTemplate: ignoreTitleTemplate ? '%s' : METADATA?.title?.template || '%s',
+  canonical,
+  noindex:
+    typeof robots?.index !== 'undefined'
+      ? !robots.index
+      : typeof METADATA?.robots?.index !== 'undefined'
+        ? !METADATA.robots.index
+        : true,
+  nofollow:
+    typeof robots?.follow !== 'undefined'
+      ? !robots.follow
+      : typeof METADATA?.robots?.follow !== 'undefined'
+        ? !METADATA.robots.follow
+        : true,
+  description: resolvedDescription,
+  openGraph: firstImage?.url
+    ? {
+        basic: {
+          title: resolvedTitle,
+          type: adaptedOg.type || 'website',
+          image: firstImage.url,
+          url: adaptedOg.url,
+        },
+        optional: {
+          description: resolvedDescription,
+          locale: adaptedOg.locale,
+          siteName: adaptedOg.siteName,
+        },
+        image: {
+          width: firstImage.width,
+          height: firstImage.height,
+        },
+      }
+    : undefined,
+  twitter: {
+    card: mergedTwitter.cardType as NonNullable<SEOProps['twitter']>['card'],
+    site: mergedTwitter.site,
+    creator: mergedTwitter.handle,
+  },
+  surpressWarnings: true,
+};
 ---
 
-<AstroSeo {...{ ...seoProps, openGraph: await adaptOpenGraphImages(seoProps?.openGraph, Astro.site) }} />
+<SEO {...seoProps} />

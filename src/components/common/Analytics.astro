@@ -1,13 +1,16 @@
 ---
-import { GoogleAnalytics } from '@astrolib/analytics';
 import { ANALYTICS } from 'astrowind:config';
+
+const id = ANALYTICS?.vendors?.googleAnalytics?.id ? String(ANALYTICS.vendors.googleAnalytics.id) : '';
+const partytown = !!ANALYTICS?.vendors?.googleAnalytics?.partytown;
+const scriptType = partytown ? 'text/partytown' : undefined;
+
+// gtag.js only reads Arguments objects off the queue; a rest array is ignored.
+const gtagInit = `window.dataLayer = window.dataLayer || [];
+window.gtag = function () { dataLayer.push(arguments); };
+window.gtag('js', new Date());
+window.gtag('config', ${JSON.stringify(id)});`;
 ---
 
-{
-  ANALYTICS?.vendors?.googleAnalytics?.id ? (
-    <GoogleAnalytics
-      id={String(ANALYTICS.vendors.googleAnalytics.id)}
-      partytown={ANALYTICS?.vendors?.googleAnalytics?.partytown}
-    />
-  ) : null
-}
+{id && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} type={scriptType} />}
+{id && <script is:inline type={scriptType} set:html={gtagInit} />}

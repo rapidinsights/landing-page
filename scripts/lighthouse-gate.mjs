@@ -58,7 +58,9 @@ async function waitForServer(origin, preview) {
 // child of its own, and killing only the parent leaves the port held.
 function startPreview(port) {
   const astroBin = join(process.cwd(), 'node_modules', '.bin', 'astro');
-  const child = spawn(astroBin, ['preview', '--port', String(port), '--host', '127.0.0.1'], {
+  // --ignore-lock: Astro 7 allows one preview per project through a lock file,
+  // and a server this gate left behind would otherwise make every later run exit.
+  const child = spawn(astroBin, ['preview', '--port', String(port), '--host', '127.0.0.1', '--ignore-lock'], {
     stdio: ['ignore', 'ignore', 'pipe'],
     detached: true,
   });

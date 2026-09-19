@@ -1,6 +1,101 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+/* Tailwind 4 defaults `dark:` to the OS setting. The page is light only, and
+   the template `dark:` classes still in the widgets must never fire for a
+   visitor whose OS is in dark mode, so tie the variant to a .dark class that
+   is never set. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@custom-variant intersect (&:not([no-intersect]));
+
+/* Tokens are channel lists in CustomStyles.astro, so each one is wrapped in
+   rgb() here. `inline` puts that expression into every utility, so it resolves
+   against the element's own tokens, and Tailwind builds opacity modifiers
+   (`text-primary/10`) on top of it with color-mix(). */
+@theme inline {
+  --color-primary: rgb(var(--aw-color-primary));
+  --color-secondary: rgb(var(--aw-color-secondary));
+  --color-accent: rgb(var(--aw-color-accent));
+  --color-default: rgb(var(--aw-color-text-default));
+  --color-muted: rgb(var(--aw-color-text-muted));
+  --color-muted-on-dark: rgb(var(--aw-color-text-muted-on-dark));
+  --color-section: rgb(var(--aw-color-bg-section));
+  --color-prussian: rgb(var(--aw-color-bg-prussian));
+  --color-cream: rgb(var(--aw-color-text-cream));
+
+  --font-sans:
+    var(--aw-font-sans, ui-sans-serif), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: var(--aw-font-serif, ui-serif), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-heading:
+    var(--aw-font-heading, ui-sans-serif), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    var(--aw-font-mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --font-display: var(--aw-font-display, ui-serif), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+@theme {
+  --leading-tighter: 1.2;
+
+  --tracking-heading: -0.02em;
+  --tracking-label: 0.12em;
+
+  --animate-fade: fadeInUp 1s both;
+  --animate-stamp: stampDown 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2) both;
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes stampDown {
+    0% {
+      opacity: 0;
+      transform: scale(1.35) rotate(-2.5deg);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(0.97) rotate(-2.5deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(-2.5deg);
+    }
+  }
+}
+
+/* Tailwind 3 defaults that Tailwind 4 changed, restored so the page renders
+   as it did: borders default to gray-200 (now currentColor), placeholders to
+   gray-400, and buttons keep the pointer cursor. */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 @layer base {
   @media (prefers-reduced-motion: no-preference) {
@@ -32,41 +127,36 @@
   }
 }
 
-@layer utilities {
-  /* Tokens are channel lists, so direct consumers must wrap them in rgb(). */
-  .bg-page {
-    background-color: rgb(var(--aw-color-bg-page));
-  }
-  .bg-dark {
-    background-color: rgb(var(--aw-color-bg-page-dark));
-  }
-  .bg-light {
-    background-color: rgb(var(--aw-color-bg-page));
-  }
-  .text-page {
-    color: rgb(var(--aw-color-text-page));
-  }
-  .text-muted {
-    color: rgb(var(--aw-color-text-muted));
-  }
+/* Tokens are channel lists, so direct consumers must wrap them in rgb(). */
+@utility bg-page {
+  background-color: rgb(var(--aw-color-bg-page));
+}
+@utility bg-dark {
+  background-color: rgb(var(--aw-color-bg-page-dark));
+}
+@utility bg-light {
+  background-color: rgb(var(--aw-color-bg-page));
+}
+@utility text-page {
+  color: rgb(var(--aw-color-text-page));
 }
 
-@layer components {
-  .btn {
-    @apply inline-flex items-center justify-center rounded-sm border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-primary focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 active:scale-[0.98] active:translate-y-px dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
-  }
+/* Utilities rather than components: Tailwind 4 can only @apply a class
+   declared with @utility, and the variants below apply `btn`. */
+@utility btn {
+  @apply inline-flex items-center justify-center rounded-xs border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-primary focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 active:scale-[0.98] active:translate-y-px dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
+}
 
-  .btn-primary {
-    @apply btn font-semibold bg-accent text-primary border-accent hover:bg-primary hover:border-primary hover:text-white dark:text-white dark:bg-accent dark:border-accent dark:hover:border-primary dark:hover:bg-primary;
-  }
+@utility btn-primary {
+  @apply btn font-semibold bg-accent text-primary border-accent hover:bg-primary hover:border-primary hover:text-white dark:text-white dark:bg-accent dark:border-accent dark:hover:border-primary dark:hover:bg-primary;
+}
 
-  .btn-secondary {
-    @apply btn;
-  }
+@utility btn-secondary {
+  @apply btn;
+}
 
-  .btn-tertiary {
-    @apply btn border-none shadow-none text-muted hover:text-gray-900 dark:text-gray-400 dark:hover:text-white;
-  }
+@utility btn-tertiary {
+  @apply btn border-none shadow-none text-muted hover:text-gray-900 dark:text-gray-400 dark:hover:text-white;
 }
 
 /* On pages with a dark hero, default the header's bg layer to match the hero's navy.

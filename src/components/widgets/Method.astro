@@ -126,25 +126,25 @@ const ways = [
           >
             {i === 0 && (
               <>
-                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] md:leading-none tracking-[-0.03em]">
                   Show me the money.
                 </h3>
                 <ul class="m-0 p-0 list-none flex flex-col gap-4 max-w-[46ch]">
                   {findings.map((f) => (
-                    <li class="flex gap-3 text-lg md:text-xl leading-relaxed">
+                    <li class="flex gap-3 text-lg md:text-xl leading-relaxed md:leading-7">
                       <span class="mt-[0.7em] h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true" />
                       <span set:html={f} />
                     </li>
                   ))}
                 </ul>
-                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch] border-l-2 border-accent pl-4">
+                <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch] border-l-2 border-accent pl-4">
                   I find the biggest profit opportunity in your business, and I put a dollar value on it.
                 </p>
               </>
             )}
             {i === 1 && (
               <>
-                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] md:leading-none tracking-[-0.03em]">
                   <span class="daycount">
                     <span class="oldwrap" aria-hidden="true">
                       <span class="old">120</span>
@@ -156,15 +156,15 @@ const ways = [
                   </span>{' '}
                   days to results.
                 </h3>
-                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   You get a high-value slice of the larger problem quickly. You can be confident that
                 </p>
-                <ul class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                <ul class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   <li>the problem is worth solving</li>
                   <li>it can be fixed</li>
                   <li>you'll love working with us</li>
                 </ul>
-                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   If ANY of that isn't true, there's no obligation to continue.
                 </p>
                 <div class="mt-3">
@@ -181,7 +181,7 @@ const ways = [
                     </filter>
                   </svg>
                   <div class="stamp inline-block rounded-md border-4 border-primary p-1.5 text-primary text-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-stamp">
-                    <div class="rounded-sm border-[1.5px] border-primary px-6 pt-4 pb-3.5 md:px-7">
+                    <div class="rounded-xs border-[1.5px] border-primary px-6 pt-4 pb-3.5 md:px-7">
                       <p class="font-mono text-sm font-bold uppercase tracking-[0.3em]">You get our</p>
                       <p class="mt-2 font-heading text-xl md:text-[1.9rem] font-extrabold uppercase leading-[1.05] tracking-[0.01em]">
                         10-Day
@@ -199,10 +199,10 @@ const ways = [
             )}
             {i === 2 && (
               <>
-                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+                <h3 class="font-heading text-6xl md:text-8xl font-extrabold leading-[0.95] md:leading-none tracking-[-0.03em]">
                   The Payoff.
                 </h3>
-                <p class="text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   We build the complete profit recovery solution that works best for your business. On average it's done
                   in under <strong>90 days</strong>. You own it. We design and document it so that it takes little to no
                   training. And if you want support, we got your back.
