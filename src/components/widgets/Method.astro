@@ -10,7 +10,7 @@
  * help, the monitoring that follows, and the section's only CTA. Step three
  * runs build and sustain: implement the fix, verify it against real numbers,
  * then leave the monitoring behind that keeps it closed.
- * On phones the numeral is a short bar pinned under the site header instead.
+ * On phones and tablets the numeral is a short bar pinned under the site header instead.
  */
 import Button from '~/components/ui/Button.astro';
 import { mapUrl } from '~/navigation';
@@ -91,13 +91,13 @@ const ways = [
 ---
 
 <section id="method" class="relative not-prose bg-page" data-step="01">
-  <div class="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-0 grid grid-cols-1 md:grid-cols-12 md:gap-x-6">
+  <div class="mx-auto max-w-6xl px-4 md:px-6 py-16 lg:py-0 grid grid-cols-1 lg:grid-cols-12 lg:gap-x-6">
     <h2 class="sr-only">The 90-Day Profit Recovery System</h2>
 
     <!-- Pinned numeral: one row of the ticker is visible; the row for the active step slides into view.
          A short bar under the site header on phones, a full-height column on desktop. -->
     <div
-      class="sticky top-[76px] z-10 bg-page pt-4 md:pt-0 flex flex-col md:justify-center md:col-span-5 md:h-[calc(100vh-76px)]"
+      class="sticky top-[76px] z-10 bg-page pt-4 lg:pt-0 flex flex-col lg:justify-center lg:col-span-5 lg:h-[calc(100vh-76px)]"
       aria-hidden="true"
     >
       <p class="font-mono text-sm uppercase tracking-label text-secondary mb-3 md:mb-5">
@@ -117,12 +117,12 @@ const ways = [
       </div>
     </div>
 
-    <ol class="m-0 p-0 list-none md:col-start-7 md:col-span-6">
+    <ol class="m-0 p-0 list-none lg:col-start-7 lg:col-span-6">
       {
         steps.map((s, i) => (
           <li
             data-step={s.n}
-            class="step intersect intersect-once intersect-quarter flex flex-col gap-5 py-10 md:py-0 md:min-h-[calc(100vh-76px)] md:justify-center border-t first:border-0 border-default/15 md:border-0"
+            class="step intersect intersect-once intersect-quarter flex flex-col gap-5 py-10 lg:py-0 lg:min-h-[calc(100vh-76px)] lg:justify-center border-t first:border-0 border-default/15 lg:border-0"
           >
             {i === 0 && (
               <>

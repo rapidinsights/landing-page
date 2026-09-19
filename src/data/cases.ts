@@ -29,6 +29,8 @@ export interface Case {
   name: string;
   business: string;
   problem: string;
+  // How it was solved, one or two short lines under the card's figure. The basis stays on the case page.
+  teaser: string;
   // The hero metric: the highest ladder level fully substantiated for this case, per
   // docs/impact-measurement.md. Cases land on different levels, so a dollar and a
   // percentage sit side by side and neither the label nor a total can be shared.
@@ -56,6 +58,8 @@ export const cases: Case[] = [
     name: 'ABM',
     business: 'Facility services, Fortune 500 division',
     problem: 'Needed to provide thousands of maintenance procedures, but they took half a day each.',
+    teaser:
+      'We built a system that writes the first draft. It cut the time by 90%, so the experts only do the part that needs an expert.',
     value: '$69,000',
     valueLabel: 'Labor capacity freed',
     basis:
@@ -104,6 +108,8 @@ export const cases: Case[] = [
     name: 'Apparel Redefined',
     business: 'Apparel decoration, Chicago',
     problem: 'One order in ten sat on the dock a week or more before anyone could start making it.',
+    teaser:
+      'Now one scan tells the receiver which order a box belongs to, so the box goes to production instead of waiting on the dock.',
     value: '75%',
     valueUnit: 'fewer',
     valueLabel: 'Orders waiting a week to start',
@@ -162,7 +168,8 @@ export const cases: Case[] = [
     label: 'invoice coding',
     name: 'Apparel Redefined',
     business: 'Apparel decoration, Chicago',
-    problem: 'Every sale landed in QuickBooks blank, for one part-time accountant to code by hand.',
+    problem: 'Every sale landed in QuickBooks blank, for one accountant to code by hand.',
+    teaser: "We automated the coding, so invoices arrive ready and the rules no longer live in one person's head.",
     value: '150',
     valueUnit: 'hrs/yr',
     valueLabel: 'Accounting time freed',

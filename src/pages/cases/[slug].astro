@@ -60,7 +60,7 @@ const facts = [
                 <span class="tip ml-1 inline-flex align-middle">
                   <button
                     type="button"
-                    class="tip-btn h-4 w-4 rounded-full border border-muted/50 font-mono text-[10px] font-normal leading-none text-muted hover:border-primary hover:text-primary"
+                    class="tip-btn relative h-4 w-4 before:absolute before:-inset-2 before:content-[''] rounded-full border border-muted/50 font-mono text-[10px] font-normal leading-none text-muted hover:border-primary hover:text-primary"
                     aria-label={`Where the ${f.term.toLowerCase()} number comes from`}
                   >
                     i
@@ -175,7 +175,7 @@ const facts = [
       visibility 160ms;
   }
   .tip-btn:hover + .tip-box,
-  .tip-btn:focus-visible + .tip-box,
+  .tip-btn:focus + .tip-box,
   .tip:hover .tip-box {
     opacity: 1;
     visibility: visible;
