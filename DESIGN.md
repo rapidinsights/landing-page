@@ -1,8 +1,8 @@
 # Design System
 
-Reference for the **values** of this project's visual language — tokens, type roles, motion primitives, shape, and layout conventions. The **principles** ("why" and "how to work") live in [CLAUDE.md](CLAUDE.md).
+Reference for the **values** of this project's visual language — tokens, type roles, motion primitives, shape, and layout conventions. The **principles** ("why" and "how to work") live alongside this file in the project's working notes, which are kept out of this repository.
 
-When the two drift: DESIGN.md is the source of truth for _what exists_; CLAUDE.md is the source of truth for _how to work_.
+DESIGN.md is the source of truth for _what exists_.
 
 ---
 
