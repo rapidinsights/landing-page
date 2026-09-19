@@ -34,3 +34,6 @@ pnpm-debug.log*
 *.docx
 *.xlsx
 ~$*
+
+# Local Netlify folder
+.netlify
