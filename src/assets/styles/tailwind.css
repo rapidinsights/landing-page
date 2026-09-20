@@ -24,6 +24,7 @@
   --color-section: rgb(var(--aw-color-bg-section));
   --color-prussian: rgb(var(--aw-color-bg-prussian));
   --color-cream: rgb(var(--aw-color-text-cream));
+  --color-check: rgb(var(--aw-color-check));
 
   --font-sans:
     var(--aw-font-sans, ui-sans-serif), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',

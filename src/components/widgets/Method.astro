@@ -21,6 +21,93 @@ const steps = [
   { n: '03', word: 'Scale' },
 ];
 
+// Step two's three certainties, ticked off by hand. A pen does not draw at one
+// width: it enters light, bears down through the corner, then lifts to a point.
+// A tick is therefore a run of short strokes whose weight rises and falls,
+// rather than one stroke of fixed width, which is what gives an icon away.
+// No two marks share a path either, because three identical ticks read as a
+// stamp, and a stamp is a claim the page makes about itself; three unlike ones
+// read as someone going down the list.
+type Pt = [number, number];
+
+const at = (p: Pt, q: Pt, t: number): Pt => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+
+// One stroke from p to q, bowed sideways so no edge of the mark is straight,
+// and over-run at both ends so consecutive strokes overlap and the change in
+// weight reads as pressure rather than as a join.
+const stroke = (p: Pt, q: Pt, bow: number, w: number, run = 0.35) => {
+  const [dx, dy] = [q[0] - p[0], q[1] - p[1]];
+  const len = Math.hypot(dx, dy);
+  const [ux, uy] = [dx / len, dy / len];
+  const [a, b]: Pt[] = [
+    [p[0] - ux * run, p[1] - uy * run],
+    [q[0] + ux * run, q[1] + uy * run],
+  ];
+  const ctrl = [(a[0] + b[0]) / 2 - uy * bow, (a[1] + b[1]) / 2 + ux * bow];
+  return {
+    d: `M${a[0].toFixed(2)} ${a[1].toFixed(2)}Q${ctrl[0].toFixed(2)} ${ctrl[1].toFixed(2)} ${b[0].toFixed(2)} ${b[1].toFixed(2)}`,
+    w,
+  };
+};
+
+// Weight along the whole mark: light in, heaviest through the corner, lifting
+// to a point. Seven strokes is enough for the change to look continuous.
+const WEIGHTS = [1.4, 2.1, 2.8, 3.0, 2.4, 1.7, 0.95];
+
+const drawTick = (corner: Pt, start: Pt, tip: Pt, bow: number) => {
+  const shortArm = [0, 0.45, 0.78, 1].map((t) => at(start, corner, t));
+  const longArm = [0.22, 0.48, 0.74, 1].map((t) => at(corner, tip, t));
+  const pts = [...shortArm, ...longArm];
+  return pts.slice(0, -1).map((p, i) => stroke(p, pts[i + 1], i < 3 ? bow : -bow, WEIGHTS[i]));
+};
+
+// The box the tick is put in: square to the page, never tilted, because a
+// crooked box reads as a mistake rather than as a hand. The hand shows in the
+// sides bowing a little and the corners over-running instead of meeting.
+const drawBox = (x0: number, y0: number, x1: number, y1: number, bow: number) =>
+  (
+    [
+      [
+        [x0, y0],
+        [x1, y0],
+      ],
+      [
+        [x1, y0],
+        [x1, y1],
+      ],
+      [
+        [x1, y1],
+        [x0, y1],
+      ],
+      [
+        [x0, y1],
+        [x0, y0],
+      ],
+    ] as Pt[][]
+  ).map(([p, q], i) => stroke(p, q, i % 2 ? bow : -bow, 1.05, 0.12));
+
+// Only the mark is tilted, and only by a degree or two.
+const certainties = [
+  {
+    text: 'the problem is worth solving,',
+    tilt: -3,
+    box: drawBox(3.3, 6.1, 18.2, 21.0, 0.18),
+    strokes: drawTick([10.2, 18.4], [6.2, 14.2], [20.6, 4.2], 0.22),
+  },
+  {
+    text: 'it can be fixed,',
+    tilt: 2,
+    box: drawBox(3.1, 6.3, 18.0, 21.2, 0.24),
+    strokes: drawTick([10.6, 18.9], [6.5, 14.8], [20.3, 4.8], 0.3),
+  },
+  {
+    text: "you'll love working with us.",
+    tilt: -1.5,
+    box: drawBox(3.4, 5.9, 18.3, 20.8, 0.13),
+    strokes: drawTick([10.0, 18.7], [6.0, 14.5], [21.0, 3.8], 0.16),
+  },
+];
+
 // Step one's findings, written as the finished report reads with the answers
 // withheld. Two withholdings, two arguments: the first line is struck out in
 // ink, because what is behind it is a name and not a number. The other two spin
@@ -97,10 +184,10 @@ const ways = [
     <!-- Pinned numeral: one row of the ticker is visible; the row for the active step slides into view.
          A short bar under the site header on phones, a full-height column on desktop. -->
     <div
-      class="sticky top-[76px] z-10 bg-page pt-4 lg:pt-0 flex flex-col lg:justify-center lg:col-span-5 lg:h-[calc(100vh-76px)]"
+      class="sticky top-[76px] z-10 bg-page pt-3 lg:pt-0 -mx-4 px-4 md:-mx-6 md:px-6 lg:mx-0 lg:px-0 flex flex-col lg:justify-center lg:col-span-5 lg:h-[calc(100vh-76px)]"
       aria-hidden="true"
     >
-      <p class="font-mono text-sm uppercase tracking-label text-secondary mb-3 md:mb-5">
+      <p class="font-mono text-sm uppercase tracking-label text-secondary mb-2 md:mb-5">
         The 90-Day Profit Recovery System
       </p>
       <div class="ticker h-20 md:h-28 overflow-clip border-t border-b border-default/15">
@@ -157,12 +244,33 @@ const ways = [
                   days to results.
                 </h3>
                 <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
-                  You get a high-value slice of the larger problem quickly. You can be confident that
+                  You get a high-value slice of the larger problem quickly. You can be confident that:
                 </p>
-                <ul class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
-                  <li>the problem is worth solving</li>
-                  <li>it can be fixed</li>
-                  <li>you'll love working with us</li>
+                <ul class="m-0 p-0 list-none flex flex-col gap-3 max-w-[46ch] text-lg md:text-xl leading-relaxed md:leading-7">
+                  {certainties.map((c) => (
+                    <li class="flex gap-3">
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="tick w-8 h-8 shrink-0 mt-[0.05em]"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <g class="text-default/35" stroke="currentColor">
+                          {c.box.map((s) => (
+                            <path d={s.d} stroke-width={s.w} />
+                          ))}
+                        </g>
+                        <g class="text-check" stroke="currentColor" transform={`rotate(${c.tilt} 12 12)`}>
+                          {c.strokes.map((s) => (
+                            <path d={s.d} stroke-width={s.w} />
+                          ))}
+                        </g>
+                      </svg>
+                      <span>{c.text}</span>
+                    </li>
+                  ))}
                 </ul>
                 <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   If ANY of that isn't true, there's no obligation to continue.
@@ -181,17 +289,19 @@ const ways = [
                     </filter>
                   </svg>
                   <div class="stamp inline-block rounded-md border-4 border-primary p-1.5 text-primary text-center intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-stamp">
-                    <div class="rounded-xs border-[1.5px] border-primary px-6 pt-4 pb-3.5 md:px-7">
-                      <p class="font-mono text-sm font-bold uppercase tracking-[0.3em]">You get our</p>
-                      <p class="mt-2 font-heading text-xl md:text-[1.9rem] font-extrabold uppercase leading-[1.05] tracking-[0.01em]">
+                    <div class="rounded-xs border-[1.5px] border-primary px-5 pt-3 pb-2.5 md:px-6 lg:px-7 lg:pt-4 lg:pb-3.5">
+                      <p class="font-mono text-xs lg:text-sm font-bold uppercase tracking-[0.3em]">You get our</p>
+                      <p class="mt-2 font-heading text-lg md:text-2xl lg:text-[1.9rem] font-extrabold uppercase leading-[1.05] tracking-[0.01em]">
                         10-Day
                         <br />
                         Proof-or-Release
                         <br />
                         Guarantee
                       </p>
-                      <div class="mx-auto my-2.5 h-[1.5px] w-[70%] bg-primary" />
-                      <p class="font-mono text-sm font-bold uppercase tracking-[0.3em]">No strings attached</p>
+                      <div class="mx-auto my-2 lg:my-2.5 h-[1.5px] w-[70%] bg-primary" />
+                      <p class="font-mono text-xs lg:text-sm font-bold uppercase tracking-[0.3em]">
+                        No strings attached
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -205,7 +315,7 @@ const ways = [
                 <p class="text-lg md:text-xl leading-relaxed md:leading-7 max-w-[46ch]">
                   We build the complete profit recovery solution that works best for your business. On average it's done
                   in under <strong>90 days</strong>. You own it. We design and document it so that it takes little to no
-                  training. And if you want support, we got your back.
+                  training. And if you want support, we've got your back.
                 </p>
                 <ul class="flex flex-wrap gap-x-8 gap-y-3 m-0 p-0 list-none">
                   {ways.map((w) => (
