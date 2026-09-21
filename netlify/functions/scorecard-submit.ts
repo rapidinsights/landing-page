@@ -201,7 +201,7 @@ function buildEmailHtml(data: ScorecardSubmission): string {
     ? `
     <div style="background: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; text-align: center;">
       <p style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; color: #111827;">Want to see what's actually hiding in your numbers?</p>
-      <a href="https://rapidinsightsconsulting.com/#contact" style="display: inline-block; padding: 14px 32px; background-color: #1e40af; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Book a 20-minute call</a>
+      <a href="https://getrapidinsights.com/#contact" style="display: inline-block; padding: 14px 32px; background-color: #1e40af; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Book a 20-minute call</a>
       <p style="margin: 16px 0 0 0; font-size: 14px; color: #6b7280;">No obligation. We'll look at your results together and tell you what we see.</p>
     </div>`
     : '';
@@ -239,7 +239,7 @@ function buildEmailHtml(data: ScorecardSubmission): string {
     </div>
     ${ctaSection}
     <div style="text-align: center; padding-top: 24px;">
-      <p style="margin: 0; font-size: 12px; color: #9ca3af;">Rapid Insights Consulting Inc. &middot; <a href="https://rapidinsightsconsulting.com" style="color: #9ca3af;">rapidinsightsconsulting.com</a></p>
+      <p style="margin: 0; font-size: 12px; color: #9ca3af;">Rapid Insights Consulting Inc. &middot; <a href="https://getrapidinsights.com" style="color: #9ca3af;">getrapidinsights.com</a></p>
       <p style="margin: 8px 0 0 0; font-size: 12px; color: #9ca3af;">You received this because you completed the Business Visibility Scorecard.</p>
     </div>
   </div>
