@@ -1,6 +1,6 @@
 site:
   name: Rapid Insights
-  site: 'https://rapidinsightsconsulting.com'
+  site: 'https://getrapidinsights.com'
   base: '/'
   trailingSlash: false
 
@@ -56,11 +56,6 @@ apps:
 
     isRelatedPostsEnabled: true
     relatedPostsCount: 4
-
-analytics:
-  vendors:
-    googleAnalytics:
-      id: null # or "G-XXXXXXXXXX"
 
 ui:
   theme: 'light:only'

@@ -1,16 +1,22 @@
 ---
-import { ANALYTICS } from 'astrowind:config';
+/**
+ * Measurement for every page: PostHog for what visitors do, GA4 only so Google
+ * Ads has a conversion to optimize against.
+ *
+ * Both load after the page has painted and gone idle, which a Lighthouse
+ * comparison showed costs no points. Clicks and scrolling are watched from here
+ * rather than wired into each widget. With neither ID set (local dev, CI,
+ * deploy previews) nothing is rendered and nothing is sent.
+ *
+ * The map app shares the root domain and the PostHog project, so a visitor who
+ * clicks through is recognised there as the same person with no handoff.
+ */
+import { mapUrl } from '~/navigation';
+import client from './analytics.client.js?raw';
 
-const id = ANALYTICS?.vendors?.googleAnalytics?.id ? String(ANALYTICS.vendors.googleAnalytics.id) : '';
-const partytown = !!ANALYTICS?.vendors?.googleAnalytics?.partytown;
-const scriptType = partytown ? 'text/partytown' : undefined;
-
-// gtag.js only reads Arguments objects off the queue; a rest array is ignored.
-const gtagInit = `window.dataLayer = window.dataLayer || [];
-window.gtag = function () { dataLayer.push(arguments); };
-window.gtag('js', new Date());
-window.gtag('config', ${JSON.stringify(id)});`;
+const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY ?? '';
+const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
+const vars = `const posthogKey = ${JSON.stringify(posthogKey)}, gaId = ${JSON.stringify(gaId)}, mapUrl = ${JSON.stringify(mapUrl)};`;
 ---
 
-{id && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} type={scriptType} />}
-{id && <script is:inline type={scriptType} set:html={gtagInit} />}
+{(posthogKey || gaId) && <script is:inline set:html={`{${vars}\n${client}}`} />}
