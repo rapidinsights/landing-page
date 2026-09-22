@@ -7,7 +7,7 @@ export const headerData = {
   links: [
     { text: 'Home', href: getHomePermalink() },
     { text: 'About', href: getPermalink('/about') },
-    { text: 'Blog', href: getPermalink('/blog') },
+    { text: 'Case studies', href: getPermalink('/case-studies') },
   ],
   actions: [{ text: 'See what to fix first', href: mapUrl }],
 };
@@ -20,7 +20,7 @@ export const footerData = {
       title: 'Site',
       links: [
         { text: 'About', href: getPermalink('/about') },
-        { text: 'Blog', href: getPermalink('/blog') },
+        { text: 'Case studies', href: getPermalink('/case-studies') },
       ],
     },
   ],

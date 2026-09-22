@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -69,7 +70,23 @@ export default defineConfig({
   ],
 
   integrations: [
-    sitemap(),
+    sitemap({
+      // The tag pages are noindex, so they have no business in the sitemap.
+      filter: (page) => !page.includes('/tag/'),
+    }),
+    {
+      // The sitemap library always writes the homepage with a trailing slash,
+      // while the page's canonical has none. Rewrite the file so the two agree.
+      // Must stay listed after sitemap(): build:done hooks run in this order.
+      name: 'sitemap-home-without-slash',
+      hooks: {
+        'astro:build:done': ({ dir }) => {
+          const file = new URL('sitemap-0.xml', dir);
+          const xml = fs.readFileSync(file, 'utf8').replace(/<loc>(https?:\/\/[^/<]+)\/<\/loc>/, '<loc>$1</loc>');
+          fs.writeFileSync(file, xml);
+        },
+      },
+    },
     mdx(),
     icon({
       include: {
