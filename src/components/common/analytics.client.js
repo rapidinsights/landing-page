@@ -20,6 +20,55 @@ if (!navigator.webdriver) {
     window.gtag = function () {
       window.dataLayer.push(arguments);
     };
+    // Quebec (Law 25), the EEA and the UK need analytics off until the visitor opts in;
+    // the consent banner is a separate issue, and PostHog is not gated by this. Ads stay
+    // denied everywhere, we run none.
+    window.gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    window.gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      region: [
+        'AT',
+        'BE',
+        'BG',
+        'HR',
+        'CY',
+        'CZ',
+        'DK',
+        'EE',
+        'FI',
+        'FR',
+        'DE',
+        'GR',
+        'HU',
+        'IE',
+        'IT',
+        'LV',
+        'LT',
+        'LU',
+        'MT',
+        'NL',
+        'PL',
+        'PT',
+        'RO',
+        'SK',
+        'SI',
+        'ES',
+        'SE',
+        'IS',
+        'LI',
+        'NO',
+        'GB',
+        'CA-QC',
+      ],
+    });
     window.gtag('js', new Date());
     window.gtag('config', gaId);
   }

@@ -247,10 +247,6 @@
               "properties": {
                 "id": {
                   "type": ["string", "null"]
-                },
-                "partytown": {
-                  "type": "boolean",
-                  "default": true
                 }
               },
               "required": ["id"]
