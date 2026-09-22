@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:netlify": "pnpm --package=netlify-cli@27 dlx netlify dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

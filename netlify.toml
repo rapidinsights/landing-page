@@ -1,3 +1,6 @@
+# Netlify is the host, decided 2026-09-09, and this is the only deploy config in
+# the repo. The Vercel, Docker and nginx configs were deleted rather than kept in
+# step, because only Netlify serves netlify/functions.
 [build]
   publish = "dist"
   command = "pnpm run build"
