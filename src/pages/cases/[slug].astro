@@ -36,7 +36,8 @@ const facts = [
         headline: c.problem,
         description: c.description,
         image: c.image ? String(new URL(c.image.src, Astro.site)) : undefined,
-        datePublished: `${c.finished}-01`,
+        // Google's validator wants a time and zone; midnight UTC on the first of the month is the convention.
+        datePublished: `${c.finished}-01T00:00:00Z`,
       },
     },
   }}
