@@ -21,7 +21,8 @@ if (!navigator.webdriver) {
       window.dataLayer.push(arguments);
     };
     // Quebec (Law 25), the EEA and the UK need analytics off until the visitor opts in;
-    // the consent banner is a separate issue. Ads stay denied everywhere, we run none.
+    // the consent banner is a separate issue, and PostHog is not gated by this. Ads stay
+    // denied everywhere, we run none.
     window.gtag('consent', 'default', {
       analytics_storage: 'granted',
       ad_storage: 'denied',
