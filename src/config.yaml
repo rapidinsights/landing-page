@@ -9,7 +9,7 @@ metadata:
   title:
     default: Rapid Insights
     template: '%s — Rapid Insights'
-  description: "I find what's quietly costing your business money, and I fix it. Most of it hides between the things your business does: the waiting, the handoffs, the work done twice. Rapid Insights finds those points and clears them."
+  description: 'I find what is quietly costing your business money, and I fix it. It hides in the waiting, the handoffs and the work done twice. Rapid Insights clears it.'
   robots:
     index: true
     follow: true
@@ -20,6 +20,8 @@ metadata:
         width: 1200
         height: 630
     type: website
+  twitter:
+    cardType: summary_large_image
 
 i18n:
   language: en

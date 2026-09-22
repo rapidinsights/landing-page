@@ -1,0 +1,60 @@
+---
+import { SITE } from 'astrowind:config';
+import appleTouchIcon from '~/assets/favicons/apple-touch-icon.png';
+import { linkedInUrl } from '~/navigation';
+import { getCanonical } from '~/utils/permalinks';
+import type { MetaDataSchema } from '~/types';
+
+type Props = MetaDataSchema;
+
+const { article } = Astro.props;
+
+const siteUrl = String(getCanonical('/'));
+const organization = {
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: 'Rapid Insights Consulting Inc.',
+  url: siteUrl,
+  logo: String(new URL(appleTouchIcon.src, Astro.site)),
+  sameAs: [linkedInUrl],
+};
+
+const graph: Record<string, unknown>[] = [
+  organization,
+  { '@type': 'WebSite', name: SITE.name, url: siteUrl, publisher: { '@id': organization['@id'] } },
+];
+
+const segments = Astro.url.pathname.split('/').filter(Boolean);
+if (segments.length) {
+  const crumbs = [
+    { name: 'Home', path: '/' },
+    ...segments.map((s, i) => ({ name: s.replace(/-/g, ' '), path: '/' + segments.slice(0, i + 1).join('/') })),
+  ];
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: String(getCanonical(c.path)),
+    })),
+  });
+}
+
+if (article) {
+  graph.push({
+    '@type': 'Article',
+    headline: article.headline,
+    description: article.description,
+    ...(article.image ? { image: article.image } : {}),
+    datePublished: article.datePublished,
+    mainEntityOfPage: String(getCanonical(Astro.url.pathname)),
+    author: { '@id': organization['@id'] },
+    publisher: { '@id': organization['@id'] },
+  });
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<script is:inline type="application/ld+json" set:html={jsonLd} />

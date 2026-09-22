@@ -30,6 +30,8 @@ export interface Case {
   name: string;
   business: string;
   problem: string;
+  // The page's meta description, 140 to 155 characters.
+  description: string;
   // How it was solved, one or two short lines under the card's figure. The basis stays on the case page.
   teaser: string;
   // The hero metric: the highest ladder level fully substantiated for this case, per
@@ -61,6 +63,8 @@ export const cases: Case[] = [
     name: 'ABM',
     business: 'Facility services, Fortune 500 division',
     problem: 'Needed to provide thousands of maintenance procedures, but they took half a day each.',
+    description:
+      'ABM needed thousands of maintenance procedures, at half a day each. A system that writes the first draft cut the time by 90% and freed $69,000 of labor.',
     teaser:
       'We built a system that writes the first draft. It cut the time by 90%, so the experts only do the part that needs an expert.',
     value: '$69,000',
@@ -111,6 +115,8 @@ export const cases: Case[] = [
     name: 'Apparel Redefined',
     business: 'Apparel decoration, Chicago',
     problem: 'One order in ten sat on the dock a week or more before anyone could start making it.',
+    description:
+      'One order in ten sat on the dock a week before work could start. One scan now tells the receiver which order a box belongs to. 75% fewer orders wait.',
     teaser:
       'Now one scan tells the receiver which order a box belongs to, so the box goes to production instead of waiting on the dock.',
     value: '75%',
@@ -172,6 +178,8 @@ export const cases: Case[] = [
     name: 'Apparel Redefined',
     business: 'Apparel decoration, Chicago',
     problem: 'Every sale landed in QuickBooks blank, for one accountant to code by hand.',
+    description:
+      'Every sale landed in QuickBooks blank for one accountant to code by hand. We automated the coding, so invoices arrive ready and 150 hours a year are freed.',
     teaser: "We automated the coding, so invoices arrive ready and the rules no longer live in one person's head.",
     value: '150',
     valueUnit: 'hrs/yr',
@@ -231,6 +239,8 @@ export const cases: Case[] = [
     name: 'Apparel Redefined',
     business: 'Apparel decoration, Chicago',
     problem: 'The shop found out an order was late when the customer did.',
+    description:
+      'The shop found out an order was late when the customer did. A live list of orders about to run late lets the team step in first. 62% fewer finish late.',
     teaser:
       "We built a live list of orders about to run late, each judged against its own customer's normal pace, so the team can step in before the date slips.",
     value: '62%',

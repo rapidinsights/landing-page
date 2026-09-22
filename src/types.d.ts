@@ -61,6 +61,12 @@ export interface MetaData {
 
   openGraph?: MetaDataOpenGraph;
   twitter?: MetaDataTwitter;
+
+  schema?: MetaDataSchema;
+}
+
+export interface MetaDataSchema {
+  article?: { headline: string; description: string; image?: string; datePublished: string };
 }
 
 export interface MetaDataRobots {
@@ -69,7 +75,7 @@ export interface MetaDataRobots {
 }
 
 export interface MetaDataImage {
-  url: string;
+  url: string | ImageMetadata;
   width?: number;
   height?: number;
 }

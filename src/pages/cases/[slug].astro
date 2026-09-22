@@ -26,7 +26,21 @@ const facts = [
 ];
 ---
 
-<Layout metadata={{ title: `${c.name} case study: ${c.label}` }}>
+<Layout
+  metadata={{
+    title: `${c.name} case study: ${c.label}`,
+    description: c.description,
+    openGraph: c.image ? { images: [{ url: c.image }] } : undefined,
+    schema: {
+      article: {
+        headline: c.problem,
+        description: c.description,
+        image: c.image ? String(new URL(c.image.src, Astro.site)) : undefined,
+        datePublished: `${c.finished}-01`,
+      },
+    },
+  }}
+>
   <Fragment slot="header">
     <Header
       links={headerData.links}

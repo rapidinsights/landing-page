@@ -15,7 +15,13 @@ import { headerData, mapUrl } from '~/navigation';
 import portrait from '~/assets/images/derek-wayne-portrait.jpg';
 ---
 
-<Layout metadata={{ title: 'About' }}>
+<Layout
+  metadata={{
+    title: 'About',
+    description:
+      'I am Derek. I find the one place where work piles up in your business and I build the fix: a tool your team uses on the work they already do, not a report.',
+  }}
+>
   <Fragment slot="header">
     <Header
       links={headerData.links}
