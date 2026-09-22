@@ -3,17 +3,15 @@ import Layout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 import BlogIndex from '~/components/widgets/BlogIndex.astro';
 import { headerData, mapUrl } from '~/navigation';
-import { tags, tagSlug } from '~/data/blog';
-import type { Outcome } from '~/data/cases';
-
-export function getStaticPaths() {
-  return tags.map((tag) => ({ params: { tag: tagSlug(tag) }, props: { tag } }));
-}
-
-const { tag } = Astro.props as { tag: Outcome };
 ---
 
-<Layout metadata={{ title: `Blog: ${tag}` }}>
+<Layout
+  metadata={{
+    title: 'Case studies',
+    description:
+      'Four small businesses, the problem each owner named, and the profit we got back by fixing how the work moved. Real numbers, with how long each took.',
+  }}
+>
   <Fragment slot="header">
     <Header
       links={headerData.links}
@@ -21,5 +19,5 @@ const { tag } = Astro.props as { tag: Outcome };
       isSticky
     />
   </Fragment>
-  <BlogIndex tag={tag} />
+  <BlogIndex />
 </Layout>

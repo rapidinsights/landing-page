@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,6 +17,9 @@ import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Filled at config:done; build:done receives no config of its own.
+let siteUrl = '';
 
 export default defineConfig({
   output: 'static',
@@ -69,7 +73,28 @@ export default defineConfig({
   ],
 
   integrations: [
-    sitemap(),
+    sitemap({
+      // The tag pages are noindex, so they have no business in the sitemap.
+      filter: (page) => !page.includes('/tag/'),
+    }),
+    {
+      // The sitemap library writes the homepage as `https://getrapidinsights.com/`
+      // even after `serialize` strips the slash (it re-normalizes every URL), while
+      // the page's canonical has none. Rewrite the file so the two agree.
+      name: 'sitemap-home-without-slash',
+      hooks: {
+        'astro:config:done': ({ config }) => {
+          siteUrl = String(config.site);
+        },
+        'astro:build:done': ({ dir }) => {
+          const file = new URL('sitemap-0.xml', dir);
+          if (!fs.existsSync(file)) return;
+          const home = new URL(siteUrl).origin;
+          const xml = fs.readFileSync(file, 'utf8').replace(`<loc>${home}/</loc>`, `<loc>${home}</loc>`);
+          fs.writeFileSync(file, xml);
+        },
+      },
+    },
     mdx(),
     icon({
       include: {

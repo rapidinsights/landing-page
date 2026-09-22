@@ -1,37 +1,29 @@
 ---
 /**
- * Blog index — everything published, newest first. The newest entry gets the
+ * Case studies index — every case, newest first. The newest entry gets the
  * stage with its photo, opening paragraph and result; the rest sit in two
- * columns below. Filter chips link to one page per category and only show once
- * there is more than one category to choose from. Tags are the outcomes each
- * entry delivered; the tag row links to one page per tag.
+ * columns below. Tags are the outcomes each entry delivered; the tag row links
+ * to one page per tag.
  */
 import { Image } from 'astro:assets';
 import { categories, tags, tagSlug } from '~/data/blog';
 import { finishedMonth, type Outcome } from '~/data/cases';
 
 interface Props {
-  // Category slug; omitted for the unfiltered list.
-  active?: string;
   tag?: Outcome;
 }
 
-const { active, tag } = Astro.props;
+const { tag } = Astro.props;
 
 const entries = categories
-  .filter((cat) => !active || cat.slug === active)
   .flatMap((cat) => cat.entries.map((c) => ({ ...c, entryLabel: cat.entryLabel })))
   .filter((c) => !tag || c.outcomes.includes(tag))
   .sort((a, b) => b.finished.localeCompare(a.finished));
 
 const [lead, ...rest] = entries;
 
-const chips = [{ href: '/blog', title: 'All', current: !active && !tag }].concat(
-  categories.map((cat) => ({ href: `/blog/${cat.slug}`, title: cat.title, current: cat.slug === active }))
-);
-
-const tagLinks = [{ href: '/blog', title: 'Any result', current: !tag }].concat(
-  tags.map((t) => ({ href: `/blog/tag/${tagSlug(t)}`, title: t, current: t === tag }))
+const tagLinks = [{ href: '/case-studies', title: 'Any result', current: !tag }].concat(
+  tags.map((t) => ({ href: `/case-studies/tag/${tagSlug(t)}`, title: t, current: t === tag }))
 );
 
 // A loose loop that overshoots its own start, so it reads as circled by hand.
@@ -41,31 +33,11 @@ const penCircle = `<svg class="pen-circle" viewBox="0 0 200 80" preserveAspectRa
 <section class="mx-auto max-w-7xl px-4 md:px-6 pt-16 md:pt-24 pb-16 md:pb-24 lg:pb-32">
   <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between pb-10 border-b border-default/10">
     <div>
-      <p class="font-mono text-sm uppercase tracking-label text-secondary">Blog</p>
+      <p class="font-mono text-sm uppercase tracking-label text-secondary">Case studies</p>
       <h1 class="mt-3 max-w-3xl font-heading text-4xl md:text-5xl font-bold tracking-heading text-default">
         What I find inside businesses, and what changed
       </h1>
     </div>
-    {
-      categories.length > 1 && (
-        <nav aria-label="Filter posts" class="flex flex-wrap gap-2">
-          {chips.map((chip) => (
-            <a
-              href={chip.href}
-              aria-current={chip.current ? 'page' : undefined}
-              class:list={[
-                'whitespace-nowrap rounded-full border px-4 py-2 font-mono text-sm uppercase tracking-label',
-                chip.current
-                  ? 'border-primary bg-primary text-white'
-                  : 'border-default/20 bg-white text-default hover:border-primary',
-              ]}
-            >
-              {chip.title}
-            </a>
-          ))}
-        </nav>
-      )
-    }
   </div>
 
   <nav aria-label="Filter by result" class="flex flex-wrap items-baseline gap-x-2 gap-y-2 pt-6 pb-2">

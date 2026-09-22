@@ -1,6 +1,6 @@
-// The blog's filters. Categories split entries by kind; case studies are the only
-// kind until the first article lands, and the category chips appear once there are
-// two. Tags are the outcomes an entry delivered, listed in the order of `outcomes`.
+// The case studies index's filters. Categories split entries by kind; case studies
+// are the only kind, and a second kind needs its own route before it can be listed.
+// Tags are the outcomes an entry delivered, listed in the order of `outcomes`.
 
 import { cases, outcomes, type Case, type Outcome } from './cases';
 
