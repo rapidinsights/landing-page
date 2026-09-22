@@ -1,15 +1,22 @@
 ---
+/**
+ * One JSON-LD graph per page: who Rapid Insights is, the site, a breadcrumb
+ * for any page below the root, and an Article on case pages.
+ */
 import { SITE } from 'astrowind:config';
 import appleTouchIcon from '~/assets/favicons/apple-touch-icon.png';
 import { linkedInUrl } from '~/navigation';
 import { getCanonical } from '~/utils/permalinks';
 import type { MetaDataSchema } from '~/types';
 
-type Props = MetaDataSchema;
+interface Props extends MetaDataSchema {
+  title?: string;
+}
 
-const { article } = Astro.props;
+const { article, title } = Astro.props;
 
 const siteUrl = String(getCanonical('/'));
+const pageUrl = String(getCanonical(Astro.url.pathname));
 const organization = {
   '@type': 'Organization',
   '@id': `${siteUrl}#organization`,
@@ -18,26 +25,29 @@ const organization = {
   logo: String(new URL(appleTouchIcon.src, Astro.site)),
   sameAs: [linkedInUrl],
 };
+const person = {
+  '@type': 'Person',
+  '@id': `${siteUrl}#derek`,
+  name: 'Derek Wayne',
+  url: String(getCanonical('/about')),
+  sameAs: [linkedInUrl],
+  worksFor: { '@id': organization['@id'] },
+};
 
 const graph: Record<string, unknown>[] = [
   organization,
+  person,
   { '@type': 'WebSite', name: SITE.name, url: siteUrl, publisher: { '@id': organization['@id'] } },
 ];
 
-const segments = Astro.url.pathname.split('/').filter(Boolean);
-if (segments.length) {
-  const crumbs = [
-    { name: 'Home', path: '/' },
-    ...segments.map((s, i) => ({ name: s.replace(/-/g, ' '), path: '/' + segments.slice(0, i + 1).join('/') })),
-  ];
+// Home and the current page only: the middle of a path (/cases) is not a page here.
+if (pageUrl !== siteUrl) {
   graph.push({
     '@type': 'BreadcrumbList',
-    itemListElement: crumbs.map((c, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: c.name,
-      item: String(getCanonical(c.path)),
-    })),
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: title || SITE.name, item: pageUrl },
+    ],
   });
 }
 
@@ -48,13 +58,15 @@ if (article) {
     description: article.description,
     ...(article.image ? { image: article.image } : {}),
     datePublished: article.datePublished,
-    mainEntityOfPage: String(getCanonical(Astro.url.pathname)),
-    author: { '@id': organization['@id'] },
+    mainEntityOfPage: pageUrl,
+    author: { '@id': person['@id'] },
     publisher: { '@id': organization['@id'] },
   });
 }
 
-const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+// A "</script>" inside any string would end the block early; JSON.stringify leaves "<" alone.
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
 ---
 
+{/* Data, not code: is:inline only stops astro check asking for it on every set:html script. */}
 <script is:inline type="application/ld+json" set:html={jsonLd} />

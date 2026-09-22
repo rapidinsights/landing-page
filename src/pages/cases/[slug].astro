@@ -30,7 +30,7 @@ const facts = [
   metadata={{
     title: `${c.name} case study: ${c.label}`,
     description: c.description,
-    openGraph: c.image ? { images: [{ url: c.image }] } : undefined,
+    openGraph: { type: 'article', images: c.image ? [{ url: c.image }] : [] },
     schema: {
       article: {
         headline: c.problem,

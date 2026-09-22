@@ -64,7 +64,7 @@ export const cases: Case[] = [
     business: 'Facility services, Fortune 500 division',
     problem: 'Needed to provide thousands of maintenance procedures, but they took half a day each.',
     description:
-      'ABM needed thousands of maintenance procedures, at half a day each. A system that writes the first draft cut the time by 90% and freed $69,000 of labor.',
+      'ABM needed thousands of maintenance procedures, half a day each. A system writes the first draft, cutting time 90% and freeing $69,000 of labor capacity.',
     teaser:
       'We built a system that writes the first draft. It cut the time by 90%, so the experts only do the part that needs an expert.',
     value: '$69,000',
@@ -116,7 +116,7 @@ export const cases: Case[] = [
     business: 'Apparel decoration, Chicago',
     problem: 'One order in ten sat on the dock a week or more before anyone could start making it.',
     description:
-      'One order in ten sat on the dock a week before work could start. One scan now tells the receiver which order a box belongs to. 75% fewer orders wait.',
+      'One order in ten sat on the dock a week or more before work could start. One scan now tells the receiver which order a box is for. 75% fewer orders wait.',
     teaser:
       'Now one scan tells the receiver which order a box belongs to, so the box goes to production instead of waiting on the dock.',
     value: '75%',
@@ -240,7 +240,7 @@ export const cases: Case[] = [
     business: 'Apparel decoration, Chicago',
     problem: 'The shop found out an order was late when the customer did.',
     description:
-      'The shop found out an order was late when the customer did. A live list of orders about to run late lets the team step in first. 62% fewer finish late.',
+      'The shop found out an order was late when the customer did. A live list of orders about to run late lets the team step in. 62% fewer finish 5+ days late.',
     teaser:
       "We built a live list of orders about to run late, each judged against its own customer's normal pace, so the team can step in before the date slips.",
     value: '62%',
