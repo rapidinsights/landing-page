@@ -4,4 +4,3 @@ node_modules
 .changeset
 .lighthouse
 pnpm-lock.yaml
-.netlify

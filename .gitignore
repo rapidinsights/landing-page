@@ -35,8 +35,9 @@ pnpm-debug.log*
 *.xlsx
 ~$*
 
-# Local Netlify folder
+# Local Netlify folder, plus the Deno lockfile `netlify dev` writes for its edge runtime
 .netlify
+deno.lock
 
 # internal, local only: kept out of the public repo
 docs/
