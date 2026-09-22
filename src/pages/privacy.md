@@ -1,5 +1,6 @@
 ---
 title: 'Privacy Policy'
+description: 'How Rapid Insights collects, uses and protects your information when you use the service, and the privacy rights you have and how the law protects you.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

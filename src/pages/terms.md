@@ -1,5 +1,6 @@
 ---
 title: 'Terms and Conditions'
+description: 'The terms and conditions that apply when you use the Rapid Insights service. Read them carefully before you use it: they set out what you and we agree to.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

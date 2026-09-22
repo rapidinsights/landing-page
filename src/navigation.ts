@@ -12,6 +12,8 @@ export const headerData = {
   actions: [{ text: 'See what to fix first', href: mapUrl }],
 };
 
+export const linkedInUrl = 'https://www.linkedin.com/in/derek-wayne/';
+
 export const footerData = {
   links: [
     {
@@ -26,7 +28,7 @@ export const footerData = {
     { text: 'Terms', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
-  socialLinks: [{ text: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/derek-wayne/' }],
+  socialLinks: [{ text: 'LinkedIn', icon: 'tabler:brand-linkedin', href: linkedInUrl }],
   footNote: `
     &copy; ${new Date().getFullYear()} Rapid Insights Consulting Inc. All rights reserved.
   `,
