@@ -18,9 +18,6 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Filled at config:done; build:done receives no config of its own.
-let siteUrl = '';
-
 export default defineConfig({
   output: 'static',
 
@@ -78,19 +75,14 @@ export default defineConfig({
       filter: (page) => !page.includes('/tag/'),
     }),
     {
-      // The sitemap library writes the homepage as `https://getrapidinsights.com/`
-      // even after `serialize` strips the slash (it re-normalizes every URL), while
-      // the page's canonical has none. Rewrite the file so the two agree.
+      // The sitemap library always writes the homepage with a trailing slash,
+      // while the page's canonical has none. Rewrite the file so the two agree.
+      // Must stay listed after sitemap(): build:done hooks run in this order.
       name: 'sitemap-home-without-slash',
       hooks: {
-        'astro:config:done': ({ config }) => {
-          siteUrl = String(config.site);
-        },
         'astro:build:done': ({ dir }) => {
           const file = new URL('sitemap-0.xml', dir);
-          if (!fs.existsSync(file)) return;
-          const home = new URL(siteUrl).origin;
-          const xml = fs.readFileSync(file, 'utf8').replace(`<loc>${home}/</loc>`, `<loc>${home}</loc>`);
+          const xml = fs.readFileSync(file, 'utf8').replace(/<loc>(https?:\/\/[^/<]+)\/<\/loc>/, '<loc>$1</loc>');
           fs.writeFileSync(file, xml);
         },
       },
