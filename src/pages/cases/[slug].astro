@@ -17,6 +17,8 @@ export function getStaticPaths() {
 
 const { c } = Astro.props as { c: Case };
 
+const barLabel = c.valueLabelShort ?? c.valueLabel;
+
 const facts = [
   { term: 'Business', detail: c.name },
   { term: 'Industry and size', detail: c.business },
@@ -53,11 +55,38 @@ const facts = [
   <article
     class="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-[13rem_minmax(0,46rem)] lg:justify-center gap-10 lg:gap-16 items-start"
   >
+    <!-- Mobile only. The outcome is the one fact worth following the reader down a
+         2,000 word page, so on phones it is all that survives of the rail: business,
+         industry and duration are already in the prose. Desktop keeps the full rail.
+         The offsets sit ~2px ABOVE the header's bottom (76.5px, 80.75px from md) so the
+         header, which is opaque once scrolled and sits a layer higher, always overlaps
+         this bar. Butting them together leaves a sub-pixel seam that scrolling content
+         shows through. Root font-size is 17px, so no spacing-scale step lands here. -->
+    <dl
+      class="lg:hidden sticky top-[74px] md:top-[78px] z-30 relative -mx-4 m-0 flex items-baseline gap-3 border-b border-default/10 bg-page px-4 py-2.5 md:-mx-6 md:px-6"
+    >
+      <dt class="min-w-0 truncate font-mono text-xs uppercase tracking-label text-muted">{barLabel}</dt>
+      <dd
+        class="m-0 ml-auto flex shrink-0 items-baseline gap-1 font-heading text-lg font-bold tabular-nums leading-none text-default"
+      >
+        {c.value}
+        {c.valueUnit && <span class="text-xs font-normal text-muted">{c.valueUnit}</span>}
+        <span class="tip tip-down inline-flex align-middle">
+          <button
+            type="button"
+            class="tip-btn relative h-4 w-4 before:absolute before:-inset-2 before:content-[''] rounded-full border border-muted/50 font-mono text-[10px] font-normal leading-none text-muted"
+            aria-label={`Where the ${barLabel.toLowerCase()} number comes from`}
+          >
+            i
+          </button>
+          <span role="tooltip" class="tip-box">{c.basis}</span>
+        </span>
+      </dd>
+    </dl>
+
     <!-- The facts are a margin note beside the story, not a second column of it:
          one left edge carries the whole argument, from back link to CTA. -->
-    <dl
-      class="order-2 lg:order-1 m-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-1 gap-x-6 gap-y-5 border-y border-default/10 py-6 lg:sticky lg:top-[120px] lg:border-y-0 lg:py-0"
-    >
+    <dl class="order-1 m-0 hidden gap-y-5 lg:sticky lg:top-[120px] lg:grid">
       {
         facts.map((f) => (
           <div class="relative">
@@ -91,7 +120,7 @@ const facts = [
       }
     </dl>
 
-    <div class="order-1 lg:order-2">
+    <div class="order-2">
       <a href="/case-studies" class="font-mono text-sm uppercase tracking-label text-muted hover:text-primary">
         All case studies
       </a>
@@ -188,6 +217,14 @@ const facts = [
       opacity 160ms ease,
       transform 160ms ease,
       visibility 160ms;
+  }
+  /* In the mobile bar there is nothing above to open into, so it drops instead.
+     It anchors to the bar rather than to the icon, so it clears the bar's edge. */
+  .tip-down .tip-box {
+    top: calc(100% + 8px);
+    bottom: auto;
+    left: auto;
+    right: 1rem;
   }
   .tip-btn:hover + .tip-box,
   .tip-btn:focus + .tip-box,
