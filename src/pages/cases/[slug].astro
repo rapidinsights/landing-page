@@ -58,12 +58,11 @@ const facts = [
     <!-- Mobile only. The outcome is the one fact worth following the reader down a
          2,000 word page, so on phones it is all that survives of the rail: business,
          industry and duration are already in the prose. Desktop keeps the full rail.
-         The offsets sit ~2px ABOVE the header's bottom (76.5px, 80.75px from md) so the
-         header, which is opaque once scrolled and sits a layer higher, always overlaps
-         this bar. Butting them together leaves a sub-pixel seam that scrolling content
-         shows through. Root font-size is 17px, so no spacing-scale step lands here. -->
+         It pins to --header-overlap, which tracks the header's height including the
+         iOS safe area, so the header (opaque once scrolled, and a layer higher)
+         always overlaps it. See the block defining it in tailwind.css. -->
     <dl
-      class="lg:hidden sticky top-[74px] md:top-[78px] z-30 relative -mx-4 m-0 flex items-baseline gap-3 border-b border-default/10 bg-page px-4 py-2.5 md:-mx-6 md:px-6"
+      class="lg:hidden sticky top-[var(--header-overlap)] z-30 relative -mx-4 m-0 flex items-baseline gap-3 border-b border-default/10 bg-page px-4 py-2.5 md:-mx-6 md:px-6"
     >
       <dt class="min-w-0 truncate font-mono text-xs uppercase tracking-label text-muted">{barLabel}</dt>
       <dd
