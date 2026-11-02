@@ -182,9 +182,13 @@ const ways = [
     <h2 class="sr-only">The 90-Day Profit Recovery System</h2>
 
     <!-- Pinned numeral: one row of the ticker is visible; the row for the active step slides into view.
-         A short bar under the site header on phones, a full-height column on desktop. -->
+         A short bar under the site header on phones, a full-height column on desktop.
+         The phone bar pins to --header-overlap, which tracks the header's height
+         including the iOS safe area; a constant here would put it behind the header
+         on a phone with a camera cut-out. Desktop keeps 76px, which is paired with
+         the column height on the same line, not with the header. -->
     <div
-      class="sticky top-[76px] z-10 bg-page pt-3 lg:pt-0 -mx-4 px-4 md:-mx-6 md:px-6 lg:mx-0 lg:px-0 flex flex-col lg:justify-center lg:col-span-5 lg:h-[calc(100vh-76px)]"
+      class="sticky top-[var(--header-overlap)] lg:top-[76px] z-10 bg-page pt-3 lg:pt-0 -mx-4 px-4 md:-mx-6 md:px-6 lg:mx-0 lg:px-0 flex flex-col lg:justify-center lg:col-span-5 lg:h-[calc(100vh-76px)]"
       aria-hidden="true"
     >
       <p class="font-mono text-sm uppercase tracking-label text-secondary mb-2 md:mb-5">
