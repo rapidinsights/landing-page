@@ -99,6 +99,26 @@
 }
 
 @layer base {
+  /* iOS 26 Safari lays pages out edge to edge, so page content draws under the
+     Dynamic Island while a sticky header pinned at top:0 does not. The header
+     absorbs that strip as padding instead, and everything that has to sit below
+     the header measures itself from here rather than hardcoding a pixel value.
+     The two constants are the header's measured content height; the root font
+     is 17px, so no step on the spacing scale lands on them. */
+  :root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --header-h: calc(var(--safe-top) + 76.5px);
+    /* Sticky bars tuck under the header rather than butting against it: a seam
+       flush with the edge reopens on sub-pixel rounding. */
+    --header-overlap: calc(var(--header-h) - 2px);
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --header-h: calc(var(--safe-top) + 80.75px);
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
@@ -107,6 +127,14 @@
 
   body {
     line-height: 1.6;
+    /* Edge-to-edge layout (viewport-fit=cover) draws the page into the strips the
+       system reserves: the camera cut-out in landscape, and the home indicator at
+       the foot of every page. The header absorbs the top strip itself; the other
+       three come out of the body. All three are 0 on a desktop browser, and the
+       side insets are 0 on a phone held upright. */
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   /* Subtle grain overlay — breaks digital flatness */
@@ -213,7 +241,7 @@ body:has(#hero) #header:not(.scroll) [data-aw-toggle-menu] span {
    cannot show through. */
 #header.expanded nav {
   position: fixed;
-  top: 70px;
+  top: var(--header-h);
   left: 0;
   right: 0;
   bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;

@@ -50,11 +50,14 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 <header
   class:list={[
     { sticky: isSticky, relative: !isSticky, dark: isDark },
-    'top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-opacity ease-in-out',
+    'top-0 z-40 flex-none mx-auto w-full pt-[var(--safe-top)] transition-opacity ease-in-out',
   ]}
   {...isSticky ? { 'data-aw-sticky-header': true } : {}}
   {...id ? { id } : {}}
 >
+  <!-- The background layer. `inset-0` resolves against the padding box, so it cannot
+       paint over a border on the header: any border here leaves an unpainted strip
+       that scrolling content shows through. Keep this element borderless. -->
   <div class="absolute inset-0"></div>
   <div
     class:list={[

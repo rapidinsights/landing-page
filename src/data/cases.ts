@@ -42,6 +42,9 @@ export interface Case {
   valueUnit?: string;
   // What the figure is. Per case, because "cost avoided" is false for capacity freed.
   valueLabel: string;
+  // Set only when valueLabel is too long for the mobile sticky bar, which has room
+  // for about 20 characters beside the figure. Falls back to valueLabel.
+  valueLabelShort?: string;
   // Where the value came from, e.g. "Labor reduction: 180 hrs a month at $45 an hour".
   basis: string;
   took: string;
@@ -122,6 +125,7 @@ export const cases: Case[] = [
     value: '75%',
     valueUnit: 'fewer',
     valueLabel: 'Orders waiting a week to start',
+    valueLabelShort: 'Orders stuck a week',
     basis: 'Down from 1 in 10 to 1 in 40, in weeks just as busy as before.',
     took: '30 days',
     finished: '2026-03',
@@ -246,6 +250,7 @@ export const cases: Case[] = [
     value: '62%',
     valueUnit: 'fewer',
     valueLabel: 'Orders finishing 5+ days late',
+    valueLabelShort: 'Orders 5+ days late',
     basis:
       'Down from 6.4% of orders to 2.4%, April to August, against the 2023 and 2024 average. Lower in each of the five largest accounts.',
     took: '63 days',
